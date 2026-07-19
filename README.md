@@ -1,3 +1,5 @@
+# Projet.ConcepteurDeveloppeurDapplications.Novelli.Sandra.2026
+Projet etudiant Ilaria Digital School
 **🍝 CUCINA 🍝**
 
 
@@ -58,11 +60,6 @@ ROADMAP
 Add user authentication improvements
 Add recipe search
 Improve mobile responsiveness
-
-
-CONTRIBUTING
-
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you'd like to contribute.
 
 
 AUTHOR
