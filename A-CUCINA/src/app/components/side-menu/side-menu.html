@@ -1,0 +1,16 @@
+<aside id="side-menu">
+    <p id="menu-title">Recipe types:</p>
+    <button id="toggle-menu" (click)="toggleSideMenu()">{{listIsVisible === true ? '➖' : '➕'}}</button>
+    <ul id="cuisine-genres" [class.minus]="listIsVisible" [class.plus]="!listIsVisible">
+        <li id="show-all">SHOW ALL</li>
+        <li class="menu-filter">Italian</li>
+        <li class="menu-filter">French</li>
+        <li class="menu-filter">Meat</li>
+        <li class="menu-filter">Spicy</li>
+        <li class="menu-filter">Sweet & sour</li>
+        <li class="menu-filter">Sashimi and sushi</li>
+        <li class="menu-filter">Homemade hamburgers</li>
+        <li class="menu-filter">Cake</li>
+        <li class="menu-filter">Creamy dessert</li>
+    </ul>
+</aside>
