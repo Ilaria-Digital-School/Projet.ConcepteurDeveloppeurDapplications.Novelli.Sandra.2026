@@ -1,11 +1,12 @@
 <section id="recipe-list-container">
-    <div id="recipe-list"></div>
-    @for (recipe of recipes; track recipe.id; let i=$index) {
-    <div class="recipe-box">
-        <img [src]="recipe.imgSrc" alt="">
-        <button class="heart" [attr.data-id]="recipe.id">🩶</button>
-        <p class="recipe-title">{{recipe.name}}</p>
-        <p class="author">By {{recipe.author}}</p>
-    </div>
+    <div id="recipe-list">
+        @for (recipe of recipes; track recipe.id; let i=$index) {
+        <div class="recipe-box">
+            <img [src]="recipe.imgSrc" alt="">
+            <button class="heart" [attr.data-id]="recipe.id">🩶</button>
+            <p class="recipe-title">{{recipe.name}}</p>
+            <p class="author">By {{recipe.author}}</p>
+        </div>
     }
+    </div>
 </section>
