@@ -12,7 +12,6 @@ export class SideMenu {
   listIsVisible = true;
 
   toggleSideMenu() {
-    // alert('Anyting you try to do using Angular is hard.');
     // if (this.listIsVisible === true) {
     //   this.listIsVisible = false;
     // }

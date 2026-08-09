@@ -1,5 +1,9 @@
 <section id="recipe-list-container">
-    <div id="recipe-list">
+
+    <h2>Our recipes</h2>
+
+    <div class="recipe-list">
+
         @for (recipe of recipes; track recipe.id; let i=$index) {
         <div class="recipe-box">
             <img [src]="recipe.imgSrc" alt="">
@@ -7,6 +11,12 @@
             <p class="recipe-title">{{recipe.name}}</p>
             <p class="author">By {{recipe.author}}</p>
         </div>
-    }
+        }
+
+        @empty {
+            <p>There are no recipes to display here</p>
+        }
+    
     </div>
+
 </section>

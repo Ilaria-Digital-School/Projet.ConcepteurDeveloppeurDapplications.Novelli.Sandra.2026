@@ -81,6 +81,11 @@ nav li:hover {
     color: turquoise;
 }
 
+button:hover {
+    /* background-color: turquoise; */
+    box-shadow: 0 0 6px 6px turquoise;
+}
+
 h1, p#motto {
     display: block;
     text-align: center;
@@ -92,6 +97,11 @@ h1, p#motto {
 p#motto {
     padding: 1rem;
     font-size: 2em;
+}
+
+h2 {
+    margin: 1rem auto;
+    max-width: max-content;
 }
 
 .banner {
@@ -129,12 +139,16 @@ p#motto {
     font-size: 1.85em;
 }
 
-#toggle {
+#toggle-menu {
     cursor: pointer;
     position: absolute;
     top: 0;
     right: 0;
     font-size: 1.66em;
+}
+
+#toggle-menu:hover {
+    box-shadow: none;
 }
 
 #cuisine-genres {
@@ -163,22 +177,25 @@ p#motto {
 }
 
 #recipe-list-container {
+    margin: 0 2.15rem;
+    background-color: blue;
     display: inline-block;
     width: 70%;
-    margin: 0 auto;
 }
 
-#recipe-list {
+.recipe-list {
+    width: 100%;
     display: grid;
     /* grid-template-columns: 200px 200px; */
     /* grid-template-columns: repeat(3, 1fr); */
     grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
-    gap: 5rem;
+    gap: 4rem;
     /* column-gap: 10px;
     row-gap: 10px; */
     justify-items: center;
     align-items: center;
     background-color: beige;
+    flex-wrap: wrap;
 }
 
 .recipe-box {
@@ -221,6 +238,82 @@ p#motto {
     bottom: 4%;
 }
 
+
+.forms {
+    background-color: white;
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid rgb(175, 171, 171);
+    border-radius: 10px;
+}
+
+fieldset {
+    border: 1px solid rgb(175, 171, 171);
+    padding: 15px 50px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+legend {
+    font-weight: 900;
+    padding: 5px;
+}
+
+.forms div {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 6rem;
+    padding-bottom: 6rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(175, 171, 171);
+    border-radius: 5px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+input,
+textarea,
+select {
+    margin-top: 0.5rem;
+}
+
+.error {
+    color: red;
+    font-size: 0.85em;
+    padding: 2px;
+}
+
+#form-msg {
+    max-width: 100%;
+    min-height: 14rem;
+}
+
+.forms button {
+    background-color: #2b58d4;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+
 #subscribe {
     position: relative;
     height: 20rem;
@@ -241,7 +334,7 @@ p#motto {
     display: inline-block;
 }
 
-#sign-in-main {
+#log-in-main {
     display: flex;
     align-items: center;
     justify-content: space-evenly;

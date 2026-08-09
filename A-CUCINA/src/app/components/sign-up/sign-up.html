@@ -1,1 +1,132 @@
-<p>sign-up works!</p>
+<form class="forms" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+    <h2>Register with us</h2>
+
+    <fieldset class="inscription-fieldset">
+        <legend>Personnal details</legend>
+        <div>
+            <label for="name">Name : </label>
+            <input type="text" name="familyName" id="name" formControlName="familyName" placeholder="You family Name" required>
+            @if (signUpForm.get('familyName')?.invalid && signUpForm.get('familyName')?.touched || signUpForm.get('familyName')?.dirty) {
+                @if (signUpForm.get('familyName')?.errors?.['required']) {
+                <div class="error">This field is required</div>
+                }
+                @else if (signUpForm.get('familyName')?.errors?.['minlength']) {
+                <div class="error">Name must be at least 3 characters long</div>
+                }    
+            }
+        </div>
+        <div>
+            <label for="firstname">Firstname: </label>
+            <input type="text" name="firstName" id="firstname" formControlName="firstName" placeholder="Your firstname" required>
+            @if (signUpForm.get('firstName')?.invalid && signUpForm.get('firstName')?.touched || signUpForm.get('firstName')?.dirty) {
+                @if (signUpForm.get('firstname')?.errors?.['required']) {
+                <div class="error">This field is required</div>
+                }
+                @else if (signUpForm.get('firstName')?.errors?.['minlength']) {
+                <div class="error">First name must be at least 2 characters long</div>
+                }
+            }
+        </div>
+
+        <div>
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email" formControlName="email" placeholder="exemple@email.com" required>
+            @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched || signUpForm.get('email')?.dirty) {
+                @if (signUpForm.get('email')?.errors?.['required']) {
+                <div class="error">This field is required</div>
+                }
+                @else if (signUpForm.get('email')?.errors?.['email']) {
+                <div class="error">Invalid email format</div>
+                }
+            }
+        </div>
+
+        <div>
+            <label for="pwd">Mot de passe : </label>
+            <input type="password" id="pwd" name="password" formControlName="pwd" placeholder="Enter your password" required>
+            @if (signUpForm.get('pwd')?.invalid && signUpForm.get('pwd')?.touched || signUpForm.get('pwd')?.dirty) {
+                @if (signUpForm.get('pwd')?.errors?.['required']) {
+                <div class="error">This field is required</div>
+                }
+                @else if (signUpForm.get('pwd')?.errors?.['minlength']) {
+                <div class="error">Password must be at least 8 characters long</div>
+                }
+                @else if (signUpForm.get('pwd')?.errors?.['maxlength']) {
+                <div class="error">Password cannot exceed 20 characters</div>
+                }
+            }
+        </div>
+        <div>
+            <label for="pwd2">Confirm your password: </label>
+            <input type="password" id="pwd2" name="password2" formControlName="pwd2" placeholder="Enter your password again" required>
+            @if (signUpForm.get('pwd2')?.touched || signUpForm.get('pwd2')?.dirty) {
+                @if (signUpForm.get('pwd2')?.errors?.['required']) {
+                <div class="error">This field is required</div>
+                }
+                <!-- @else if (signUpForm.get('pwd2')?.value !== signUpForm.get('pwd')?.value) {
+                <div class="error">Les mots de passe doivent être identiques</div>
+                } -->
+                @else if (signUpForm.hasError('passwordMismatch')) {
+                <div class="error">Passwords do not match</div>
+                }
+            }
+        </div>
+    </fieldset>
+
+    <fieldset class="inscription-fieldset">
+        <legend>Additional information</legend>
+        <!-- Radio -->
+        <div>
+            <label>Gender: </label>
+            <input type="radio" id="female" name="gender" formControlName="gender" value="female">
+            <label for="female"> Female </label>
+            <input type="radio" id="male" name="gender" formControlName="gender" value="male">
+            <label for="male"> Male </label>
+            <!-- @if (signUpForm.get('gender')?.errors?.['required']) {
+                <div class="error">Le genre doit être précisé</div>
+            } -->
+        </div>
+
+        <!-- Checkbox -->
+        <div>
+            <label>Interests: </label>
+            <input type="checkbox" name="interets" id="browsing" formControlName="clothes" value="vetements">
+            <label for="browsing">Browsing </label>
+
+            <input type="checkbox" name="interets" id="contributing" formControlName="accessories" value="accessoires">
+            <label for="contributing">Contributing </label>
+        </div>
+
+        <!-- Choix multiples -->
+        <div>
+            <label for="country">Country:</label>
+            <select name="country" id="country" formControlName="country">
+                <option value="uk">UK</option>
+                <option value="ireland">Ireland</option>
+                <option value="netherlands">Netherlands</option>
+                <option value="germany">Germany</option>
+                <option value="france">France</option>
+                <option value="spain">Spain</option>
+                <option value="italy">Italy</option>
+                <option value="switzerland">Suisse</option>
+                <option value="belgium">Belgium</option>
+                <option value="senegal">Senegal</option>
+                <option value="angola">Angola</option>
+                <option value="autre">Autre</option>
+            </select>
+            @if (signUpForm.get('gender')?.errors?.['required']) {
+                <div class="error">Country must be specified</div>
+            }
+        </div>
+    </fieldset>
+
+    <button type="submit" [disabled]="signUpForm.invalid"
+    [class.btn-disabled]="signUpForm.invalid"
+    >Sign up</button>
+
+    <div>
+        <p>Already have an account?
+            <a routerLink="/log-in" target="_blank">Log in</a>
+        </p>
+    </div>
+</form>

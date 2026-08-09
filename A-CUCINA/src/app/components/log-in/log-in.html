@@ -1,0 +1,27 @@
+<section id="log-in-box">
+    <form class="forms" class="forms" id="log-in-form" [formGroup]="logInForm" (ngSubmit)="logIn()">
+        <h2>Log in to your account</h2>
+
+        <fieldset>
+            <div class="info">
+                <label for="email">Username/email</label>
+                <input type="email" id="email" formControlName="email" placeholder="Enter your email" required>
+            </div>
+            <div class="info">
+                <label for="password">Password</label>
+                <input type="password" id="password" formControlName="pwd" placeholder="Enter your password" required>
+            </div>
+
+            @if (errorMsg !== '') {
+                <div class="error">{{errorMsg}}</div>
+            }
+
+            <button type="submit">Submit</button>
+
+            <div>
+                <a routerLink="/sign-up" target="_blank">Create your account</a>
+            </div>
+        </fieldset>
+
+    </form>
+</section>

@@ -1,0 +1,46 @@
+<form class="forms" [formGroup]="contactForm" (ngSubmit)="sendMessage()">
+    <h2>Contact us</h2>
+
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="username" placeholder="Enter your name" required>
+        @if (contactForm.get('username')?.invalid && contactForm.get('username')?.touched || contactForm.get('username')?.dirty) {
+            @if (contactForm.get('username')?.errors?.['required']) {
+                <div class="error">This field is required</div>
+            }
+            @else if (contactForm.get('username')?.errors?.['minlength']) {
+                <div class="error">Name must be at least 3 characters long</div>
+            }
+        }
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" placeholder="exemple@email.com" required> <br>
+        @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched || contactForm.get('email')?.dirty) {
+            @if (contactForm.get('email')?.errors?.['required']) {
+            <div class="error">This field is required</div>
+            }
+            @else if (contactForm.get('email')?.errors?.['email']) {
+            <div class="error">Invalid email format</div>
+            }
+        }
+    </div>
+    <div>
+        <label for="form-msg">Message:</label>
+        <textarea rows="2" id="form-msg" formControlName="msg" placeholder="Type your message" required></textarea> <br>
+        @if (contactForm.get('msg')?.invalid && contactForm.get('msg')?.touched || contactForm.get('msg')?.dirty) {
+            @if (contactForm.get('msg')?.errors?.['required']) {
+            <div class="error">This field is required</div>
+            }
+            @else if (contactForm.get('msg')?.errors?.['minlength']) {
+            <div class="error">Message must be at least 3 characters long</div>
+            }
+            @else if (contactForm.get('msg')?.errors?.['maxlength']) {
+            <div class="error">Message cannot exceed 600 characters</div>
+            }
+        }
+    </div>
+    <div>
+        <button type="submit">Envoyer</button>
+    </div>
+</form>
