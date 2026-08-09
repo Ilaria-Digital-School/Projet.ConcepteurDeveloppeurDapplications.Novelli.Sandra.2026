@@ -5,6 +5,7 @@ import { SignUp } from './components/sign-up/sign-up';
 import { Contact } from './components/contact/contact';
 import { Favourites } from './components/favourites/favourites';
 import { AddRecipe } from './components/add-recipe/add-recipe';
+import { RecipeDetails } from './components/recipe-details/recipe-details';
 
 
 export const routes: Routes = [
@@ -13,6 +14,7 @@ export const routes: Routes = [
     {path: 'add-recipe', component: AddRecipe},
     {path: 'contact', component: Contact},
     {path: 'log-in', component: LogIn},
-    {path: 'sign-up', component: SignUp}, 
+    {path: 'sign-up', component: SignUp},
+    {path: 'recipe-details/:id', component: RecipeDetails},
 
 ];

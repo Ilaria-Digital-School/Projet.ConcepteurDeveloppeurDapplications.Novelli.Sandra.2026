@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RecipeService } from '../../services/recipe-service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
@@ -10,11 +11,18 @@ import { RecipeService } from '../../services/recipe-service';
 export class Recipes {
 
   recipes: any[] = [];
+  recipeId!: string;
 
-  recipeService = inject(RecipeService);
+  private recipeService = inject(RecipeService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
   ngOnInit() {
     this.loadRecipes();
+  }
+
+  viewRecipeDetails(id: string) {
+    this.router.navigate(['/recipe-details', id]);
   }
 
   loadRecipes() {

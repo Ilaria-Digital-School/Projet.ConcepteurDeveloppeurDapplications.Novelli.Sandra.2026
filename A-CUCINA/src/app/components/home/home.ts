@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SideMenu } from '../side-menu/side-menu';
 import { Banner } from '../banner/banner';
 import { Recipes } from '../recipes/recipes';
+import { Router } from 'express';
 
 @Component({
   selector: 'app-home',
@@ -9,4 +10,6 @@ import { Recipes } from '../recipes/recipes';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {}
+export class Home {
+
+}

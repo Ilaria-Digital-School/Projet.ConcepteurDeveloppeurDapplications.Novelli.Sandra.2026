@@ -200,7 +200,7 @@ h2 {
 
 .recipe-box {
     position: relative;
-    height: 19.85rem;
+    height: 20rem;
     width: 22rem;
     background-color: aqua;
 }
@@ -238,6 +238,23 @@ h2 {
     bottom: 4%;
 }
 
+.view-recipe {
+    position: absolute;
+    right: 5%;
+    bottom: 3%;
+    background-color: #2b58d4;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    width: 15%;
+    height: 8%;
+}
+
+.view-recipe:hover {
+    box-shadow: 0 0 6px 6px silver;
+}
 
 .forms {
     background-color: white;

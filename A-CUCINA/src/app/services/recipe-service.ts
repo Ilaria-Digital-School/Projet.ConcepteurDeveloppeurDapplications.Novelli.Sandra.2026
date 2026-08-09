@@ -7,13 +7,18 @@ import { inject, Injectable } from '@angular/core';
 
 export class RecipeService {
 
-    recipeURL: string = 'http://localhost:3001/recipes';
+    recipeURL: string = 'http://localhost:3000/recipes';
 
     private httpClient = inject(HttpClient);
 
     getAllRecipes() {
-      return this.httpClient.get(this.recipeURL);
-    //   return this.httpClient.get<any[]>(this.recipeURL);
+        return this.httpClient.get(this.recipeURL);
+        // return this.httpClient.get<any[]>(this.recipeURL);
+    }
+
+    // Response - productObj || null
+    getRecipeById(id: string) {
+        return this.httpClient.get(`${this.recipeURL}/${id}`);
     }
 
 }

@@ -10,6 +10,7 @@
             <button class="heart" [attr.data-id]="recipe.id">🩶</button>
             <p class="recipe-title">{{recipe.name}}</p>
             <p class="author">By {{recipe.author}}</p>
+            <a (click)="viewRecipeDetails(recipe.id)"><button class="view-recipe">View</button></a>
         </div>
         }
 
