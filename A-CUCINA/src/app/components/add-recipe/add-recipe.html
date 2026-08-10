@@ -1,1 +1,63 @@
-<p>add-recipe works!</p>
+<h2>{{ isOnEditMode ? 'Edit recipe' : 'Add recipe' }}</h2>
+
+<!-- NAME REQUIRED IN THE HTML -->
+
+<form class="forms" id="recipe-form" [formGroup]="addRecipeForm" (ngSubmit)="addOrEditRecipe()">
+
+    <div>
+        <label for="recipeName" class="form-label">Recipe</label>
+        <!-- Ajouter le #recipeName="ngModel" pour gérer erreurs ? -->
+        <input type="text" class="form-control" id="recipeName" name="recipeName" formControlName="ngModel"
+            formControlName="name" required minlength="3">
+        @if (addRecipeForm.get('recipeName')?.invalid && (addRecipeForm.get('recipeName')?.touched || addRecipeForm.get('recipeName')?.dirty)) {
+            @if (addRecipeForm.get('recipeName')?.errors?.['required']) {
+                <div class="error">This field is required</div>
+                }
+            @else if (addRecipeForm.get('recipeName')?.errors?.['minlength']) {
+                <div class="error">Recipe name must be at least 3 characters long</div>
+                }
+            }
+    </div>
+    <div>
+        <label for="img-url" class="form-label">Image URL</label>
+        <input type="text" class="form-control" id="img-url" name="imgSrc" formControlName="imgSrc">
+    </div>
+    <div>
+        <label for="recipe-author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="recipe-author" name="author" formControlName="author">
+    </div>
+    <div>
+        <label for="recipe-type" class="form-label">Type</label>
+        <select class="form-control" id="recipe-type" name="type" formControlName="type">
+            <option value="italian">Italian</option>
+            <option value="french">French</option>
+            <option value="meat">Meat</option>
+            <option value="spicy">Spicy</option>
+            <option value="sweet & sour">Sweet & sour</option>
+            <option value="sashimi & sushi">Sashimi & sushi</option>
+            <option value="homemade hamburgers">Homemade hamburgers</option>
+            <option value="creamy dessert">Creamy dessert</option>
+            <option value="cake">Cake</option>
+            <option value="other">Other</option>
+        </select>
+        </div>
+    <div>
+        <label for="recipe-ingredients" class="form-label">Ingredients:</label>
+        <input type="text" class="form-control" id="recipe-ingredients" name="ingredients" formControlName="ingredients">
+    </div>
+        <div>
+        <label for="instructions">Instructions</label>
+        <textarea id="instructions" formControlName="instructions" placeholder="Type in your instructions..." required></textarea> <br>
+        @if (addRecipeForm.get('instructions')?.invalid && addRecipeForm.get('instructions')?.touched || addRecipeForm.get('instructions')?.dirty) {
+            @if (addRecipeForm.get('instructions')?.errors?.['required']) {
+            <div class="error">This field is required</div>
+            }
+            @else if (addRecipeForm.get('instructions')?.errors?.['minlength']) {
+            <div class="error">Instructions must be at least 20 characters</div>
+            }
+        }
+    </div>
+
+
+    <button type="submit">{{ isOnEditMode ? 'Edit' : 'Add'}}</button>
+</form>

@@ -315,7 +315,7 @@ select {
     padding: 2px;
 }
 
-#form-msg {
+textarea {
     max-width: 100%;
     min-height: 14rem;
 }

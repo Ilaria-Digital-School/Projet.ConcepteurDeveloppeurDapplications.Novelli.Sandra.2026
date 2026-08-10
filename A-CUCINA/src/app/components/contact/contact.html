@@ -27,7 +27,7 @@
     </div>
     <div>
         <label for="form-msg">Message:</label>
-        <textarea rows="2" id="form-msg" formControlName="msg" placeholder="Type your message" required></textarea> <br>
+        <textarea formControlName="msg" placeholder="Type your message" required></textarea> <br>
         @if (contactForm.get('msg')?.invalid && contactForm.get('msg')?.touched || contactForm.get('msg')?.dirty) {
             @if (contactForm.get('msg')?.errors?.['required']) {
             <div class="error">This field is required</div>
