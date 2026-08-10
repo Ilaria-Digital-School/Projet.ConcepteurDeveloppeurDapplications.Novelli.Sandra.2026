@@ -2,6 +2,10 @@
 
     <h2>Our recipes</h2>
 
+    <div class="search-bar-container">
+        <input type="text" placeholder="Search..." (input)="search($event.target.value)">
+    </div>
+
     <div class="recipe-list">
 
         @for (recipe of recipes; track recipe.id; let i=$index) {

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RecipeService } from '../../services/recipe-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, map } from 'rxjs';
 
 @Component({
   selector: 'app-recipes',
@@ -17,8 +18,25 @@ export class Recipes {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
 
+  filteredRecipes: any[] = [];
+  searchSubject = new Subject<string>();
+
   ngOnInit() {
     this.loadRecipes();
+
+    this.searchSubject.pipe(
+      map(value => 
+        this.recipes.filter(recipe => 
+          recipe.name?.toLowerCase().includes(value?.toLowerCase()),
+        )
+       )
+    ).subscribe(result => {
+        this.filteredRecipes = result;
+    })
+  }
+
+  search(value: string) {
+    this.searchSubject.next(value);
   }
 
   viewRecipeDetails(id: string) {
@@ -32,7 +50,8 @@ export class Recipes {
         this.recipes = res;
         console.log(res);
         // For search function.
-        // this.filteredProducts = res;
+        this.filteredRecipes = res;
+        console.log(this.filteredRecipes);
 
       },
       error: (err) => {

@@ -5,84 +5,114 @@
         "name": "Arrabiata pasta",
         "imgSrc": "../assets/images/arrabiata_pasta.jpg",
         "author": "Sara Kelley",
-        "type": "Italian"
+        "type": "Italian",
+        "ingredients": ["pasta", "tomato sauce", "extra virgin olive oil", "basil"],
+        "instructions": [
+            "Pour a large amount of water into a pan",
+            "Add a pinch of salt",
+            "Pour one liter of water into a pan",
+            "Once it starts boiling, pour the pasta into it",
+            "Leave it to boil for 12 to 15 minutes"
+        ]
     },
     {
         "id": "2",
         "name": "Roastbeef & potatoes",
         "imgSrc": "../assets/images/roastbeef_potatoes.jpg",
         "author": "John 0'Connor",
-        "type": "Meat"
+        "type": "Meat",
+        "ingredients": ["potatoes", "1 kg beef", "salt", "pepper", "garlic"],
+        "instructions": []
     },
     {
         "id": "3",
         "name": "Tuna sushi",
         "imgSrc": "assets/images/tuna_sushi.jpg",
         "author": "Debbie Birmingham",
-        "type": "Sashimi and sushi"
+        "type": "Sashimi and sushi",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "4",
         "name": "Spring rolls",
         "imgSrc": "assets/images/spring_rolls.jpg",
         "author": "Damien Nguyen",
-        "type": "Sweet & sour"
+        "type": "Sweet & sour",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "5",
         "name": "Four season pizza",
         "imgSrc": "assets/images/four_season_pizza.jpg",
         "author": "Giani Livrieri",
-        "type": "Italian"
+        "type": "Italian",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "6",
         "name": "Tiramisù",
         "imgSrc": "assets/images/tiramisu.jpg",
         "author": "Anja Weisser",
-        "type": "Cake"
+        "type": "Cake",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "7",
         "name": "Blue cheese hamburger",
         "imgSrc": "assets/images/blue_cheese_hamburger.jpg",
         "author": "Wendy Heyward",
-        "type": "Homemade hamburgers"
+        "type": "Homemade hamburgers",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "8",
         "name": "Cheesecake",
         "imgSrc": "assets/images/cheesecake.jpg",
         "author": "Sandra Novelli-Riquer",
-        "type": "Cake"
+        "type": "Cake",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "9",
         "name": "Bruschetta",
         "imgSrc": "assets/images/bruschetta.jpg",
         "author": "Sandra Novelli-Riquer",
-        "type": "Italian"
+        "type": "Italian",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "10",
         "name": "Caprese salad",
         "imgSrc": "assets/images/caprese_salad.jpg",
         "author": "Gaetano Cremonese",
-        "type": "Italian"
+        "type": "Italian",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "11",
         "name": "Mini hamburgers",
         "imgSrc": "assets/images/mini_hamburgers.jpg",
         "author": "Julien Ndiaye",
-        "type": "Homemade hamburgers"
+        "type": "Homemade hamburgers",
+        "ingredients": [],
+        "instructions": []
     },
     {
         "id": "12",
         "name": "Chocolate cake",
         "imgSrc": "assets/images/chocolate_cake.jpg",
         "author": "Anja Weisser",
-        "type": "Cake"
+        "type": "Cake",
+        "ingredients": [],
+        "instructions": []
     }
 ]
 }

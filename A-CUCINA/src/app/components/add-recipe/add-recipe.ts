@@ -18,6 +18,7 @@ export class AddRecipe {
   private activatedRoute = inject(ActivatedRoute);
 
   recipeID!: string;
+  recipes: any[] = [];
   recipe: any = {};
   isOnEditMode = false;
 

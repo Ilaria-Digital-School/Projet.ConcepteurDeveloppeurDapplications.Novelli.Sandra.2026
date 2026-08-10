@@ -1,3 +1,21 @@
-<p>{{recipe.id}}</p>
-<p>{{recipe.name}}</p>
-<p>By {{recipe.author}}</p>
+<section class="recipe-details">
+    <h2>{{recipe.name}}</h2>
+    <p>By {{recipe.author}}</p>
+    <img [src]="recipe.imgSrc" alt="">
+    <h3>Ingredients:</h3>
+    <ul>
+        @for (ingredient of recipe.ingredients; track ingredient) {
+            <li>{{ ingredient }}</li>
+        } @empty {
+            <li>No ingredients listed yet.</li>
+        }
+    </ul>
+    <h3>Instructions:</h3>
+    <ul>
+        @for (instruction of recipe.instructions; track instruction; let i = $index) {
+            <p>{{ i + 1 }}. {{ instruction }}</p>
+        } @empty {
+            <p>No instructions listed yet.</p>
+        }
+    </ul>
+</section>
