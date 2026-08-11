@@ -12,7 +12,7 @@ import { Subject, map } from 'rxjs';
 export class Recipes {
 
   recipes: any[] = [];
-  recipeId!: string;
+  recipeID!: string;
 
   private recipeService = inject(RecipeService);
   private router = inject(Router);

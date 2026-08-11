@@ -128,17 +128,6 @@
   ],
   "users": [
     {
-      "familyName": "Novelli-Riquer",
-      "firstName": "Sandra",
-      "email": "sandra@novelli-riquer.com",
-      "pwd": "666666666",
-      "gender": "female",
-      "country": "france",
-      "interests": [],
-      "admin": false,
-      "id": "OfKgTdNQhoM"
-    },
-    {
       "familyName": "Admin",
       "firstName": "Administrator",
       "email": "admin@administrator.com",
@@ -148,6 +137,17 @@
       "interests": [],
       "admin": true,
       "id": "1"
+    },
+    {
+      "familyName": "Novelli-Riquer",
+      "firstName": "Sandra",
+      "email": "sandra@novelli-riquer.com",
+      "pwd": "666+++666",
+      "gender": "female",
+      "country": "france",
+      "interests": [],
+      "admin": false,
+      "id": "LRUa0NEAXGU"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
