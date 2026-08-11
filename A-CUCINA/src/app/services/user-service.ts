@@ -39,6 +39,8 @@ export class UserService {
   {
     return this.httpClient.get<any[]>(`${this.userURL}?email=${loginData.email}&pwd=${loginData.pwd}`);
   }
+
+  
   
   // // If using real back-end: POST request + encypted data:
   // // URL's must be different from one another hence the '/login'.

@@ -49,6 +49,10 @@ export class LogIn {
         else {
           this.errorMsg = 'Invalid username or password';
         }
+      },
+      error: (err) => {
+        console.log(err)
+        alert('Login failed');
       }
     });
 
