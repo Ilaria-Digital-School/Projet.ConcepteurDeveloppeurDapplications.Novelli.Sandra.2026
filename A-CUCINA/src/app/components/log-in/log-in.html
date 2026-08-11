@@ -12,7 +12,7 @@
                 <input type="password" id="password" formControlName="pwd" placeholder="Enter your password" required>
             </div>
 
-            @if (errorMsg !== '') {
+            @if (errorMsg) {
                 <div class="error">{{errorMsg}}</div>
             }
 

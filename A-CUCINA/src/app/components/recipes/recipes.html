@@ -8,7 +8,7 @@
 
     <div class="recipe-list">
 
-        @for (recipe of recipes; track recipe.id; let i=$index) {
+        @for (recipe of filteredRecipes; track recipe.id) {
         <div class="recipe-box">
             <img [src]="recipe.imgSrc" alt="">
             <button class="heart" [attr.data-id]="recipe.id">🩶</button>

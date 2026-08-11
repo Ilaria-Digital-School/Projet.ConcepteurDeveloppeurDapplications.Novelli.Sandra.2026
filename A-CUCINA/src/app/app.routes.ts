@@ -6,6 +6,7 @@ import { Contact } from './components/contact/contact';
 import { Favourites } from './components/favourites/favourites';
 import { AddRecipe } from './components/add-recipe/add-recipe';
 import { RecipeDetails } from './components/recipe-details/recipe-details';
+import { Admin } from './components/admin/admin';
 
 
 export const routes: Routes = [
@@ -15,6 +16,7 @@ export const routes: Routes = [
     {path: 'contact', component: Contact},
     {path: 'log-in', component: LogIn},
     {path: 'sign-up', component: SignUp},
+    {path: 'admin', component: Admin},
     {path: 'recipe-details/:id', component: RecipeDetails},
 
 ];

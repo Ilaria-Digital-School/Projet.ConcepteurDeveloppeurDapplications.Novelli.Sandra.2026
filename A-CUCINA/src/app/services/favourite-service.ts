@@ -1,11 +1,14 @@
-// import { Service } from '@angular/core';
+import { computed, Injectable, Service, signal } from '@angular/core';
 
-// @Injectable({
-//     providedIn: 'root',
-// })
+@Injectable({
+    providedIn: 'root',
+})
 
-// export class FavouriteService {
+export class FavouriteService {
 
 
 
-// }
+
+}
+
+

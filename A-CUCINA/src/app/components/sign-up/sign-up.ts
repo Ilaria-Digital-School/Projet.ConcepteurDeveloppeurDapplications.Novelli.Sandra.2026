@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { UserService } from '../../services/user-service';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class SignUp {
 
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
-  // private userService = inject(UserService);
+  private userService = inject(UserService);
 
   ngOnInit(): void {
     console.log('Hi, ngOnInit is running!');
@@ -76,17 +77,16 @@ export class SignUp {
       admin: false
     }
 
-    // // this.userService.addUser(userFinal).subscribe({
-    // //   next: (res: any) => {
-    // //     alert('Inscription effectuée avec succès')
-    // //     this.router.navigate(['/log-in']);
-    // //   },
-    // //   error: (err) => {
-    // //     console.log((err));
-    // //     alert('Erreur dans la procédure d\'inscription');
-    // //   }
-    // })
-
+    this.userService.addUser(userFinal).subscribe({
+      next: (res: any) => {
+        alert('Account added successfully')
+        this.router.navigate(['/log-in']);
+      },
+      error: (err) => {
+        console.log((err));
+        alert('Failed to subscribe');
+      }
+    })
 
   }
 

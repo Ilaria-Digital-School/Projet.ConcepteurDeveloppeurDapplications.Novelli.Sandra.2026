@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RecipeService } from '../../services/recipe-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subject, map } from 'rxjs';
 
 @Component({
@@ -16,7 +16,7 @@ export class Recipes {
 
   private recipeService = inject(RecipeService);
   private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
+
 
   filteredRecipes: any[] = [];
   searchSubject = new Subject<string>();
@@ -27,7 +27,7 @@ export class Recipes {
     this.searchSubject.pipe(
       map(value => 
         this.recipes.filter(recipe => 
-          recipe.name?.toLowerCase().includes(value?.toLowerCase()),
+          recipe.name.toLowerCase().includes(value.toLowerCase()),
         )
        )
     ).subscribe(result => {
