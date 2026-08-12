@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Recipes } from '../recipes/recipes';
 import { RecipeService } from '../../services/recipe-service';
 import { Router, RouterLink } from '@angular/router';
+import { FavouriteService } from '../../services/favourite-service';
 
 @Component({
   selector: 'app-favourites',
@@ -13,34 +13,19 @@ export class Favourites {
 
   private recipeService = inject(RecipeService);
   private router = inject(Router);
+  public favouriteService = inject(FavouriteService);
 
-  recipes: any[] = [];
-  favouriteRecipes: any = {};
 
-  ngOnInit() {
-    this.loadRecipes();
-  }
 
-  loadRecipes() {
-    // Subscribe method is mandatory to fetch data.
-    this.recipeService.getAllRecipes().subscribe({
-      next: (res: any) => {
-        this.recipes = res;
-        console.log(res);
-        // For search function.
-        this.favouriteRecipes = res;
-        console.log(this.favouriteRecipes);
 
-      },
-      error: (err) => {
-        console.log(err);
-        alert('Failed to get recipe list');
-      }
-    });
-  }
+
 
   viewRecipeDetails(id: string) {
     this.router.navigate(['/recipe-details', id]);
+  }
+
+  addToFavourites(recipeObj: any) {
+    this.favouriteService.addToFavourites(recipeObj);
   }
 
 }

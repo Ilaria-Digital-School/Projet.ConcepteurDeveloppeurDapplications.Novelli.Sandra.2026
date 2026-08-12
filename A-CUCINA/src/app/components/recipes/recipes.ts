@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RecipeService } from '../../services/recipe-service';
 import { Router } from '@angular/router';
 import { Subject, map } from 'rxjs';
+import { FavouriteService } from '../../services/favourite-service';
 
 @Component({
   selector: 'app-recipes',
@@ -13,9 +14,11 @@ export class Recipes {
 
   recipes: any[] = [];
   recipeID!: string;
+  recipe: any = {};
 
   private recipeService = inject(RecipeService);
   private router = inject(Router);
+  public favouriteService = inject(FavouriteService);
 
 
   filteredRecipes: any[] = [];
@@ -25,13 +28,13 @@ export class Recipes {
     this.loadRecipes();
 
     this.searchSubject.pipe(
-      map(value => 
-        this.recipes.filter(recipe => 
+      map(value =>
+        this.recipes.filter(recipe =>
           recipe.name.toLowerCase().includes(value.toLowerCase()),
         )
-       )
+      )
     ).subscribe(result => {
-        this.filteredRecipes = result;
+      this.filteredRecipes = result;
     })
   }
 
@@ -59,6 +62,10 @@ export class Recipes {
         alert('Failed to get recipe list');
       }
     });
+  }
+
+  addToFavourites(recipeObj: any) {
+    this.favouriteService.addToFavourites(recipeObj);
   }
 
   // recipes: any[] = [

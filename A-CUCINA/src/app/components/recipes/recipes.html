@@ -11,7 +11,7 @@
         @for (recipe of filteredRecipes; track recipe.id) {
         <div class="recipe-box">
             <img [src]="recipe.imgSrc" alt="">
-            <button class="heart" [attr.data-id]="recipe.id">🩶</button>
+            <button class="heart" [attr.data-id]="recipe.id" (click)="addToFavourites(recipe)">🩶</button>
             <p class="recipe-title">{{recipe.name}}</p>
             <p class="author">By {{recipe.author}}</p>
             <button (click)="viewRecipeDetails(recipe.id)"class="view-recipe">View</button>

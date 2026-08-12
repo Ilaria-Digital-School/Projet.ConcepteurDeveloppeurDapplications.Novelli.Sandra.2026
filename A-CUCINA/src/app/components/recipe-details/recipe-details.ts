@@ -17,17 +17,33 @@ export class RecipeDetails {
   private activatedRoute = inject(ActivatedRoute);
   private recipeService = inject(RecipeService);
 
-  ngOnInit() {
-    this.recipeID = this.activatedRoute.snapshot.paramMap.get('id') || '';
+  // ngOnInit() {
+  //   this.recipeID = this.activatedRoute.snapshot.paramMap.get('id') || '';
 
-    this.recipeService.getRecipeById(this.recipeID).subscribe({
-      next: (res: any) => {
-        this.recipe = res;
-      },
-      error: (err) => {
-        console.log(err);
-        alert('Error loading recipe');
-      }
+  //   this.recipeService.getRecipeById(this.recipeID).subscribe({
+  //     next: (res: any) => {
+  //       this.recipe = res;
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       alert('Error loading recipe');
+  //     }
+  //   });
+  // }
+
+    ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.recipeID = params.get('id') || '';
+
+      this.recipeService.getRecipeById(this.recipeID).subscribe({
+        next: (res: any) => {
+          this.recipe = res;
+        },
+        error: (err) => {
+          console.log(err);
+          alert('Error loading recipe');
+        }
+      });
     });
   }
 
