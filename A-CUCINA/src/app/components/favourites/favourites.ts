@@ -16,16 +16,16 @@ export class Favourites {
   public favouriteService = inject(FavouriteService);
 
 
-
-
-
-
   viewRecipeDetails(id: string) {
     this.router.navigate(['/recipe-details', id]);
   }
 
-  addToFavourites(recipeObj: any) {
-    this.favouriteService.addToFavourites(recipeObj);
+  // addToFavourites(recipeObj: any) {
+  //   this.favouriteService.addToFavourites(recipeObj);
+  // }
+
+  faveOrUnfave(recipeObj: any) {
+      this.favouriteService.toggleFavourite(recipeObj);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RecipeService } from '../../services/recipe-service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -11,41 +11,48 @@ import { ActivatedRoute } from '@angular/router';
 export class RecipeDetails {
 
   
-  recipe: any = {};
+
+  recipe = signal<any>({});
   recipeID!: string;
 
   private activatedRoute = inject(ActivatedRoute);
   private recipeService = inject(RecipeService);
 
   ngOnInit() {
-    this.recipeID = this.activatedRoute.snapshot.paramMap.get('id') || '';
+    this.activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id') || '';
 
-    this.recipeService.getRecipeById(this.recipeID).subscribe({
-      next: (res: any) => {
-        this.recipe = res;
-      },
-      error: (err) => {
-        console.log(err);
-        alert('Error loading recipe');
-      }
+      this.recipeService.getRecipeById(id).subscribe({
+        next: (res: any) => {
+          this.recipe.set(res)
+        },
+        error: (err) => {
+          console.log(err);
+          alert('Error loading recipe');
+        }
+      });
     });
   }
 
-  //   ngOnInit() {
-  //   this.activatedRoute.paramMap.subscribe(params => {
-  //     this.recipeID = params.get('id') || '';
 
-  //     this.recipeService.getRecipeById(this.recipeID).subscribe({
-  //       next: (res: any) => {
-  //         this.recipe = res;
-  //       },
-  //       error: (err) => {
-  //         console.log(err);
-  //         alert('Error loading recipe');
-  //       }
-  //     });
+  // // THE OLD WAY, WITHOUT SIGNALS.
+
+  // recipe: any = {};
+
+  // ngOnInit() {
+  //   this.recipeID = this.activatedRoute.snapshot.paramMap.get('id') || '';
+
+  //   this.recipeService.getRecipeById(this.recipeID).subscribe({
+  //     next: (res: any) => {
+  //       this.recipe = res;
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       alert('Error loading recipe');
+  //     }
   //   });
   // }
+
 
 
 }

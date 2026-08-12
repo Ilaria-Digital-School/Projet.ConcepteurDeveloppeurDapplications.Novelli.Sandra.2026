@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user-service';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,9 @@ import { FormsModule } from '@angular/forms';
 export class UsersTable {
 
   // Whether you're using local storage or JSON DB, you need to initialize this.
-  users: any[] = [];
+  // users: any[] = [];
+
+  users = signal<any>([]);
 
   // For special editing directly in the table.
   editId: number | null = null;
@@ -27,7 +29,7 @@ export class UsersTable {
   loadUsers() {
     this.userService.getAllUsers().subscribe({
       next: (res: any) => {
-        this.users = res;
+        this.users.set(res);
       },
       error: (err) => {
         console.log(err);
@@ -35,6 +37,18 @@ export class UsersTable {
       }
     });
   }
+
+  // loadUsers() {
+  //   this.userService.getAllUsers().subscribe({
+  //     next: (res: any) => {
+  //       this.users = res;
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       alert('There are no users to display here');
+  //     }
+  //   });
+  // }
   
   viewUserDetails(id: string) {
     this.router.navigate(['/user-details', id]);
@@ -44,8 +58,8 @@ export class UsersTable {
     this.router.navigate(['/edit-user', id]);
   }
 
-  // Forget this one and implement goToEditUser() back in th HTML
-  // if you don't like it.
+  // goToEditUser() can be introduced back in th HTML.
+
   save(userObj: any) {
     this.userService.updateUser(userObj).subscribe({
       next: (res: any) => {

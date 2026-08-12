@@ -4,22 +4,23 @@
 
     <div class="recipe-list">
 
-        <p>Count: {{ favouriteService.favouriteRecipes().length }}</p>
-
+        
         @for (recipe of favouriteService.favouriteRecipes(); track recipe.id) {
-        <div class="recipe-box">
-            <img [src]="recipe.imgSrc" alt="">
-            <button class="heart" [attr.data-id]="recipe.id" (click)="addToFavourites(recipe)">🩶</button>
-            <p class="recipe-title">{{recipe.name}}</p>
-            <p class="author">By {{recipe.author}}</p>
-            <button (click)="viewRecipeDetails(recipe.id)"class="view-recipe">View</button>
-        </div>
+            <div class="recipe-box">
+                <img [src]="recipe.imgSrc" alt="">
+                <button class="heart" [attr.data-id]="recipe.id" (click)="faveOrUnfave(recipe)">{{ favouriteService.isFavourite(recipe.id) ? '❤️' : '🩶' }}</button>
+                <p class="recipe-title">{{recipe.name}}</p>
+                <p class="author">By {{recipe.author}}</p>
+                <button (click)="viewRecipeDetails(recipe.id)"class="view-recipe">View</button>
+            </div>
         }
-
+        
         @empty {
             <p>There are no recipes to display here</p>
         }
-    
+        
     </div>
 
+    <!-- <p>Count: {{ favouriteService.favouriteRecipes().length }}</p> -->
+    
 </section>

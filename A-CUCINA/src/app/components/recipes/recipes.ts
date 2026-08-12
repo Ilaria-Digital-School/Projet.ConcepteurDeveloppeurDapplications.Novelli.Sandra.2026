@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RecipeService } from '../../services/recipe-service';
 import { Router } from '@angular/router';
 import { Subject, map } from 'rxjs';
@@ -12,7 +12,7 @@ import { FavouriteService } from '../../services/favourite-service';
 })
 export class Recipes {
 
-  recipes: any[] = [];
+  // recipes: any[] = [];
   recipeID!: string;
   recipe: any = {};
 
@@ -21,20 +21,35 @@ export class Recipes {
   public favouriteService = inject(FavouriteService);
 
 
-  filteredRecipes: any[] = [];
+  // filteredRecipes: any[] = [];
+
   searchSubject = new Subject<string>();
+
+  recipes = signal<any[]>([]);
+  filteredRecipes = signal<any[]>([]);
 
   ngOnInit() {
     this.loadRecipes();
 
+    //   this.searchSubject.pipe(
+    //     map(value =>
+    //       this.recipes().filter(recipe =>
+    //         recipe.name.toLowerCase().includes(value.toLowerCase()),
+    //       )
+    //     )
+    //   ).subscribe(result => {
+    //     this.filteredRecipes = result;
+    //   })
+    // }
+
     this.searchSubject.pipe(
       map(value =>
-        this.recipes.filter(recipe =>
+        this.recipes().filter(recipe =>
           recipe.name.toLowerCase().includes(value.toLowerCase()),
         )
       )
     ).subscribe(result => {
-      this.filteredRecipes = result;
+      this.filteredRecipes.set(result);
     })
   }
 
@@ -50,10 +65,10 @@ export class Recipes {
     // Subscribe method is mandatory to fetch data.
     this.recipeService.getAllRecipes().subscribe({
       next: (res: any) => {
-        this.recipes = res;
+        this.recipes.set(res);
         console.log(res);
         // For search function.
-        this.filteredRecipes = res;
+        this.filteredRecipes.set(res);
         console.log(this.filteredRecipes);
 
       },
@@ -64,9 +79,33 @@ export class Recipes {
     });
   }
 
-  addToFavourites(recipeObj: any) {
-    this.favouriteService.addToFavourites(recipeObj);
+  faveOrUnfave(recipeObj: any) {
+      this.favouriteService.toggleFavourite(recipeObj);
   }
+
+
+  // addToFavourites(recipeObj: any) {
+  //   this.favouriteService.addToFavourites(recipeObj);
+  // }
+
+  // loadRecipes() {
+  //   // Subscribe method is mandatory to fetch data.
+  //   this.recipeService.getAllRecipes().subscribe({
+  //     next: (res: any) => {
+  //       this.recipes = res;
+  //       console.log(res);
+  //       // For search function.
+  //       this.filteredRecipes = res;
+  //       console.log(this.filteredRecipes);
+
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       alert('Failed to get recipe list');
+  //     }
+  //   });
+
+
 
   // recipes: any[] = [
   //   { id: 1, name: 'Arrabiata pasta', imgSrc: '../assets/images/arrabiata_pasta.jpg', author: 'Sara Kelley', type: 'Italian' },
