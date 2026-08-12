@@ -39,13 +39,13 @@ nav ul {
 }
 
 #nav1 {
-    flex-direction: flex-start;
-    width: 80%;
+    justify-content: flex-start;
+    width: 50%;
 }
 
 #nav2 {
-    flex-direction: flex-end;
-    width: 20%;
+    justify-content: flex-end;
+    width: 50%;
 }
 
 nav li {
@@ -71,19 +71,32 @@ nav li:hover {
     box-shadow: 0 0 6px 4px turquoise;
 }
 
-#sign-up {
+#sign-up-btn {
     border: 3px solid silver;
     color: silver;
     background-color: blue;
 }
 
-#sign-up:hover {
+#sign-up-btn:hover {
     color: turquoise;
 }
 
+#admin-btn {
+    background-color: blueviolet;
+    color:silver;
+}
+
+button {
+    cursor: pointer;
+    border: 1px solid silver;
+    color: silver;
+    background-color: blue;
+    margin: 0 auto;
+}
+
+
 button:hover {
-    /* background-color: turquoise; */
-    box-shadow: 0 0 6px 6px turquoise;
+    box-shadow: 0 0 6px 4px turquoise;
 }
 
 h1, p#motto {
@@ -150,10 +163,13 @@ h3 {
     top: 0;
     right: 0;
     font-size: 1.66em;
+    background-color: whitesmoke;
+    border-radius: 5px;
 }
 
 #toggle-menu:hover {
     box-shadow: none;
+    background-color: silver;
 }
 
 #cooking-genres {
@@ -342,7 +358,8 @@ select {
 .error {
     color: red;
     font-size: 0.85em;
-    padding: 2px;
+    /* padding: 0.5rem 0; */
+    margin-top: 5px;
 }
 
 textarea {
@@ -357,7 +374,7 @@ textarea {
     border-radius: 10px;
     cursor: pointer;
     display: block;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 
@@ -412,6 +429,14 @@ th, td {
     border: 2px solid gray;
     padding: 10px;
     text-align: center;
+}
+
+table button {
+    font-size: 0.85em;
+    font-weight: bold;
+    width: 60%;
+    padding: 0.8rem;
+    border-radius: 10px;
 }
 
 footer {

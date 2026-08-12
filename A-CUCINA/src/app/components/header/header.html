@@ -14,13 +14,28 @@
                 <li>Contact</li>
             </a>
         </ul>
-        <ul id="nav2">
+            @if (getConnectedUser()) {
+                <p id="greetings">Hi! Welcome, {{getConnectedUser().firstName}}</p>
+                }
+            <ul id="nav2">
+            @if (getConnectedUser()?.admin) {
+                <a routerLink="/admin">
+                    <li id="admin-btn">Admin</li>
+                </a>
+            }
+            @if (!getConnectedUser()) {
             <a routerLink="/log-in">
                 <li>Login</li>
             </a>
             <a routerLink="/sign-up">
-                <li id="sign-up">Sign up</li>
+                <li id="sign-up-btn">Sign up</li>
             </a>
+            }
+            @else {
+            <a routerLink="/log-in" (click)="logOut()">
+                <li>Logout</li>
+            </a>
+            }
         </ul>
     </nav>
     <h1>CUCINA</h1>

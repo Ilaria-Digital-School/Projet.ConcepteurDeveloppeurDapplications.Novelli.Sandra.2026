@@ -5,8 +5,8 @@
         <legend>Personnal details</legend>
         <div>
             <label for="name">Name : </label>
-            <input type="text" name="familyName" id="name" formControlName="familyName" placeholder="You family Name" required>
-            @if (signUpForm.get('familyName')?.invalid && signUpForm.get('familyName')?.touched || signUpForm.get('familyName')?.dirty) {
+            <input type="text" name="familyName" id="name" formControlName="familyName" placeholder="Your family Name" required>
+            @if (signUpForm.get('familyName')?.invalid && (signUpForm.get('familyName')?.touched || signUpForm.get('familyName')?.dirty)) {
                 @if (signUpForm.get('familyName')?.errors?.['required']) {
                 <div class="error">This field is required</div>
                 }
@@ -18,7 +18,7 @@
         <div>
             <label for="firstname">Firstname: </label>
             <input type="text" name="firstName" id="firstname" formControlName="firstName" placeholder="Your firstname" required>
-            @if (signUpForm.get('firstName')?.invalid && signUpForm.get('firstName')?.touched || signUpForm.get('firstName')?.dirty) {
+            @if (signUpForm.get('firstName')?.invalid && (signUpForm.get('firstName')?.touched || signUpForm.get('firstName')?.dirty)) {
                 @if (signUpForm.get('firstname')?.errors?.['required']) {
                 <div class="error">This field is required</div>
                 }
@@ -82,9 +82,6 @@
             <label for="female"> Female </label>
             <input type="radio" id="male" name="gender" formControlName="gender" value="male">
             <label for="male"> Male </label>
-            <!-- @if (signUpForm.get('gender')?.errors?.['required']) {
-                <div class="error">Le genre doit être précisé</div>
-            } -->
         </div>
 
         <!-- Checkbox -->
@@ -103,6 +100,8 @@
             <select name="country" id="country" formControlName="country">
                 <option value="uk">UK</option>
                 <option value="ireland">Ireland</option>
+                <option value="us">US</option>
+                <option value="canada">Canada</option>
                 <option value="netherlands">Netherlands</option>
                 <option value="germany">Germany</option>
                 <option value="france">France</option>
@@ -112,10 +111,12 @@
                 <option value="belgium">Belgium</option>
                 <option value="senegal">Senegal</option>
                 <option value="angola">Angola</option>
-                <option value="autre">Autre</option>
+                <option value="other">Other</option>
             </select>
-            @if (signUpForm.get('gender')?.errors?.['required']) {
-                <div class="error">Country must be specified</div>
+            @if (signUpForm.get('country')?.touched) {
+                @if (signUpForm.get('country')?.errors?.['required']) {
+                    <div class="error">Country must be specified</div>
+                }
             }
         </div>
     </fieldset>
@@ -126,7 +127,7 @@
 
     <div>
         <p>Already have an account?
-            <a routerLink="/log-in" target="_blank">Log in</a>
+            <a routerLink="/log-in">Log in</a>
         </p>
     </div>
 </form>

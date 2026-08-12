@@ -17,7 +17,11 @@
         "Add a pinch of salt",
         "Pour one liter of water into a pan",
         "Once it starts boiling, pour the pasta into it",
-        "Leave it to boil for 12 to 15 minutes"
+        "Leave it to boil for 12 to 15 minutes",
+        "Meanwhile, mince the garlic and peperroni",
+        "Stir it into the tomato sauce",
+        "Dry out the pasta once it's cooked",
+        "Gently fry the mix in a frying pan for about 5 minutes"
       ]
     },
     {
@@ -27,13 +31,20 @@
       "author": "John 0'Connor",
       "type": "Meat",
       "ingredients": [
-        "potatoes",
+        "1 kg potatoes",
         "1 kg beef",
         "salt",
         "pepper",
         "garlic"
       ],
-      "instructions": []
+      "instructions": [
+        "Preheat the oven to 220 C/GM 7 /425 F",
+        "Peel and chop the potatoes into medium pieces",
+        "Peel and chop the potatoes into medium pieces",
+        "Place in a deep pot and cover with Boiling Water/Beef Stock",
+        "Add plenty of Salt and pepper",
+        "Cook for 40 - 55 minutes, turning once midway"
+      ]
     },
     {
       "id": "3",
@@ -148,6 +159,17 @@
       "interests": [],
       "admin": true,
       "id": "qBgyn3cWykQ"
+    },
+    {
+      "familyName": "O'Connor",
+      "firstName": "John",
+      "email": "john.connor@example.com",
+      "pwd": "Terminator2",
+      "gender": "male",
+      "country": "us",
+      "interests": [],
+      "admin": false,
+      "id": "lxbfWOa4RH8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

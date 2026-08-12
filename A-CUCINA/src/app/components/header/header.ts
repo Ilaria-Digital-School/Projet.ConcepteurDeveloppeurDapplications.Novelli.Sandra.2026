@@ -21,7 +21,7 @@ export class Header {
 
   logOut() {
     localStorage.removeItem('connectedUser');
-    this.router.navigate(['/sign-in']);
+    this.router.navigate(['/log-in']);
   }
 
 }

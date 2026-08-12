@@ -21,7 +21,6 @@ export class UsersTable {
   private userService = inject(UserService);
 
   ngOnInit() {
-    // this.users = JSON.parse(localStorage.getItem('users') || '[]');
     this.loadUsers();
   }
 
@@ -32,7 +31,7 @@ export class UsersTable {
       },
       error: (err) => {
         console.log(err);
-        alert('Erreur lors du chargementde la liste utilisateurs');
+        alert('There are no users to display here');
       }
     });
   }
@@ -50,7 +49,7 @@ export class UsersTable {
   save(userObj: any) {
     this.userService.updateUser(userObj).subscribe({
       next: (res: any) => {
-        alert('Informations utilisateur modifiées');
+        alert('User info updated successfully');
           this.editId = null;
       },
       error : (err) => {
@@ -66,21 +65,21 @@ export class UsersTable {
     this.userService.deleteUserById(id).subscribe({
       next: (res: any) => {
         this.loadUsers();
-        alert('Utilisateur supprimé');
+        alert('User deleted successfully');
       },
       error: (err) => {
         console.log(err);
-        alert('Erreur lors de la suppression de l\'utilisateur');
+        alert('Failed to delete user');
       }
     })
   }
 
   applyUserStyle(admin: boolean) {
     if (admin) {
-      return { color: 'blue', 'font-weight': 'bold' }
+      return { color: 'blueviolet', 'font-weight': 'bold' }
     }
 
-    return { color: 'blueviolet' }
+    return { color: 'deepskyblue' }
   }
 }
 
