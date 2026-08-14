@@ -7,8 +7,7 @@
     <div>
         <label for="recipeName" class="form-label">Recipe</label>
         <!-- Ajouter le #recipeName="ngModel" pour gérer erreurs ? -->
-        <input type="text" class="form-control" id="recipeName" name="recipeName" formControlName="ngModel"
-            formControlName="name" required minlength="3">
+         <input type="text" class="form-control" id="recipeName" name="recipeName" formControlName="recipeName" required minlength="3">
         @if (addRecipeForm.get('recipeName')?.invalid && (addRecipeForm.get('recipeName')?.touched || addRecipeForm.get('recipeName')?.dirty)) {
             @if (addRecipeForm.get('recipeName')?.errors?.['required']) {
                 <div class="error">This field is required</div>

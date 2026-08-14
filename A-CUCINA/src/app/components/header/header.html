@@ -29,7 +29,7 @@
                     <li id="sign-up-btn">Sign up</li>
                 </a>
             }
-            @if (getConnectedUser().admin) {
+            @if (getConnectedUser()?.admin) {
                 <a routerLink="/admin">
                     <li id="admin-btn">Admin</li>
                 </a>
