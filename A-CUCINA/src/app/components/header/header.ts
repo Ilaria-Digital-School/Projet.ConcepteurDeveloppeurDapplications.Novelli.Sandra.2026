@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FavouriteService } from '../../services/favourite-service';
 import { AuthService } from '../../services/auth-service';
@@ -20,6 +20,11 @@ export class Header {
     const user = JSON.parse(localStorage.getItem('connectedUser') || 'null');
     return user
   }
+  
+  // user: any = JSON.parse(localStorage.getItem('connectedUser') || 'null')
+  
+  // getConnectedUser = signal(this.user);
+
 
   logOut() {
     localStorage.removeItem('connectedUser');
