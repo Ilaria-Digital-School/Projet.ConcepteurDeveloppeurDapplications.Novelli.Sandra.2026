@@ -15,7 +15,7 @@
             <a href="contact.html" target="_blank"><li>Contact</li></a>
         </ul>
         <ul id="nav2">
-            <a href="sign-in.html" target="_blank"><li>Sign in</li></a>
+            <a href="log-in.html" target="_blank"><li>Login</li></a>
             <a href="sign-up.html" target="_blank"><li id="sign-up">Sign up</li></a>
         </ul>
     </nav>
@@ -25,7 +25,90 @@
 
     <main>
     
+<form class="forms">
+    <h2>Register with us</h2>
 
+    <fieldset>
+        <legend>Personnal details</legend>
+        <div class="info">
+            <label for="name">Name : </label>
+            <input type="text" name="familyName" id="name" formControlName="familyName" placeholder="Your family Name" required>
+        </div>
+        <p class="error">This field is required</p>
+        <div class="info">
+            <label for="firstname">Firstname: </label>
+            <input type="text" name="firstName" id="firstname" formControlName="firstName" placeholder="Your firstname" required>
+        </div>
+        <p class="error">This field is required</p>
+        <div class="info">
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
+        </div>
+        <p class="error">This field is required</p>
+        <div class="info">
+            <label for="pwd">Mot de passe : </label>
+            <input type="password" id="pwd" name="password" placeholder="Enter your password" required>
+        </div>
+        <p class="error">This field is required</p>
+        <div class="info">
+            <label for="pwd2">Confirm your password: </label>
+            <input type="password" id="pwd2" name="password2" formControlName="pwd2" placeholder="Enter your password again" required>
+        </div>
+        <p class="error">This field is required</p>
+    </fieldset>
+
+    <fieldset class="additional-info">
+        <legend>Additional information</legend>
+        <!-- Radio -->
+        <div class="info">
+            <label>Gender: </label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female"> Female </label>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male"> Male </label>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="info">
+            <label>Interests: </label>
+            <input type="checkbox" name="interets" id="browsing" value="vetements">
+            <label for="browsing">Browsing </label>
+
+            <input type="checkbox" name="interets" id="contributing" formControlName="contributing" value="accessoires">
+            <label for="contributing">Contributing </label>
+        </div>
+
+        <!-- Choix multiples -->
+        <div class="info">
+            <label for="country">Country:</label>
+            <select name="country" id="country" formControlName="country">
+                <option value="uk">UK</option>
+                <option value="ireland">Ireland</option>
+                <option value="us">US</option>
+                <option value="canada">Canada</option>
+                <option value="netherlands">Netherlands</option>
+                <option value="germany">Germany</option>
+                <option value="france">France</option>
+                <option value="spain">Spain</option>
+                <option value="italy">Italy</option>
+                <option value="switzerland">Suisse</option>
+                <option value="belgium">Belgium</option>
+                <option value="senegal">Senegal</option>
+                <option value="angola">Angola</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <p class="error">This field is required</p>
+    </fieldset>
+
+    <button class="submit-btn" type="submit">Sign up</button>
+
+    <div>
+        <p>Already have an account?
+            <a routerLink="/log-in">Log in</a>
+        </p>
+    </div>
+</form>
 
 
 

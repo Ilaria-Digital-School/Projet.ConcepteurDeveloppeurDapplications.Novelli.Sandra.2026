@@ -16,7 +16,14 @@ header {
 }
 
 main {
-    margin: 2rem;
+    width: 90%;
+    height: 100%;
+    margin: 2rem auto;
+    /* height: 100vh; */
+}
+
+button {
+    cursor: pointer;
 }
 
 a {
@@ -92,6 +99,13 @@ h1, p#motto {
 p#motto {
     padding: 1rem;
     font-size: 2em;
+}
+
+h2 {
+    display: block;
+    text-align: center;
+    /* margin: 3rem; */
+    padding: 1.5rem;
 }
 
 .banner {
@@ -241,11 +255,82 @@ p#motto {
     display: inline-block;
 }
 
-#sign-in-main {
+#log-in-main {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
+}
+
+.forms {
+    /* display: flex;
+    flex-direction: column; */
+    width: 30rem;
+    margin: 0 auto;
+    background-color: aqua;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 0 6px 6px aqua;
+    padding: 1rem;
+
+}
+
+fieldset {
+    border: 2px solid silver;
+    padding: 1rem;
+    margin: 1rem auto;
+}
+
+.info {
+    /* margin-bottom: 0.5rem; */
+    padding: 0 0.6rem;
+}
+
+.forms label, input, textarea, p {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.2rem;
+    padding: 0.6rem;
+    border-radius: 14px;
+}
+
+textarea {
+    max-width: 100%;
+    min-height: 10rem;
+}
+
+.additional-info label, input {
+    display: inline;
+}
+
+input[type="checkbox"], input[type="radio"], input[type="select"] {
+    margin-bottom: 0.2rem;
+    padding: 0.6rem;
+    width: unset;
+    display: inline;
+}
+
+.error {
+    color: crimson;
+    font-size: 0.85em;
+}
+
+.submit-btn {
+    display: block;
+    width: 6rem;
+    height: 2.5rem;
+    margin: 0.5rem auto;
+    color: white;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 1em;
+    background-color: blue;
+    border: none;
+    border-radius: 14px;
+}
+
+.submit-btn:hover {
+    box-shadow: 0 0 6px 4px rgb(0, 89, 255);
 }
 
 footer {
