@@ -27524,7 +27524,7 @@ var require_send = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		if (this._dotfiles !== "ignore" && this._dotfiles !== "allow" && this._dotfiles !== "deny") throw new TypeError("dotfiles option must be \"allow\", \"deny\", or \"ignore\"");
 		this._extensions = opts.extensions !== void 0 ? normalizeList(opts.extensions, "extensions option") : [];
 		this._immutable = opts.immutable !== void 0 ? Boolean(opts.immutable) : false;
-		this._index = opts.index !== void 0 ? normalizeList(opts.index, "index option") : ["index.html"];
+		this._index = opts.index !== void 0 ? normalizeList(opts.index, "index option") : ["../index.html"];
 		this._lastModified = opts.lastModified !== void 0 ? Boolean(opts.lastModified) : true;
 		this._maxage = opts.maxAge || opts.maxage;
 		this._maxage = typeof this._maxage === "string" ? ms(this._maxage) : Number(this._maxage);

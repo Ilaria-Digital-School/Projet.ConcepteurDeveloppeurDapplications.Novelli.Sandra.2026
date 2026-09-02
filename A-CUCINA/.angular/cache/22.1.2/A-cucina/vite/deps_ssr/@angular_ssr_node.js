@@ -117,7 +117,7 @@ var CommonEngine = class {
 		const { publicPath, documentFilePath, url } = opts;
 		if (!publicPath || !documentFilePath || url === void 0) return;
 		const { pathname } = new URL$1(url, "resolve://");
-		const pagePath = join(publicPath, pathname, "index.html");
+		const pagePath = join(publicPath, pathname, "../index.html");
 		if (this.pageIsSSG.get(pagePath)) return fs.promises.readFile(pagePath, "utf-8");
 		if (!pagePath.startsWith(normalize(publicPath))) return;
 		if (pagePath === resolve(documentFilePath) || !await exists(pagePath)) return;

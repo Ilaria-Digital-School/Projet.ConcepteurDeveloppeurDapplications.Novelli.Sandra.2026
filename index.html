@@ -8,15 +8,15 @@
 </head>
 <body>
     <header>     
-    <nav>
-        <ul id="nav1">
-            <a href="index.html" target="_blank"><li>Home</li></a>
-            <a href="pages/favourites.html" target="_blank"><li>Favourites ❤️</li></a>
-            <a href="pages/contact.html" target="_blank"><li>Contact</li></a>
+    <nav role="navigation">
+        <ul id="nav1" aria-label="main menu">
+            <li><a href="../index.html" target="_blank">Home</a></li>
+            <li><a href="pages/favourites.html" target="_blank">Favourites ❤️</a></li>
+            <li><a href="pages/contact.html" target="_blank">Contact</a></li>
         </ul>
-        <ul id="nav2">
-            <a href="pages/sign-up.html" target="_blank"><li>LogIn</li></a>
-            <a href="pages/sign-in.html" target="_blank"><li id="sign-up">Sign up</li></a>
+        <ul id="nav2" aria-label="sign in or login menu">
+            <li><a href="pages/log-in.html" target="_blank">Login</a></li>
+            <li id="sign-up"><a href="pages/sign-up.html" target="_blank">Sign up</a></li>
         </ul>
     </nav>
     <h1>CUCINA</h1>
@@ -32,7 +32,7 @@
 
     <aside id="side-menu">
         <p id="menu-title">Recipe types:</p>
-        <button id="toggle">➖</button>
+        <button id="toggle" aria-label="collapse recipe type menu">➖</button>
         <ul id="cuisine-genres" class="minus">
             <li id="show-all">SHOW ALL</li>
             <li class="menu-filter">Italian</li>
@@ -52,7 +52,7 @@
         <div id="recipe-list"></div>    
     </section>
 
-    <section id="subscribe">
+    <section id="subscribe" role="newsletter subscription">
         <div>
             <p>Be the first to know about every new recipe!</p>
             <button>Subscribe</button>
@@ -61,7 +61,7 @@
 
     </main>
 
-    <footer>
+    <footer role="footer">
         <p>© 2026 - Cucina - Made in Plymouth, England</p>
     </footer>
 

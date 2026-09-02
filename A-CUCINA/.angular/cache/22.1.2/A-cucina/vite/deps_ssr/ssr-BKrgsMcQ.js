@@ -10590,7 +10590,7 @@ function joinUrlParts(...parts) {
 	return addLeadingSlash(normalizedParts.join("/"));
 }
 function stripIndexHtmlFromURL(url) {
-	if (url.pathname.endsWith("/index.html")) {
+	if (url.pathname.endsWith("/../index.html")) {
 		const modifiedURL = new URL(url);
 		modifiedURL.pathname = modifiedURL.pathname.slice(0, -11);
 		return modifiedURL;
@@ -11536,7 +11536,7 @@ var AngularServerApp = class {
 	}
 	buildServerAssetPathFromRequest(request) {
 		let { pathname: assetPath } = new URL(request.url);
-		if (!assetPath.endsWith("/index.html")) assetPath = joinUrlParts(assetPath, "index.html");
+		if (!assetPath.endsWith("/../index.html")) assetPath = joinUrlParts(assetPath, "../index.html");
 		const { baseHref } = this.manifest;
 		if (baseHref.length > 1 && assetPath.startsWith(baseHref)) assetPath = assetPath.slice(baseHref.length);
 		return stripLeadingSlash(assetPath);
