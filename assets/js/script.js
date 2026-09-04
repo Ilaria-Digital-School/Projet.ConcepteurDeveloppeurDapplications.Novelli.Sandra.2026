@@ -1,4 +1,4 @@
-const toggleButton = document.querySelector('#toggle');
+const toggleButton = document.querySelector('#toggle-button');
 const cuisineGenres = document.querySelector('#cuisine-genres');
 const showAll = document.querySelector('#show-all');
 
@@ -34,6 +34,7 @@ function createRecipeBox(recipe) {
     <button class="heart" data-id="${recipe.id}">🩶</button>
     <p class="recipe-title">${recipe.name}</p>
     <p class="author">By ${recipe.author}</p>
+    <button class="view-recipe" data-id="${recipe.id}">View</button>
     </div>
     `;
 
@@ -59,22 +60,6 @@ function displayAllRecipes() {
 
     ];
 
-    recipeList.innerHTML = '';
-
-    // const recipeBoxes = document.querySelectorAll('.recipe-box');
-
-    // recipeBoxes.forEach((box, index) => {
-    //     let recipe = recipes[index];
-
-    //     box.innerHTML = `
-    //     <img src="${recipe.imgSrc}" alt="">
-    //     <button class="heart">🩶</button>
-    //     <p class="recipe-title">${recipe.name}</p>
-    //     <p class="author">By ${recipe.author}</p>
-    //     `;
-    // });
-
-
     recipeList = document.querySelector('#recipe-list');
 
     recipes.forEach((recipe) => {
@@ -95,14 +80,13 @@ showAll.addEventListener('click', function() {
 })
 
 
-const filters = document.querySelectorAll('.menu-filter');
+const filters = document.querySelectorAll('.select-type');
 
-filters.forEach(filter => filter.addEventListener('click', function() {
+filters.forEach(type => type.addEventListener('click', function() {
     recipeList.innerHTML = '';
     for (let recipe of recipes) {
-        if (filter.innerText === recipe.type) {
-            console.log(recipe);
-            
+        if (type.innerText === recipe.type) {
+            // console.log(recipe);
             createRecipeBox(recipe);
         }
     }
@@ -113,12 +97,68 @@ filters.forEach(filter => filter.addEventListener('click', function() {
 // Adding recipes to favourites.
 
 let favouriteRecipes = [];
-let hearts = document.querySelectorAll('.heart');
 
+
+recipeList.addEventListener('click', function(e) {
+    
+    const heartButton = e.target.closest('.heart');
+    
+    // To avoid errors if user clicks elsewhere on the recipeList.
+    if (!heartButton) {
+        return;
+    }
+
+    // console.log(heartButton);
+    // console.log(heartButton.dataset.id);
+    // console.log(recipes);
+    
+    const heartId = Number(heartButton.dataset.id);
+
+    let isFavourite = function() {
+        for (let fave of favouriteRecipes) {
+            if (fave.id === heartId) {
+                return true;
+            }    
+        }
+        return false;
+    } 
+    
+    console.log(isFavourite());
+
+    if (!isFavourite()) {
+        for (let recipe of recipes) {
+            if (recipe.id === heartId) {
+                // console.log(recipe);
+                favouriteRecipes.push(recipe);
+                heartButton.innerText = '❤️';
+            }
+        }
+    }
+
+    else {
+
+        const indexToRemove = favouriteRecipes.findIndex(fave => fave.id === heartId)
+
+        if (indexToRemove !== -1) {
+            favouriteRecipes.splice(indexToRemove, 1);
+            heartButton.innerText = '🩶';
+        }
+
+    }
+
+    console.log(favouriteRecipes);
+    
+});
+
+
+// let hearts = document.querySelectorAll('.heart');
 
 // hearts.forEach(heart => heart.addEventListener('click', function() {
 
-//     // heart.innerText == '🩶' ? heart.innerText = '❤️' : heart.innerText = '🩶';
+//     heart.innerText == '🩶' ? heart.innerText = '❤️' : heart.innerText = '🩶';
+
+//     // console.log(heart.parentElement.innerHTML);
+
         
 //         // if (favouriteRecipes.indexOf(heart.parentElement.innerHTML) === -1) {
 //         //         favouriteRecipes.push(heart.parentElement.innerHTML);
@@ -138,46 +178,94 @@ let hearts = document.querySelectorAll('.heart');
                 
 
                 
-function getFavourites() {
-    return JSON.parse(localStorage.getItem('favourites'))  || [];
+// function getFavourites() {
+//     return JSON.parse(localStorage.getItem('favourites'))  || [];
+// }
+
+// function saveFavourites(arr) {
+//     localStorage.setItem('favourites', JSON.stringify(arr));
+// }
+
+// recipeList.addEventListener('click', function(e) {
+
+//     const button = e.target.closest(".heart")
+    
+//     if (!button) {
+//         return;
+//     }
+
+//     const favouriteList = getFavourites();
+    
+//     let isFavourite = favouriteList.some(recipe => recipe.id === Number(button.dataset.id));
+//     console.log(`result = ${!isFavourite}`);
+//     if (!isFavourite) {
+//         const recipe = recipes.find(item => item.id === Number(button.dataset.id));
+
+//         favouriteList.push(recipe);
+//         saveFavourites(favouriteList);
+//         button.innerText = '❤️';
+//     }
+//     else {
+//         const index = favouriteList.findIndex(recipe => recipe.id === Number(button.dataset.id));
+//         if (index !== -1) {
+//             favouriteList.splice(index, 1);
+//             saveFavourites(favouriteList);
+//             button.innerText = '🩶';
+//         }
+//     }
+
+//     console.log(favouriteList);
+//     isFavourite = getFavourites().some(recipe => recipe.id === button.dataset.id);
+
+// });
+
+
+
+// Displaying recipe details.
+
+
+const recipeDetails = document.querySelector('#recipe-details');
+
+function showRecipeDetails(recipe) {
+    
+    let recipePage = document.createElement('div');
+    
+    recipePage.innerHTML = `
+    <h2>${recipe.name}</h2>
+    <p>By ${recipe.author}</p>
+    <img src="${recipe.imgSrc}">
+
+    `
+
+    recipeDetails.appendChild(recipePage);
+
 }
 
-function saveFavourites(arr) {
-    localStorage.setItem('favourites', JSON.stringify(arr));
-}
+
+
 
 recipeList.addEventListener('click', function(e) {
+    // window.location.href = 'pages/recipe.html';
 
-    // const button = e.target.closest(".heart")
-    const button = e.target;
+    const viewButton = e.target.closest('.view-recipe'); 
     
-    if (!button) {
+    // To avoid errors if user clicks elsewhere on the recipeList.
+    if (!viewButton) {
         return;
     }
-
-    const favouriteList = getFavourites();
     
-    let isFavourite = favouriteList.some(recipe => recipe.id === Number(button.dataset.id));
-    console.log(`result = ${!isFavourite}`);
-    if (!isFavourite) {
-        const recipe = recipes.find(item => item.id === Number(button.dataset.id));
+    console.log(viewButton.dataset.id);
 
-        favouriteList.push(recipe);
-        saveFavourites(favouriteList);
-        button.innerText = '❤️';
-    }
-    else {
-        const index = favouriteList.findIndex(recipe => recipe.id === Number(button.dataset.id));
-        if (index !== -1) {
-            favouriteList.splice(index, 1);
-            saveFavourites(favouriteList);
-            button.innerText = '🩶';
+    const viewButtonId = Number(viewButton.dataset.id);
+
+    for (let recipe of recipes) {
+        if (recipe.id === viewButtonId) {
+            console.log(recipe);
         }
     }
 
-    console.log(favouriteList);
-    isFavourite = getFavourites().some(recipe => recipe.id === button.dataset.id);
-
-});
+    // showRecipeDetails();
+    }
+);
 
 

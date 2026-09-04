@@ -143,7 +143,7 @@ h2 {
     font-size: 1.85em;
 }
 
-#toggle {
+#toggle-button {
     cursor: pointer;
     position: absolute;
     top: 0;
@@ -164,7 +164,7 @@ h2 {
 }
 
 
-.menu-filter, #show-all {
+.select-type, #show-all {
     cursor: pointer;
     list-style: none;
     font-size: 1.45em;
@@ -172,7 +172,7 @@ h2 {
     padding-bottom: 0.5rem;
 }
 
-.menu-filter:hover, #show-all:hover {
+.select-type:hover, #show-all:hover {
     background-color: rgba(50, 50, 50, 0.2);
 }
 
@@ -205,7 +205,7 @@ h2 {
 .recipe-title {
     position: absolute;
     font-size: 1.25em;
-    top: 5%;
+    top: 2.5%;
     left: 5%;
     width: 66%;
     /* margin-bottom: 1rem; */
@@ -217,7 +217,7 @@ h2 {
     border: none;
     background: none;
     font-size: 1.5em;
-    top: 5%;
+    top: 2.5%;
     right: 5%;
 }
 
@@ -238,6 +238,20 @@ h2 {
     position: absolute;
     left: 5%;
     bottom: 2%;
+}
+
+.view-recipe {
+    position: absolute;
+    right: 5%;
+    bottom: 4%;
+    background-color: #2b58d4;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    width: 15%;
+    height: 8%;
 }
 
 #subscribe {
