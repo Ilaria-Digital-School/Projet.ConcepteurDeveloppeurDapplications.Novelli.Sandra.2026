@@ -332,9 +332,32 @@ input[type="checkbox"], input[type="radio"], input[type="select"] {
     display: inline;
 }
 
+form input:focus, textarea:focus {
+    outline: none
+}
+
+.info.success input,
+.info.success textarea {
+    border-color: rgb(47, 255, 64);
+}
+
+.info.failure input,
+.info.failure textarea {
+    border-color: crimson;
+}
+
 .error {
     color: crimson;
     font-size: 0.85em;
+    visibility: hidden
+}
+
+.info.success .error {
+    visibility: hidden;
+}
+
+.info.failure .error {
+    visibility: visible;
 }
 
 .submit-btn {

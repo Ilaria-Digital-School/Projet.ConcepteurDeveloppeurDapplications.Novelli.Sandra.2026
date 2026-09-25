@@ -15,10 +15,11 @@ function showSideMenu() {
     toggleButton.innerText = '➖';
 }
 
-
-toggleButton.addEventListener('click', function() {
-    cuisineGenres.className === 'minus' ? hideSideMenu() : showSideMenu();
-});
+if (toggleButton) {
+    toggleButton.addEventListener('click', function() {
+        cuisineGenres.className === 'minus' ? hideSideMenu() : showSideMenu();
+    });
+}
 
 
 let recipes = [];
@@ -69,17 +70,17 @@ function displayAllRecipes() {
     return recipes;
 }
 
+if (recipeList) {
 
-displayAllRecipes();
+    displayAllRecipes();
+
+    showAll.addEventListener('click', function() {
+        displayAllRecipes();
+    })
+}
 
 
 // Filter menu.
-
-showAll.addEventListener('click', function() {
-    displayAllRecipes();
-})
-
-
 const filters = document.querySelectorAll('.select-type');
 
 filters.forEach(type => type.addEventListener('click', function() {
@@ -98,57 +99,59 @@ filters.forEach(type => type.addEventListener('click', function() {
 
 let favouriteRecipes = [];
 
+if (recipeList) {
 
-recipeList.addEventListener('click', function(e) {
-    
-    const heartButton = e.target.closest('.heart');
-    
-    // To avoid errors if user clicks elsewhere on the recipeList.
-    if (!heartButton) {
-        return;
-    }
-
-    // console.log(heartButton);
-    // console.log(heartButton.dataset.id);
-    // console.log(recipes);
-    
-    const heartId = Number(heartButton.dataset.id);
-
-    let isFavourite = function() {
-        for (let fave of favouriteRecipes) {
-            if (fave.id === heartId) {
-                return true;
-            }    
+    recipeList.addEventListener('click', function(e) {
+        
+        const heartButton = e.target.closest('.heart');
+        
+        // To avoid errors if user clicks elsewhere on the recipeList.
+        if (!heartButton) {
+            return;
         }
-        return false;
-    } 
-    
-    console.log(isFavourite());
 
-    if (!isFavourite()) {
-        for (let recipe of recipes) {
-            if (recipe.id === heartId) {
-                // console.log(recipe);
-                favouriteRecipes.push(recipe);
-                heartButton.innerText = '❤️';
+        // console.log(heartButton);
+        // console.log(heartButton.dataset.id);
+        // console.log(recipes);
+        
+        const heartId = Number(heartButton.dataset.id);
+
+        let isFavourite = function() {
+            for (let fave of favouriteRecipes) {
+                if (fave.id === heartId) {
+                    return true;
+                }    
+            }
+            return false;
+        } 
+        
+        console.log(isFavourite());
+
+        if (!isFavourite()) {
+            for (let recipe of recipes) {
+                if (recipe.id === heartId) {
+                    // console.log(recipe);
+                    favouriteRecipes.push(recipe);
+                    heartButton.innerText = '❤️';
+                }
             }
         }
-    }
 
-    else {
+        else {
 
-        const indexToRemove = favouriteRecipes.findIndex(fave => fave.id === heartId)
+            const indexToRemove = favouriteRecipes.findIndex(fave => fave.id === heartId)
 
-        if (indexToRemove !== -1) {
-            favouriteRecipes.splice(indexToRemove, 1);
-            heartButton.innerText = '🩶';
+            if (indexToRemove !== -1) {
+                favouriteRecipes.splice(indexToRemove, 1);
+                heartButton.innerText = '🩶';
+            }
+
         }
 
-    }
-
-    console.log(favouriteRecipes);
-    
-});
+        console.log(favouriteRecipes);
+        
+    });
+}
 
 
 // let hearts = document.querySelectorAll('.heart');
@@ -242,38 +245,92 @@ function showRecipeDetails(recipe) {
 }
 
 
+if (recipeList) {
 
+    recipeList.addEventListener('click', function(e) {
+        // window.location.href = 'pages/recipe.html';
 
-recipeList.addEventListener('click', function(e) {
-    // window.location.href = 'pages/recipe.html';
-
-    const viewButton = e.target.closest('.view-recipe'); 
-    
-    // To avoid errors if user clicks elsewhere on the recipeList.
-    if (!viewButton) {
-        return;
-    }
-    
-    console.log(viewButton.dataset.id);
-
-    const viewButtonId = Number(viewButton.dataset.id);
-
-    for (let recipe of recipes) {
-        if (recipe.id === viewButtonId) {
-            console.log(recipe);
+        const viewButton = e.target.closest('.view-recipe'); 
+        
+        // To avoid errors if user clicks elsewhere on the recipeList.
+        if (!viewButton) {
+            return;
         }
-    }
+        
+        console.log(viewButton.dataset.id);
 
-    showRecipeDetails();
-    }
-);
+        const viewButtonId = Number(viewButton.dataset.id);
+
+        for (let recipe of recipes) {
+            if (recipe.id === viewButtonId) {
+                console.log(recipe);
+            }
+        }
+
+        showRecipeDetails();
+        }
+    );
+
+}
 
 
-
-// Error handling for the contact form
+// Error handling for the forms
 const contactForm = document.querySelector('#contact-form');
 const name = document.querySelector('#name');
 const email = document.querySelector('#email');
 const formMsg = document.querySelector('#form-msg');
 
-const contactForm = document.querySelector('#contact-form');
+const signupForm = document.querySelector('#signup-form');
+const firstname = document.querySelector('#firstname');
+const pwd = document.querySelector('#pwd');
+const pwd2 = document.querySelector('#pwd2');
+const country = document.querySelector('#country');
+
+const loginForm = document.querySelector('#login-form');
+
+const fields = document.querySelectorAll(`
+    #contact-form input,
+    #contact-form textarea,
+    #signup-form input:not([type="radio"]):not([type="checkbox"]),
+    #signup-form select,
+    #login-form input
+`);
+
+console.log(fields);
+
+function showError(element) {
+    element.parentElement.classList.remove('success');
+    element.parentElement.classList.add('failure');
+}
+
+function showSuccess(element) {
+    element.parentElement.classList.remove('failure');
+    element.parentElement.classList.add('success');
+}
+
+function checkRequired(element) {
+    if (element.value === '') {
+        element.parentElement.classList.remove('success');
+        element.parentElement.classList.add('failure');
+    }
+}
+
+fields.forEach(f => f.addEventListener('input', function(e) {
+    console.log('ARE YOU WITH ME?')
+    if (e.target.value.length < 3) {
+        showError(f);
+        // console.log(f);
+        // console.log(f.parentElement)
+        console.log(f.parentElement.className)
+        }
+    else {
+        showSuccess(f);
+        }
+}))
+
+
+contactForm.addEventListener('submit', function(e) {
+    e.preventDefault()
+
+
+})
