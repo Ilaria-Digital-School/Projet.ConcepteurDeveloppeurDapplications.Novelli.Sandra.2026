@@ -270,11 +270,12 @@ if (recipeList) {
         showRecipeDetails();
         }
     );
-
 }
 
 
 // Form error handling.
+
+const forms = document.querySelectorAll('.forms');
 
 const contactForm = document.querySelector('#contact-form');
 const name = document.querySelector('#name');
@@ -288,6 +289,7 @@ const pwd2 = document.querySelector('#pwd2');
 const country = document.querySelector('#country');
 
 const loginForm = document.querySelector('#login-form');
+const loginErrorMsg = document.querySelector('#login-error');
 
 const fields = document.querySelectorAll(`
     #contact-form input,
@@ -297,12 +299,13 @@ const fields = document.querySelectorAll(`
     #login-form input
 `);
 
-console.log(fields);
+const errorMsg = document.querySelectorAll('.error');
+
+
 
 function showError(element) {
     element.parentElement.classList.remove('success');
     element.parentElement.classList.add('failure');
-
 }
 
 function showSuccess(element) {
@@ -316,10 +319,20 @@ function checkRequired(element) {
 
 function checkLength(element, minLength) {
     element.value.length < minLength ? showError(element) : showSuccess(element);
+    const errorMsg = element.parentElement.querySelector('.error'); 
+    errorMsg.innerText =`${element.dataset.label} must be at least ${minLength} characters`;
 }
 
 function isValidEmail(email) {
     !email.value.includes('@') || !email.value.includes('.') ? showError(email) : showSuccess(email);
+    const errorMsg = email.parentElement.querySelector('.error'); 
+    errorMsg.innerText = `Invalid email format`
+}
+
+function matchingPasswords(pwd, pwd2) {
+    pwd.value !== pwd2.value ? showError(pwd2) : showSuccess(pwd2);
+    const errorMsg = pwd2.parentElement.querySelector('.error'); 
+    errorMsg.innerText = `Passwords do not match`
 }
 
 
@@ -332,12 +345,30 @@ fields.forEach(f => f.addEventListener('input', function(e) {
     else if (e.target === formMsg) {checkLength(formMsg, 20)}
     else if (e.target === firstname) {checkLength(firstname, 2)}
     else if (e.target === pwd) {checkLength(pwd, 12)}
+    else if (e.target === pwd2) {matchingPasswords(pwd, pwd2)}
 
 }))
 
 
-contactForm.addEventListener('submit', function(e) {
+// Not working.
+forms.forEach(f => f.addEventListener('submit', function(e) {
     e.preventDefault()
+    console.log('SUBMIT button clicked')
+}))
 
 
+
+// Login form error handling.
+
+loginForm.addEventListener('submit', function() {
+    // if email or password is invalid:
+    loginErrorMsg.style.visibility = visible;
+})
+
+
+// Reset forms on reload.
+
+window.addEventListener('load', function() {
+    forms.forEach(form => form.reset());
+    console.log(forms);
 })

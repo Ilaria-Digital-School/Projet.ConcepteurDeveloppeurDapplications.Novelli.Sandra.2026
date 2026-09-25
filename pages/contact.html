@@ -30,17 +30,17 @@
 
         <div class="info">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" required aria-required="true" aria-describedby="name-error">
+            <input type="text" id="name" name="name" data-label="Name" placeholder="Enter your name" required aria-required="true" aria-describedby="name-error">
             <p class="error" id="name-error" role="alert" aria-live="polite" hidden>This field is required</p>
         </div>
         <div class="info">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="exemple@email.com" required aria-required="true" aria-describedby="email-error">
+            <input type="email" id="email" name="email" data-label="Email" placeholder="exemple@email.com" required aria-required="true" aria-describedby="email-error">
             <p class="error" id="email-error" role="alert" aria-live="polite" hidden>This field is required</p>
         </div>
         <div class="info">
             <label for="form-msg">Message:</label>
-            <textarea id="form-msg" name="message" placeholder="Type your message" required aria-required="true" aria-describedby="msg-error"></textarea>
+            <textarea id="form-msg" name="message" data-label="Message" placeholder="Type your message" required aria-required="true" aria-describedby="msg-error"></textarea>
             <p class="error" id="msg-error" role="alert" aria-live="polite" hidden>This field is required</p>
         </div>
         <div>
