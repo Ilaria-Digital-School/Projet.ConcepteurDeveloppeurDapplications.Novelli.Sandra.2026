@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <header>     
+    <header>
     <nav role="navigation">
         <ul id="nav1" aria-label="main menu">
-            <li><a href="../index.html" target="_blank">Home</a></li>
-            <li><a href="favourites.html" target="_blank">Favourites ❤️</a></li>
-            <li><a href="contact.html" target="_blank">Contact</a></li>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="favourites.html">Favourites ❤️</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
         <ul id="nav2" aria-label="sign in or login menu">
-            <li><a href="log-in.html" target="_blank">Login</a></li>
-            <li id="sign-up"><a href="sign-up.html" target="_blank">Sign up</a></li>
+            <li><a href="log-in.html" aria-current="page">Login</a></li>
+            <li id="sign-up"><a href="sign-up.html">Sign up</a></li>
         </ul>
     </nav>
     <h1>CUCINA</h1>
@@ -26,32 +26,32 @@
     <main id="log-in-main">
 
     <section id="log-in-box">
-    <form class="forms">
-        <h2>Log in to your account</h2>
+    <form class="forms" id="login-form" novalidate aria-labelledby="login-heading">
+        <h2 id="login-heading">Log in to your account</h2>
 
-        <fieldset>
+        <fieldset aria-labelledby="login-heading">
             <div class="info">
                 <label for="email">Username/email </label>
-                <input type="email" id="email" placeholder="Enter your email" required>
-            </div>               
+                <input type="email" id="email" name="email" placeholder="Enter your email" required aria-required="true" aria-describedby="login-error">
+            </div>
             <div class="info">
                 <label for="password">Password </label>
-                <input type="password" id="password" placeholder="Enter your password" required>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required aria-required="true" aria-describedby="login-error">
             </div>
-            <p class="error">Invalid email or password</p>           
+            <p class="error" id="login-error" role="alert" aria-live="polite" hidden>Invalid email or password</p>
             <button class="submit-btn" type="submit">Submit</button>
         </fieldset>
 
     </form>
     </section>
 
-    <section id="sign-up-message">
-        <p>Hello there! If you haven't got an account yet, join our cooking community.</p>
-        <button class="submit-btn"><a href="sign-up.html">Sign up</a></button>
+    <section id="sign-up-message" aria-labelledby="signup-prompt">
+        <p id="signup-prompt">Hello there! If you haven't got an account yet, join our cooking community.</p>
+        <a href="sign-up.html" class="submit-btn">Sign up</a>
     </section>
     </main>
 
-    <footer role="footer">
+    <footer>
         <p>© 2026 - Cucina - Made in Plymouth, England</p>
     </footer>
 

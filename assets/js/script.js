@@ -264,8 +264,16 @@ recipeList.addEventListener('click', function(e) {
         }
     }
 
-    // showRecipeDetails();
+    showRecipeDetails();
     }
 );
 
 
+
+// Error handling for the contact form
+const contactForm = document.querySelector('#contact-form');
+const name = document.querySelector('#name');
+const email = document.querySelector('#email');
+const formMsg = document.querySelector('#form-msg');
+
+const contactForm = document.querySelector('#contact-form');

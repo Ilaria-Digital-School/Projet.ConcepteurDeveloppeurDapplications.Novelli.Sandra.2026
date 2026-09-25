@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <header>     
+    <header>
     <nav role="navigation">
         <ul id="nav1" aria-label="main menu">
-            <li><a href="../index.html" target="_blank">Home</a></li>
-            <li><a href="favourites.html" target="_blank">Favourites ❤️</a></li>
-            <li><a href="contact.html" target="_blank">Contact</a></li>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="favourites.html">Favourites ❤️</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
         </ul>
         <ul id="nav2" aria-label="sign in or login menu">
-            <li><a href="log-in.html" target="_blank">Login</a></li>
-            <li id="sign-up"><a href="sign-up.html" target="_blank">Sign up</a></li>
+            <li><a href="log-in.html">Login</a></li>
+            <li id="sign-up"><a href="sign-up.html">Sign up</a></li>
         </ul>
     </nav>
     <h1>CUCINA</h1>
@@ -24,34 +24,33 @@
     </header>
 
     <main>
-    
-    <form class="forms">
-    <h2>Contact us</h2>
 
-    <div class="info">
-        <label for="name">Name:</label>
-        <input type="text" id="name" placeholder="Enter your name" required>
-        <p class="error">This field is required</p>
-    </div>
-    <div class="info">
-        <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="email" placeholder="exemple@email.com" required>
-        <p class="error">This field is required</p>
-    </div>
-    <div class="info">
-        <label for="form-msg">Message:</label>
-        <textarea placeholder="Type your message" required></textarea>
-        <p class="error">This field is required</p>
-    </div>
-    <div>
-        <button class="submit-btn" type="submit">Submit</button>
-    </div>
-</form>
+    <form class="forms" id="contact-form" novalidate aria-labelledby="contact-heading">
+        <h2 id="contact-heading">Contact us</h2>
 
+        <div class="info">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required aria-required="true" aria-describedby="name-error">
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden>This field is required</p>
+        </div>
+        <div class="info">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="exemple@email.com" required aria-required="true" aria-describedby="email-error">
+            <p class="error" id="email-error" role="alert" aria-live="polite" hidden>This field is required</p>
+        </div>
+        <div class="info">
+            <label for="form-msg">Message:</label>
+            <textarea id="form-msg" name="message" placeholder="Type your message" required aria-required="true" aria-describedby="msg-error"></textarea>
+            <p class="error" id="msg-error" role="alert" aria-live="polite" hidden>This field is required</p>
+        </div>
+        <div>
+            <button class="submit-btn" type="submit">Submit</button>
+        </div>
+    </form>
 
     </main>
 
-    <footer role="footer">
+    <footer>
         <p>© 2026 - Cucina - Made in Plymouth, England</p>
     </footer>
 

@@ -7,60 +7,63 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <header>     
+
+    <header>
     <nav role="navigation">
         <ul id="nav1" aria-label="main menu">
-            <li><a href="../index.html" target="_blank">Home</a></li>
-            <li><a href="pages/favourites.html" target="_blank">Favourites ❤️</a></li>
-            <li><a href="pages/contact.html" target="_blank">Contact</a></li>
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="pages/favourites.html">Favourites ❤️</a></li>
+            <li><a href="pages/contact.html">Contact</a></li>
         </ul>
         <ul id="nav2" aria-label="sign in or login menu">
-            <li><a href="pages/log-in.html" target="_blank">Login</a></li>
-            <li id="sign-up"><a href="pages/sign-up.html" target="_blank">Sign up</a></li>
+            <li><a href="pages/log-in.html">Login</a></li>
+            <li id="sign-up"><a href="pages/sign-up.html">Sign up</a></li>
         </ul>
     </nav>
     <h1>CUCINA</h1>
     <p id="motto">Let's cook together! 🍝</p>
     </header>
 
-    <main>
-    
+    <main id="main-content">
+
     <section class="banner">
         <img id="banner-img" src="assets/images/pexels-freestockpro-321598.jpg" alt="woman sitting at a table outdoors with a plate full of food">
         <p id="img-text">Choose from dozens of recipes!</p>
     </section>
 
-    <aside id="side-menu">
+    <aside id="side-menu" aria-labelledby="menu-title">
         <p id="menu-title">Recipe types:</p>
-        <button id="toggle-button" aria-label="collapse recipe type menu">➖</button>
+        <button id="toggle-button" type="button" aria-expanded="true" aria-controls="cuisine-genres" aria-label="Collapse recipe type menu">➖</button>
         <ul id="cuisine-genres" class="minus">
-            <li id="show-all">SHOW ALL</li>
-            <li class="select-type">Italian</li>
-            <li class="select-type">French</li>
-            <li class="select-type">Meat</li>
-            <li class="select-type">Spicy</li>
-            <li class="select-type">Sweet & sour</li>
-            <li class="select-type">Sashimi and sushi</li>
-            <li class="select-type">Homemade hamburgers</li>
-            <li class="select-type">Cake</li>
-            <li class="select-type">Creamy dessert</li>
+            <li><button type="button" id="show-all" class="filter-btn">SHOW ALL</button></li>
+            <li><button type="button" class="select-type">Italian</button></li>
+            <li><button type="button" class="select-type">French</button></li>
+            <li><button type="button" class="select-type">Meat</button></li>
+            <li><button type="button" class="select-type">Spicy</button></li>
+            <li><button type="button" class="select-type">Sweet & sour</button></li>
+            <li><button type="button" class="select-type">Sashimi and sushi</button></li>
+            <li><button type="button" class="select-type">Homemade hamburgers</button></li>
+            <li><button type="button" class="select-type">Cake</button></li>
+            <li><button type="button" class="select-type">Creamy dessert</button></li>
         </ul>
     </aside>
 
-    <section id="recipe-list-container">
-        <div id="recipe-list"></div>    
+    <section id="recipe-list-container" aria-label="Recipe results">
+        <div id="recipe-list" aria-live="polite" aria-busy="false"></div>
     </section>
 
-    <section id="subscribe" role="newsletter subscription">
+    <section id="subscribe" aria-label="Newsletter subscription">
         <div>
-            <p>Be the first to know about every new recipe!</p>
-            <button>Subscribe</button>
+            <p id="subscribe-text">Be the first to know about every new recipe!</p>
+            <label for="subscribe-email" class="visually-hidden">Email address</label>
+            <input type="email" id="subscribe-email" name="subscribe-email" placeholder="Enter your email" aria-describedby="subscribe-text">
+            <button type="button">Subscribe</button>
         </div>
     </section>
 
     </main>
 
-    <footer role="footer">
+    <footer>
         <p>© 2026 - Cucina - Made in Plymouth, England</p>
     </footer>
 

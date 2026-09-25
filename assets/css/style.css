@@ -153,6 +153,7 @@ h2 {
 
 #cuisine-genres {
     margin: 2rem 2.5rem;
+    list-style: none;
 }
 
 #cuisine-genres.minus {
@@ -165,11 +166,13 @@ h2 {
 
 
 .select-type, #show-all {
+    all: unset;
     cursor: pointer;
-    list-style: none;
+    /* list-style: none; */
     font-size: 1.45em;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    margin-left: 1rem;
 }
 
 .select-type:hover, #show-all:hover {
