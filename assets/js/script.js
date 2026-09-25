@@ -360,10 +360,12 @@ forms.forEach(f => f.addEventListener('submit', function(e) {
 
 // Login form error handling.
 
-loginForm.addEventListener('submit', function() {
-    // if email or password is invalid:
-    loginErrorMsg.style.visibility = visible;
-})
+if (loginForm) {
+    loginForm.addEventListener('submit', function() {
+        // if email or password is invalid:
+        loginErrorMsg.style.visibility = visible;
+    })
+}
 
 
 // Reset forms on reload.
