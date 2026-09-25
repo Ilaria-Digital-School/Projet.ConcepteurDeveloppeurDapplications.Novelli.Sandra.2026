@@ -274,7 +274,8 @@ if (recipeList) {
 }
 
 
-// Error handling for the forms
+// Form error handling.
+
 const contactForm = document.querySelector('#contact-form');
 const name = document.querySelector('#name');
 const email = document.querySelector('#email');
@@ -301,6 +302,7 @@ console.log(fields);
 function showError(element) {
     element.parentElement.classList.remove('success');
     element.parentElement.classList.add('failure');
+
 }
 
 function showSuccess(element) {
@@ -309,23 +311,28 @@ function showSuccess(element) {
 }
 
 function checkRequired(element) {
-    if (element.value === '') {
-        element.parentElement.classList.remove('success');
-        element.parentElement.classList.add('failure');
-    }
+    element.value.trim() === '' ? showError(element) : showSuccess(element);
 }
 
+function checkLength(element, minLength) {
+    element.value.length < minLength ? showError(element) : showSuccess(element);
+}
+
+function isValidEmail(email) {
+    !email.value.includes('@') || !email.value.includes('.') ? showError(email) : showSuccess(email);
+}
+
+
 fields.forEach(f => f.addEventListener('input', function(e) {
-    console.log('ARE YOU WITH ME?')
-    if (e.target.value.length < 3) {
-        showError(f);
-        // console.log(f);
-        // console.log(f.parentElement)
-        console.log(f.parentElement.className)
-        }
-    else {
-        showSuccess(f);
-        }
+
+    checkRequired(e.target);
+
+    if (e.target === name) {checkLength(name, 3)}
+    else if (e.target === email) {checkLength(email, 8); isValidEmail(email)}
+    else if (e.target === formMsg) {checkLength(formMsg, 20)}
+    else if (e.target === firstname) {checkLength(firstname, 2)}
+    else if (e.target === pwd) {checkLength(pwd, 12)}
+
 }))
 
 
