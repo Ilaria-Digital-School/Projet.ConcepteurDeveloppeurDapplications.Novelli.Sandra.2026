@@ -36,15 +36,15 @@
         <button id="toggle-button" type="button" aria-expanded="true" aria-controls="cuisine-genres" aria-label="Collapse recipe type menu">➖</button>
         <ul id="cuisine-genres" class="minus">
             <li><button type="button" id="show-all" class="filter-btn">SHOW ALL</button></li>
-            <li><button type="button" class="select-type">Italian</button></li>
-            <li><button type="button" class="select-type">French</button></li>
-            <li><button type="button" class="select-type">Meat</button></li>
-            <li><button type="button" class="select-type">Spicy</button></li>
-            <li><button type="button" class="select-type">Sweet & sour</button></li>
-            <li><button type="button" class="select-type">Sashimi and sushi</button></li>
-            <li><button type="button" class="select-type">Homemade hamburgers</button></li>
-            <li><button type="button" class="select-type">Cake</button></li>
-            <li><button type="button" class="select-type">Creamy dessert</button></li>
+            <li><button type="button" class="filter-btn">Italian</button></li>
+            <li><button type="button" class="filter-btn">French</button></li>
+            <li><button type="button" class="filter-btn">Meat</button></li>
+            <li><button type="button" class="filter-btn">Spicy</button></li>
+            <li><button type="button" class="filter-btn">Sweet & sour</button></li>
+            <li><button type="button" class="filter-btn">Sashimi and sushi</button></li>
+            <li><button type="button" class="filter-btn">Homemade hamburgers</button></li>
+            <li><button type="button" class="filter-btn">Cake</button></li>
+            <li><button type="button" class="filter-btn">Creamy dessert</button></li>
         </ul>
     </aside>
 
@@ -53,12 +53,12 @@
     </section>
 
     <section id="subscribe" aria-label="Newsletter subscription">
+        <p id="subscribe-text">Be the first to know about every new recipe! 🍰</p>
         <div>
-            <p id="subscribe-text">Be the first to know about every new recipe!</p>
-            <label for="subscribe-email" class="visually-hidden">Email address</label>
-            <input type="email" id="subscribe-email" name="subscribe-email" placeholder="Enter your email" aria-describedby="subscribe-text">
+            <input type="email" id="subscribe-email" name="subscribe-email" placeholder="Enter your email adress" aria-describedby="subscribe-text">
             <button type="button">Subscribe</button>
         </div>
+        <p class="error">This field is required</p>
     </section>
 
     </main>

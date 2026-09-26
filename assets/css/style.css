@@ -31,8 +31,13 @@ a {
     color: blueviolet;
 }
 
+/* Header */
+
+/* Navagation menu */
+
 nav {
     display: flex;
+    justify-content: space-between;
 }
 
 nav a {
@@ -41,18 +46,20 @@ nav a {
 
 nav ul {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 #nav1 {
-    flex-direction: flex-start;
-    width: 80%;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* width: 40%; */
 }
 
 #nav2 {
-    flex-direction: flex-end;
-    width: 20%;
+    flex-direction: row;
+    justify-content: flex-end;
+    /* margin-left: auto; */
+    /* width: 30%; */
 }
 
 nav li {
@@ -108,6 +115,11 @@ h2 {
     padding: 1.5rem;
 }
 
+
+/* HOMEPAGE */
+
+/* Banner */
+
 .banner {
     position: relative;
     margin: 0 auto 3rem;
@@ -128,14 +140,19 @@ h2 {
     color: whitesmoke;
     font-size: 2.6em;
     font-weight: bold;
-    width: 26rem;
+    width: 40%;
     background-color: rgba(50, 50, 50, 0.2);
 }
+
+
+/* MAIN SECTION */
+
+/* Side menu */
 
 #side-menu {
     display: inline-block;
     position: relative;
-    width: 26%;
+    width: 24%;
     background-color: blueviolet;
 }
 
@@ -152,7 +169,7 @@ h2 {
 }
 
 #cuisine-genres {
-    margin: 2rem 2.5rem;
+    margin: 1.85rem 2.5rem;
     list-style: none;
 }
 
@@ -164,20 +181,23 @@ h2 {
     visibility: hidden;
 }
 
-
-.select-type, #show-all {
+.filter-btn, #show-all {
     all: unset;
     cursor: pointer;
     /* list-style: none; */
-    font-size: 1.45em;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    width: 90%;
+    font-size: 1.4em;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
     margin-left: 1rem;
 }
 
-.select-type:hover, #show-all:hover {
+.filter-btn:hover, #show-all:hover {
     background-color: rgba(50, 50, 50, 0.2);
 }
+
+
+/* Recipe list */
 
 #recipe-list-container {
     display: inline-block;
@@ -224,6 +244,11 @@ h2 {
     right: 5%;
 }
 
+.heart:hover {
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+
 .recipe-box img {
     position: absolute;
     left: 50%;
@@ -257,25 +282,55 @@ h2 {
     height: 8%;
 }
 
+.view-recipe:hover {
+    box-shadow: 0 0 6px 2px #2b58d4;
+}
+
+
+/* Subscribe section */
+
 #subscribe {
-    position: relative;
-    height: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* align-content: space-between; */
+    flex-direction: column;
+    gap: 2rem;
+    height: 17rem;
     width: 66%;
     margin: 4rem auto;
-    border-radius: 25px;;
+    border-radius: 25px;
     background-color: orangered;
 }
 
 #subscribe div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 66%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1rem;
 }
 
-#subscribe p, button {
-    display: inline-block;
+#subscribe-text {
+    width: unset;
+    font-style: italic;
+    font-size: 1.6em;
 }
+
+#subscribe div input {
+    width: 60%;
+    border-radius: 25px;
+}
+
+#subscribe div button {
+    border-radius: 25px;
+    width: 6rem;
+    height: 2.5rem;
+}
+
+
+/* LOGIN PAGE */
 
 #log-in-main {
     display: flex;
@@ -283,6 +338,9 @@ h2 {
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+
+
+/* Forms */
 
 .forms {
     /* display: flex;
@@ -304,14 +362,14 @@ fieldset {
 }
 
 .info {
-    /* margin-bottom: 0.5rem; */
-    padding: 0 0.6rem;
+    /* padding: 0 0.5rem; */
+    margin-bottom: 0.15rem;
 }
 
-.forms label, input, textarea, p {
+.forms label, input, textarea, p, .error {
     display: block;
     width: 100%;
-    margin-bottom: 0.2rem;
+    /* margin-bottom: 0.15rem; */
     padding: 0.6rem;
     border-radius: 14px;
 }
@@ -326,7 +384,7 @@ textarea {
 }
 
 input[type="checkbox"], input[type="radio"], input[type="select"] {
-    margin-bottom: 0.2rem;
+    margin: 0 0.2rem;
     padding: 0.6rem;
     width: unset;
     display: inline;
@@ -360,11 +418,12 @@ form input:focus, textarea:focus {
     visibility: visible;
 }
 
-.submit-btn {
+.submit-btn, #join-us-btn {
     display: block;
     width: 6rem;
     height: 2.5rem;
     margin: 0.5rem auto;
+    text-align: center;
     color: white;
     align-items: center;
     padding: 0.5rem;
@@ -372,11 +431,19 @@ form input:focus, textarea:focus {
     background-color: blue;
     border: none;
     border-radius: 14px;
+
+    a {
+        color: white;
+    }
+
 }
 
-.submit-btn:hover {
+.submit-btn:hover, #join-us-btn:hover {
     box-shadow: 0 0 6px 4px rgb(0, 89, 255);
 }
+
+
+/* Footer */
 
 footer {
     bottom: 0;
