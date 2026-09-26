@@ -1,9 +1,11 @@
 # Projet.ConcepteurDeveloppeurDapplications.Novelli.Sandra.2026
+
 Projet etudiant Ilaria Digital School
+
 **🍝 CUCINA 🍝**
 
 
-A collaborative cooking website where users can browse a large collection of recipes, filter them to find exactly what they're craving, and share their own creations with the community.
+Cucina is a collaborative cooking website where users can browse a large collection of recipes, filter them to find exactly what they're craving, and share their own creations with the community.
 
 
 FEATURES
@@ -21,6 +23,23 @@ CSS — styling and layout
 JavaScript — interactivity and dynamic behaviour
 
 
+QUALITY ASSURANCE TOOLS
+
+GithHub: for code hosting and collaborating
+Wave: to ensure accessibility
+Pytest:	for testing interactions between Flask, the database and other components
+
+
+SECURITY WATCH SOURCES
+
+The following sources will be used to stay informed about cybersecurity threats, vulnerabilities and security best practices:
+
+OWASP: Web application security risks and recommendations — https://owasp.org/
+Python Security: Security information related to Python — https://www.python.org/dev/security/
+GitHub Security Advisories: Security alerts affecting project dependencies — https://github.com/resources/articles?topic=security
+Flask Security Documentation: Official security recommendations for Flask applications — https://flask-security-too.readthedocs.io/en/stable/index.html
+
+
 GETTING STARTED
 
 This project was built using Visual Studio Code (v1.129.1).
@@ -36,7 +55,7 @@ RUNNING THE PROJECT: clone or download this repository.
 
 Clone:
 
-bash -> git clone <repository-url>
+bash -> git clone https://github.com/Ilaria-Digital-School/Projet.ConcepteurDeveloppeurDapplications.Novelli.Sandra.2026.git
 
 
 Navigate into the project folder:
@@ -65,3 +84,5 @@ Improve mobile responsiveness
 AUTHOR
 
 Created by Sandra Novelli-Riquer AKA sandra-black-cat-666
+
+
