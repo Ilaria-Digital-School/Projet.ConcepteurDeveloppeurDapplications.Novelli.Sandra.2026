@@ -570,6 +570,7 @@ footer {
         display: block;
         margin: auto;
         width: 80%;
+        min-width: 289px;
 
         #menu-title {
             /* font-size: 1.66em; */
