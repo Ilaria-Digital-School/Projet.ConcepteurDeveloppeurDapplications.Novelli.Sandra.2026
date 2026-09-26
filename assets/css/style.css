@@ -81,7 +81,7 @@ nav li {
 nav li:hover {
     cursor: pointer;
     color: turquoise;
-    background-color:  rgba(50, 50, 50, 0.6);
+    background-color: rgba(50, 50, 50, 0.6);
     box-shadow: 0 0 6px 4px turquoise;
 }
 
@@ -95,7 +95,8 @@ nav li:hover {
     color: turquoise;
 }
 
-h1, p#motto {
+h1,
+p#motto {
     display: block;
     text-align: center;
     padding-top: 3rem;
@@ -132,7 +133,7 @@ h2 {
     width: 100%;
 }
 
-#img-text {
+#banner-text {
     position: absolute;
     top: 1rem;
     left: 1rem;
@@ -181,7 +182,8 @@ h2 {
     visibility: hidden;
 }
 
-.filter-btn, #show-all {
+.filter-btn,
+#show-all {
     all: unset;
     cursor: pointer;
     /* list-style: none; */
@@ -192,7 +194,8 @@ h2 {
     margin-left: 1rem;
 }
 
-.filter-btn:hover, #show-all:hover {
+.filter-btn:hover,
+#show-all:hover {
     background-color: rgba(50, 50, 50, 0.2);
 }
 
@@ -293,11 +296,11 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* align-content: space-between; */
+    align-content: space-around;
     flex-direction: column;
     gap: 2rem;
     height: 17rem;
-    width: 66%;
+    width: 60%;
     margin: 4rem auto;
     border-radius: 25px;
     background-color: orangered;
@@ -314,6 +317,7 @@ h2 {
 
 #subscribe-text {
     width: unset;
+    margin: auto;
     font-style: italic;
     font-size: 1.6em;
 }
@@ -321,6 +325,7 @@ h2 {
 #subscribe div input {
     width: 60%;
     border-radius: 25px;
+    outline: none;
 }
 
 #subscribe div button {
@@ -339,13 +344,29 @@ h2 {
     flex-wrap: wrap;
 }
 
+#sign-up-box {
+    display: flex;
+    height: 14rem;
+    /* width: 50%; */
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    border: 1px dashed blue;
+    border-radius: 25px;
+}
+
+#signup-prompt {
+    justify-self: center;
+    font-size: 1.25em;
+}
+
 
 /* Forms */
 
 .forms {
     /* display: flex;
     flex-direction: column; */
-    width: 30rem;
+    width: 32rem;
     margin: 0 auto;
     background-color: aqua;
     border: none;
@@ -366,7 +387,11 @@ fieldset {
     margin-bottom: 0.15rem;
 }
 
-.forms label, input, textarea, p, .error {
+.forms label,
+input,
+textarea,
+p,
+.error {
     display: block;
     width: 100%;
     /* margin-bottom: 0.15rem; */
@@ -379,18 +404,22 @@ textarea {
     min-height: 10rem;
 }
 
-.additional-info label, input {
+.additional-info label,
+input {
     display: inline;
 }
 
-input[type="checkbox"], input[type="radio"], input[type="select"] {
+input[type="checkbox"],
+input[type="radio"],
+input[type="select"] {
     margin: 0 0.2rem;
     padding: 0.6rem;
     width: unset;
     display: inline;
 }
 
-form input:focus, textarea:focus {
+form input:focus,
+textarea:focus {
     outline: none
 }
 
@@ -418,7 +447,8 @@ form input:focus, textarea:focus {
     visibility: visible;
 }
 
-.submit-btn, #join-us-btn {
+.submit-btn,
+#join-us-btn {
     display: block;
     width: 6rem;
     height: 2.5rem;
@@ -438,7 +468,8 @@ form input:focus, textarea:focus {
 
 }
 
-.submit-btn:hover, #join-us-btn:hover {
+.submit-btn:hover,
+#join-us-btn:hover {
     box-shadow: 0 0 6px 4px rgb(0, 89, 255);
 }
 
@@ -452,4 +483,119 @@ footer {
     padding: 1.5em;
     text-align: center;
     background-color: aqua;
+}
+
+
+
+/* Tablet version */
+
+@media only screen and (max-width: 1234px) {
+
+    .banner {
+        width: 90%;
+        min-width: 350px;
+    }
+
+    #banner-text {
+        font-size: 2em;
+    }
+
+    #recipe-list-container {
+        display: block;
+        width: 89%;
+    }
+
+    #side-menu {
+
+        display: block;
+        width: 44%;
+        
+        #menu-title {    
+            font-size: 1.66em;
+        }
+    
+        #toggle-button {
+            font-size: 1.5em;
+        }
+    
+        #cuisine-genres {
+            margin: 1.85rem 1.5rem;
+        }
+    }
+}
+
+
+
+    #subscribe {
+
+        width: 90%;
+
+        div {
+            width: 90%;
+        }
+
+        #subscribe-text {
+            width: 90%;
+            font-size: 1.3em;
+        }
+
+
+    #subscribe div input {
+        width: 95%;
+    }
+
+    #sign-up-box {
+        margin-top: 3rem;
+    }
+
+}
+
+
+@media only screen and (max-width: 680px) {
+
+    main {
+        width: 90%;
+    }
+
+    .banner {
+        width: 100%;
+        min-width: 350px;
+    }
+
+    #banner-text {
+        font-size: 1.6em;
+    }
+
+    #side-menu {
+        display: block;
+        margin: auto;
+        width: 80%;
+
+        #menu-title {
+            /* font-size: 1.66em; */
+            font-size: 1.5em;
+        }
+
+        #toggle-button {
+            /* font-size: 1.5em; */
+            font-size: 1.2em;
+        }
+
+        #cuisine-genres {
+            margin-top: 0.7rem;
+        }
+        
+        .filter-btn {
+            /* font-size: 1.4; */
+            font-size: 1.2em;
+        }
+
+    }
+
+    .forms {
+        width: 90%;
+    }
+
+
+
 }

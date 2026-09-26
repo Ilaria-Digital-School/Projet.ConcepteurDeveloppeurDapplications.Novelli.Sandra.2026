@@ -73,6 +73,20 @@ function displayAllRecipes() {
 if (recipeList) {
 
     displayAllRecipes();
+    
+
+    // Filter menu.
+
+    const filters = document.querySelectorAll('.filter-btn');
+
+    filters.forEach(type => type.addEventListener('click', function() {
+        recipeList.innerHTML = '';
+        for (let recipe of recipes) {
+            if (type.innerText === recipe.type) {
+                createRecipeBox(recipe);
+            }
+        }
+    }));
 
     showAll.addEventListener('click', function() {
         displayAllRecipes();
@@ -80,18 +94,7 @@ if (recipeList) {
 }
 
 
-// Filter menu.
-const filters = document.querySelectorAll('.select-type');
 
-filters.forEach(type => type.addEventListener('click', function() {
-    recipeList.innerHTML = '';
-    for (let recipe of recipes) {
-        if (type.innerText === recipe.type) {
-            // console.log(recipe);
-            createRecipeBox(recipe);
-        }
-    }
-}));
 
 
 
