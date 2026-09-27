@@ -363,8 +363,8 @@ h2 {
     border-radius: 25px;
 }
 
-#signup-prompt {
-    justify-self: center;
+#sign-up-prompt {
+    text-align: center;
     font-size: 1.25em;
 }
 
@@ -622,6 +622,10 @@ footer {
 
     .forms {
         width: 90%;
+    }
+
+    #sign-up-box {
+        margin-top: 2rem;
     }
 
 }
