@@ -31,29 +31,31 @@
         <p id="banner-text">Choose from dozens of recipes!</p>
     </section>
 
-    <aside id="side-menu" aria-labelledby="menu-title">
-        <p id="menu-title">Recipe types:</p>
-        <button id="toggle-button" type="button" aria-expanded="true" aria-controls="cuisine-genres" aria-label="Collapse recipe type menu">➖</button>
-        <ul id="cuisine-genres" class="minus">
-            <li><button type="button" id="show-all" class="filter-btn">SHOW ALL</button></li>
-            <li><button type="button" class="filter-btn">Italian</button></li>
-            <li><button type="button" class="filter-btn">French</button></li>
-            <li><button type="button" class="filter-btn">Meat</button></li>
-            <li><button type="button" class="filter-btn">Spicy</button></li>
-            <li><button type="button" class="filter-btn">Sweet & sour</button></li>
-            <li><button type="button" class="filter-btn">Sashimi and sushi</button></li>
-            <li><button type="button" class="filter-btn">Homemade hamburgers</button></li>
-            <li><button type="button" class="filter-btn">Cake</button></li>
-            <li><button type="button" class="filter-btn">Creamy dessert</button></li>
-        </ul>
-    </aside>
+    <div class="page-layout-wrapper">
+        <aside id="side-menu" aria-labelledby="menu-title">
+            <p id="menu-title">Recipe types:</p>
+            <button id="toggle-button" type="button" aria-expanded="true" aria-controls="cuisine-genres" aria-label="Collapse recipe type menu">➖</button>
+            <ul id="cuisine-genres" class="minus">
+                <li><button type="button" id="show-all" class="filter-btn">SHOW ALL</button></li>
+                <li><button type="button" class="filter-btn">Italian</button></li>
+                <li><button type="button" class="filter-btn">French</button></li>
+                <li><button type="button" class="filter-btn">Meat</button></li>
+                <li><button type="button" class="filter-btn">Spicy</button></li>
+                <li><button type="button" class="filter-btn">Sweet & sour</button></li>
+                <li><button type="button" class="filter-btn">Sashimi and sushi</button></li>
+                <li><button type="button" class="filter-btn">Homemade hamburgers</button></li>
+                <li><button type="button" class="filter-btn">Cake</button></li>
+                <li><button type="button" class="filter-btn">Creamy dessert</button></li>
+            </ul>
+        </aside>
 
-    <section id="recipe-list-container" aria-label="Recipe results">
-        <div id="recipe-list" aria-live="polite" aria-busy="false"></div>
-    </section>
+        <section id="recipe-list-container" aria-label="Recipe results">
+            <div id="recipe-list" aria-live="polite" aria-busy="false"></div>
+        </section>
+    </div>
 
     <section id="subscribe" aria-label="Newsletter subscription">
-        <p id="subscribe-text">Be the first to know about every new recipe! 🍰</p>
+        <p id="subscribe-text">Be the first to know about every new recipe!&nbsp;🍰</p>
         <div>
             <input type="email" id="subscribe-email" name="subscribe-email" placeholder="Enter your email adress" aria-describedby="subscribe-text">
             <button type="button">Subscribe</button>

@@ -148,10 +148,17 @@ h2 {
 
 /* MAIN SECTION */
 
+.page-layout-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+
 /* Side menu */
 
 #side-menu {
-    display: inline-block;
+    /* display: inline-block; */
     position: relative;
     width: 24%;
     background-color: blueviolet;
@@ -164,22 +171,23 @@ h2 {
 #toggle-button {
     cursor: pointer;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.5rem;
+    right: 0.5rem;
     font-size: 1.66em;
 }
 
 #cuisine-genres {
-    margin: 1.85rem 2.5rem;
+    margin: 1.85rem 0;
     list-style: none;
+    width: 88%;
 }
 
 #cuisine-genres.minus {
-    visibility: visible;
+    display: inline-block;
 }
 
 #cuisine-genres.plus {
-    visibility: hidden;
+    display: none;
 }
 
 .filter-btn,
@@ -187,11 +195,11 @@ h2 {
     all: unset;
     cursor: pointer;
     /* list-style: none; */
-    width: 90%;
+    width: 80%;
     font-size: 1.4em;
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
-    margin-left: 1rem;
+    margin-left: 15%;
 }
 
 .filter-btn:hover,
@@ -203,9 +211,8 @@ h2 {
 /* Recipe list */
 
 #recipe-list-container {
-    display: inline-block;
+    /* display: inline-block; */
     width: 70%;
-    margin: 0 auto;
 }
 
 #recipe-list {
@@ -311,15 +318,16 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     gap: 1rem;
 }
 
 #subscribe-text {
-    width: unset;
-    margin: auto;
+    width: 60%;
+    margin: 0 auto;
     font-style: italic;
     font-size: 1.6em;
+    text-align: center;
 }
 
 #subscribe div input {
@@ -489,7 +497,7 @@ footer {
 
 /* Tablet version */
 
-@media only screen and (max-width: 1234px) {
+@media only screen and (max-width: 1274px) {
 
     .banner {
         width: 90%;
@@ -500,58 +508,58 @@ footer {
         font-size: 2em;
     }
 
+    .page-layout-wrapper {
+        flex-direction: column;
+    }
+
     #recipe-list-container {
         display: block;
         width: 89%;
+        margin: 2rem auto;
     }
 
     #side-menu {
 
         display: block;
-        width: 44%;
-        
-        #menu-title {    
+        width: 40%;
+
+        #menu-title {
             font-size: 1.66em;
         }
-    
+
         #toggle-button {
             font-size: 1.5em;
         }
-    
+
         #cuisine-genres {
-            margin: 1.85rem 1.5rem;
+            margin: 1.85rem 0.5rem;
+            width: 85%;
         }
     }
-}
-
-
 
     #subscribe {
 
-        width: 90%;
+        #subscribe-text {
+            font-size: 1.3em;
+            width: 80%;
+        }
 
         div {
             width: 90%;
+            flex-direction: column;
+            align-items: center;
         }
 
-        #subscribe-text {
+        div input {
             width: 90%;
-            font-size: 1.3em;
         }
 
-
-    #subscribe div input {
-        width: 95%;
     }
-
-    #sign-up-box {
-        margin-top: 3rem;
-    }
-
+    
 }
 
 
-@media only screen and (max-width: 680px) {
+@media only screen and (max-width: 768px) {
 
     main {
         width: 90%;
@@ -585,10 +593,29 @@ footer {
         #cuisine-genres {
             margin-top: 0.7rem;
         }
-        
+
+        .filter-btn,
+        #show-all {
+            margin-left: 10%;
+        }
+
         .filter-btn {
             /* font-size: 1.4; */
             font-size: 1.2em;
+        }
+    }
+
+    #subscribe {
+
+        width: 95%;
+        height: 20rem;
+
+        #subscribe div {
+            width: 90%;
+        }
+
+        div input {
+            width: 90%;
         }
 
     }
@@ -596,7 +623,5 @@ footer {
     .forms {
         width: 90%;
     }
-
-
 
 }
