@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --header-height: 19.9rem;
+}
+
 body {
     height: 100%;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -13,12 +17,13 @@ header {
     width: 100%;
     background-color: black;
     padding: 1rem;
+    height: var(--header-height);
 }
 
 main {
     width: 90%;
-    /* height: 100%; */
     margin: 2rem auto;
+    /* height: 100%; */
     min-height: 80vh;
 }
 
@@ -33,7 +38,11 @@ a {
 
 /* Header */
 
-/* Navagation menu */
+/* Navigation menu */
+
+#toggle-main-menu {
+    display: none;
+}
 
 nav {
     display: flex;
@@ -63,18 +72,22 @@ nav ul {
 }
 
 nav li {
+    margin: 0 0.6rem;
+    list-style: none;
+    border: 1px solid silver;
+    border-radius: 28px;
+}
+
+nav button {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 10rem;
     height: 3rem;
+    background-color: transparent;
     padding: 6px 10px;
-    border: 1px solid silver;
-    border-radius: 25px;
+    border: none;
     color: silver;
-    border-collapse: separate;
-    margin: 0 0.6rem;
-    list-style: none;
     font-size: 1.2em;
 }
 
@@ -555,7 +568,81 @@ footer {
         }
 
     }
+
+}
+
+
+@media only screen and (max-width: 942px) {
+
+    nav {
+        display: flex;
+        position: fixed;
+        flex-direction: column;
+        /* justify-content: flex-end; */
+        /* align-items: flex-start; */
+        background-color: black;
+        width: 85%;
+        justify-content: space-between;
+    }
+
+    #toggle-main-menu {
+
+        display: flex;
+        flex-direction: column;
+        width: 2.5rem;
+        height: 2.5rem;
+
+        #l1,
+        #l2,
+        #l3 {
+            border: 1px solid silver;
+            width: 3rem;
+            height: 0.5rem;
+            margin: 0.5rem auto;
+        }
+
+    }
+
+    #nav1,
+    #nav2 {
+        flex-direction: column;
+        align-items: flex-end;
+        /* justify-content: flex-start; */
+    }
+
+    nav li {
+        margin: 0.3rem 0.6rem;
+        list-style: none;
+        border: 1px solid silver;
+        border-radius: 28px;
+        width: 8rem;
+    }
+
+    nav button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 8rem;
+        height: 2.5rem;
+        background-color: transparent;
+        padding: 6px 10px;
+        /* border: none; */
+        font-size: 1em;
+    }
+
+    nav.visible ul{
+        display: flex;
+        /* background-color: fuchsia; */
+    } 
+
+
+
+    nav.hidden ul{
+        display: none;
+
+    }
     
+
 }
 
 

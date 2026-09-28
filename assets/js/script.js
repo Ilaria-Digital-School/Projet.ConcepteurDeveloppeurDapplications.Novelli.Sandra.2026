@@ -1,6 +1,25 @@
 const toggleButton = document.querySelector('#toggle-button');
 const cuisineGenres = document.querySelector('#cuisine-genres');
 const showAll = document.querySelector('#show-all');
+const toggleMainMenu = document.querySelector('#toggle-main-menu');
+const nav = document.querySelector('nav');
+
+
+// Mobile version: toggle main menu.
+
+function hideMainMenu() {
+    nav.classList.replace('visible', 'hidden');
+}
+
+function showMainMenu() {
+    nav.classList.replace('hidden', 'visible');
+}
+
+
+toggleMainMenu.addEventListener('click', function() {
+    nav.className === 'visible' ? hideMainMenu() : showMainMenu();
+})
+
 
 
 // Showing or hiding side menu.
@@ -20,6 +39,7 @@ if (toggleButton) {
         cuisineGenres.className === 'minus' ? hideSideMenu() : showSideMenu();
     });
 }
+
 
 
 let recipes = [];
