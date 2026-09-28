@@ -595,6 +595,7 @@ footer {
         #l1,
         #l2,
         #l3 {
+            /* display: block; */
             border: 1px solid silver;
             width: 3rem;
             height: 0.5rem;
@@ -633,13 +634,19 @@ footer {
     nav.visible ul{
         display: flex;
         /* background-color: fuchsia; */
-    } 
+    }
 
-
-
-    nav.hidden ul{
+    nav.visible button #l2 {
         display: none;
+        color: blueviolet;
+    }
+    
+    nav.hidden ul{
+        display: none;        
+    }
 
+    nav.visible button #l2 {
+        display: block;
     }
     
 
