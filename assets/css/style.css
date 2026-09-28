@@ -6,6 +6,7 @@
 
 :root {
     --header-height: 19.9rem;
+    --highlight-background-color: rgba(50, 50, 50, 0.2);
 }
 
 body {
@@ -94,7 +95,7 @@ nav button {
 nav li:hover {
     cursor: pointer;
     color: turquoise;
-    background-color: rgba(50, 50, 50, 0.6);
+    background-color: var(--highlight-background-color);
     box-shadow: 0 0 6px 4px turquoise;
 }
 
@@ -150,7 +151,7 @@ h2 {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    z-index: 100;
+    z-index: 1;
     color: whitesmoke;
     font-size: 2.6em;
     font-weight: bold;
@@ -575,81 +576,123 @@ footer {
 @media only screen and (max-width: 942px) {
 
     nav {
-        display: flex;
+        display: block;
         position: fixed;
-        flex-direction: column;
+        /* flex-direction: column; */
         /* justify-content: flex-end; */
         /* align-items: flex-start; */
         background-color: black;
-        width: 85%;
+        width: 100%;
+        height: 18rem;
         justify-content: space-between;
+        z-index: 2;
+        /* margin: 0;   
+        padding: 0;  */
+        box-shadow: 0 0 6px 6px black;
+        border-radius: 10px;
     }
 
     #toggle-main-menu {
 
-        display: flex;
-        flex-direction: column;
+        display: block;
+        position: relative;
+        /* flex-direction: column; */
         width: 2.5rem;
         height: 2.5rem;
 
-        #l1,
-        #l2,
-        #l3 {
-            /* display: block; */
+        .line {
+            position: absolute;
+            display: block;
             border: 1px solid silver;
-            width: 3rem;
-            height: 0.5rem;
-            margin: 0.5rem auto;
+            background-color: silver;
+            width: 100%;
+            height: 1px;
+            /* margin: 0rem auto; */
         }
-
     }
 
     #nav1,
     #nav2 {
         flex-direction: column;
-        align-items: flex-end;
+        align-items: center;
         /* justify-content: flex-start; */
     }
 
     nav li {
-        margin: 0.3rem 0.6rem;
-        list-style: none;
-        border: 1px solid silver;
+        margin: unset;
+        border: none;
         border-radius: 28px;
         width: 8rem;
     }
 
-    nav button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    nav button,
+    #sign-up {
+        /* display: flex; */
+        justify-content: left;
+        /* align-items: center; */
         width: 8rem;
         height: 2.5rem;
         background-color: transparent;
-        padding: 6px 10px;
-        /* border: none; */
-        font-size: 1em;
+        padding: 0;
+        border: none;
+        /* font-size: 1em; */
     }
 
-    nav.visible ul{
-        display: flex;
-        /* background-color: fuchsia; */
+    nav li:hover,
+    #sign-up:hover {
+        all: unset;
+        background-color: grey;
     }
 
-    nav.visible button #l2 {
-        display: none;
-        color: blueviolet;
-    }
-    
-    nav.hidden ul{
-        display: none;        
+    nav.visible {
+
+        ul {
+            display: flex;
+        }
+
+        #l2 {
+            display: none;
+        }
+
+        #l1,
+        #l3 {
+            margin: 0 auto;
+        }
+
+        #l1 {
+            transform: rotate(45deg);
+        }
+
+        #l3 {
+            transform: rotate(-45deg);
+        }
     }
 
-    nav.visible button #l2 {
-        display: block;
-    }
-    
+    nav.hidden {
 
+        background-color: transparent;
+        box-shadow: none;
+
+        ul {
+            display: none;
+        }
+
+        #l2 {
+            display: block;
+        }
+
+        #l1 {
+            top: 2%;
+        }
+
+        #l2 {
+            top: 48%;
+        }
+
+        #l3 {
+            bottom: 0;
+        }
+    }
 }
 
 
