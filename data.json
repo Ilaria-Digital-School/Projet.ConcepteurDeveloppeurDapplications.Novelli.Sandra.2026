@@ -31,7 +31,7 @@
     "id": 2,
     "name": "Roastbeef & potatoes",
     "imgSrc": "assets/images/roastbeef_potatoes.jpg",
-    "author": "John 0'Connor",
+    "author": "John O'Connor",
     "type": "Meat",
     "prepare": "20 min",
     "cook": "1 h 15 min",
