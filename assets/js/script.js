@@ -3,6 +3,8 @@ const cuisineGenres = document.querySelector('#cuisine-genres');
 const showAll = document.querySelector('#show-all');
 const toggleMainMenu = document.querySelector('#toggle-main-menu');
 const nav = document.querySelector('nav');
+const banner = document.querySelector('.banner');
+const favourites = document.querySelector('#favourites');
 
 
 // Mobile version: toggle main menu.
@@ -90,7 +92,7 @@ function displayAllRecipes() {
     return recipes;
 }
 
-if (recipeList) {
+if (banner) {
 
     displayAllRecipes();
     
@@ -115,14 +117,11 @@ if (recipeList) {
 
 
 
-
-
-
 // Adding recipes to favourites.
 
 let favouriteRecipes = [];
 
-if (recipeList) {
+if (banner || favourites) {
 
     recipeList.addEventListener('click', function(e) {
         
@@ -249,7 +248,6 @@ if (recipeList) {
 
 // Displaying recipe details.
 
-
 const recipeDetails = document.querySelector('#recipe-details');
 
 function showRecipeDetails(recipe) {
@@ -268,7 +266,7 @@ function showRecipeDetails(recipe) {
 }
 
 
-if (recipeList) {
+if (recipeList || banner) {
 
     recipeList.addEventListener('click', function(e) {
         // window.location.href = 'pages/recipe.html';
@@ -294,6 +292,15 @@ if (recipeList) {
         }
     );
 }
+
+
+
+// Displaying favourite recipes.
+
+if (favourites) {
+    console.log('Favourite page')
+}
+
 
 
 // Form error handling.

@@ -1,0 +1,355 @@
+recipes = [
+    {
+        id: 1,
+        name: 'Arrabiata pasta',
+        imgSrc: 'assets/images/arrabiata_pasta.jpg',
+        author: 'Sara Kelley',
+        type: 'Italian',
+        prepare: '10 min',
+        cook: '20 min',
+        serve: 4,
+        ingredients: [
+            '400 g penne',
+            '400 g canned peeled tomatoes',
+            '3 garlic cloves, sliced',
+            '1-2 dried red chillies (or 1 tsp chilli flakes)',
+            '3 tbsp extra virgin olive oil',
+            'A handful of fresh parsley, chopped',
+            'Salt',
+            'Grated Pecorino Romano, to serve'
+        ],
+        method: [
+            'Bring a large pot of salted water to the boil.',
+            'Heat the olive oil in a pan over medium heat and gently fry the garlic and chilli for 1-2 minutes, without letting the garlic brown.',
+            'Crush the tomatoes with your hands, add them to the pan with a pinch of salt and simmer for 15 minutes until the sauce thickens.',
+            'Cook the penne until al dente, then drain, reserving a cup of pasta water.',
+            'Toss the pasta in the sauce, adding a splash of pasta water to loosen it if needed.',
+            'Finish with parsley and Pecorino, and serve immediately.'
+        ]
+    },
+    {
+        id: 2,
+        name: 'Roastbeef & potatoes',
+        imgSrc: 'assets/images/roastbeef_potatoes.jpg',
+        author: 'John 0\'Connor',
+        type: 'Meat',
+        prepare: '20 min',
+        cook: '1 h 15 min',
+        serve: 6,
+        ingredients: [
+            '1.5 kg beef roasting joint (topside or sirloin)',
+            '1 kg potatoes, peeled and quartered',
+            '4 tbsp olive oil',
+            '4 garlic cloves, crushed',
+            '3 sprigs fresh rosemary',
+            '1 tbsp Dijon mustard',
+            '2 tsp sea salt',
+            '1 tsp black pepper',
+            '250 ml beef stock (for gravy)'
+        ],
+        method: [
+            'Take the beef out of the fridge 1 hour before cooking and preheat the oven to 220°C (200°C fan).',
+            'Rub the beef with mustard, 2 tbsp olive oil, garlic, salt and pepper.',
+            'Parboil the potatoes in salted water for 8 minutes, drain and shake them in the colander to roughen the edges.',
+            'Toss the potatoes with the remaining oil and rosemary and spread them around a roasting tray, placing the beef in the middle.',
+            'Roast for 20 minutes at 220°C, then reduce to 180°C (160°C fan) and roast for a further 40-50 minutes for medium-rare.',
+            'Rest the beef, covered in foil, for 20 minutes while the potatoes finish crisping.',
+            'Deglaze the tray with the beef stock over heat to make a quick gravy, then carve the beef and serve.'
+        ]
+    },
+    {
+        id: 3,
+        name: 'Tuna sushi',
+        imgSrc: 'assets/images/tuna_sushi.jpg',
+        author: 'Debbie Birmingham',
+        type: 'Sashimi and sushi',
+        prepare: '45 min',
+        cook: '20 min',
+        serve: 4,
+        ingredients: [
+            '300 g sushi rice',
+            '360 ml water',
+            '4 tbsp rice vinegar',
+            '2 tbsp sugar',
+            '1 tsp salt',
+            '250 g sushi-grade tuna',
+            'Wasabi paste',
+            'Soy sauce, to serve',
+            'Pickled ginger, to serve'
+        ],
+        method: [
+            'Rinse the rice under cold water until the water runs clear, then cook it with the water in a covered pot for about 15 minutes and rest for 10 minutes.',
+            'Warm the rice vinegar with the sugar and salt until dissolved, then fold it through the hot rice and let it cool to room temperature.',
+            'Slice the tuna against the grain into 5 mm thick slices.',
+            'Wet your hands, shape about 25 g of rice into a small oval and dab a little wasabi on top.',
+            'Press a slice of tuna on top of each rice oval.',
+            'Serve with soy sauce, pickled ginger and extra wasabi.'
+        ]
+    },
+    {
+        id: 4,
+        name: 'Spring rolls',
+        imgSrc: 'assets/images/spring_rolls.jpg',
+        author: 'Damien Nguyen',
+        type: 'Sweet & sour',
+        prepare: '30 min',
+        cook: '15 min',
+        serve: 4,
+        ingredients: [
+            '12 spring roll wrappers',
+            '100 g glass noodles',
+            '2 carrots, julienned',
+            '200 g white cabbage, finely shredded',
+            '150 g minced pork (or diced mushrooms for a vegetarian version)',
+            '3 spring onions, sliced',
+            '2 garlic cloves, minced',
+            '1 tbsp soy sauce',
+            'Vegetable oil for frying',
+            'Sweet chilli sauce, to serve'
+        ],
+        method: [
+            'Soak the glass noodles in hot water for 5 minutes, drain and cut into short lengths.',
+            'Stir-fry the garlic and pork for 3-4 minutes until cooked, then add the carrots and cabbage and cook for 2 minutes more.',
+            'Add the soy sauce, spring onions and noodles, mix well and leave the filling to cool.',
+            'Place 2 tbsp of filling near a corner of a wrapper, fold in the sides and roll up tightly, sealing the edge with a little water.',
+            'Heat about 3 cm of oil to 180°C and fry the rolls in batches for 3-4 minutes until golden and crisp.',
+            'Drain on kitchen paper and serve hot with sweet chilli sauce.'
+        ]
+    },
+    {
+        id: 5,
+        name: 'Four season pizza',
+        imgSrc: 'assets/images/four_season_pizza.jpg',
+        author: 'Giani Livrieri',
+        type: 'Italian',
+        prepare: '20 min + 1 h rising',
+        cook: '12 min',
+        serve: 2,
+        ingredients: [
+            '300 g strong bread flour',
+            '200 ml lukewarm water',
+            '7 g dried yeast',
+            '1 tsp salt',
+            '1 tbsp olive oil',
+            '120 g tomato passata',
+            '150 g mozzarella, torn',
+            '4 artichoke hearts in oil, halved',
+            '4 slices of cooked ham, torn',
+            '6 black olives',
+            '4 button mushrooms, sliced',
+            'Fresh basil leaves'
+        ],
+        method: [
+            'Mix the flour, yeast and salt, add the water and olive oil, and knead for 10 minutes until smooth and elastic.',
+            'Cover the dough and leave it to rise in a warm place for about 1 hour, until doubled in size.',
+            'Preheat the oven to its highest setting (about 250°C) with a baking tray inside.',
+            'Roll out the dough into a round, spread with passata and scatter over the mozzarella.',
+            'Divide the pizza into four sections and top each with one of the ingredients: artichokes, ham, olives and mushrooms.',
+            'Bake for 10-12 minutes until the crust is golden and the cheese is bubbling.',
+            'Finish with fresh basil and serve.'
+        ]
+    },
+    {
+        id: 6,
+        name: 'Tiramisù',
+        imgSrc: 'assets/images/tiramisu.jpg',
+        author: 'Anja Weisser',
+        type: 'Cake',
+        prepare: '30 min + 6 h chilling',
+        cook: '0 min',
+        serve: 8,
+        ingredients: [
+            '500 g mascarpone',
+            '4 large fresh eggs, separated',
+            '100 g caster sugar',
+            '300 ml strong espresso, cooled',
+            '3 tbsp Marsala or coffee liqueur (optional)',
+            '200 g savoiardi (ladyfinger biscuits)',
+            'Unsweetened cocoa powder, for dusting'
+        ],
+        method: [
+            'Whisk the egg yolks with the sugar until pale and creamy, then beat in the mascarpone until smooth.',
+            'In a clean bowl, whisk the egg whites to stiff peaks and gently fold them into the mascarpone mixture.',
+            'Mix the cooled espresso with the Marsala, then quickly dip each biscuit and lay them in a single layer in a dish.',
+            'Spread half of the cream over the biscuits, then repeat with another layer of dipped biscuits and the remaining cream.',
+            'Cover and refrigerate for at least 6 hours, ideally overnight.',
+            'Dust generously with cocoa powder just before serving.'
+        ]
+    },
+    {
+        id: 7,
+        name: 'Blue cheese hamburger',
+        imgSrc: 'assets/images/blue_cheese_hamburger.jpg',
+        author: 'Wendy Heyward',
+        type: 'Homemade hamburgers',
+        prepare: '15 min',
+        cook: '12 min',
+        serve: 4,
+        ingredients: [
+            '600 g minced beef (20% fat)',
+            '4 brioche burger buns',
+            '120 g blue cheese (Stilton or Roquefort), crumbled',
+            '1 red onion, sliced',
+            '1 tbsp butter',
+            'A handful of rocket',
+            '1 tomato, sliced',
+            'Salt and black pepper',
+            '2 tbsp mustard'
+        ],
+        method: [
+            'Gently mix the beef with salt and pepper and shape into 4 patties, pressing a small dimple in the centre of each.',
+            'Melt the butter in a pan and cook the onion slowly for 8-10 minutes until soft and golden.',
+            'Grill or pan-fry the patties over high heat for 4-5 minutes per side for medium.',
+            'In the last minute of cooking, top each patty with blue cheese and cover the pan so it melts.',
+            'Toast the buns, spread with mustard, and layer with rocket, tomato, the patty and caramelised onions.',
+            'Serve straight away.'
+        ]
+    },
+    {
+        id: 8,
+        name: 'Cheesecake',
+        imgSrc: 'assets/images/cheesecake.jpg',
+        author: 'Sandra Novelli-Riquer',
+        type: 'Cake',
+        prepare: '25 min + 6 h chilling',
+        cook: '55 min',
+        serve: 10,
+        ingredients: [
+            '250 g digestive biscuits',
+            '100 g melted butter',
+            '600 g full-fat cream cheese',
+            '150 g caster sugar',
+            '3 large eggs',
+            '200 ml sour cream',
+            '1 tsp vanilla extract',
+            'Zest of 1 lemon',
+            '2 tbsp plain flour',
+            'Fresh berries or fruit coulis, to serve'
+        ],
+        method: [
+            'Preheat the oven to 160°C (140°C fan) and line the base of a 23 cm springform tin.',
+            'Crush the biscuits, mix with the melted butter and press firmly into the base of the tin, then chill for 15 minutes.',
+            'Beat the cream cheese with the sugar until smooth, then beat in the eggs one at a time.',
+            'Stir in the sour cream, vanilla, lemon zest and flour until just combined.',
+            'Pour the filling over the base and bake for 50-55 minutes, until set at the edges with a slight wobble in the centre.',
+            'Turn off the oven and leave the cheesecake inside with the door ajar for 1 hour, then chill in the fridge for at least 6 hours.',
+            'Release from the tin and serve topped with berries or coulis.'
+        ]
+    },
+    {
+        id: 9,
+        name: 'Bruschetta',
+        imgSrc: 'assets/images/bruschetta.jpg',
+        author: 'Sandra Novelli-Riquer',
+        type: 'Italian',
+        prepare: '15 min',
+        cook: '5 min',
+        serve: 4,
+        ingredients: [
+            '8 slices of rustic country bread',
+            '500 g ripe tomatoes, diced',
+            '2 garlic cloves (1 minced, 1 halved)',
+            '4 tbsp extra virgin olive oil',
+            'A handful of fresh basil leaves, torn',
+            '1 tsp balsamic vinegar',
+            'Salt and black pepper'
+        ],
+        method: [
+            'Combine the tomatoes, minced garlic, half of the olive oil, basil, balsamic vinegar, salt and pepper, and let the mixture rest for 10 minutes.',
+            'Toast or grill the bread slices until golden and crisp on both sides.',
+            'Rub one side of each hot slice with the cut garlic clove.',
+            'Spoon the tomato mixture generously over the toast.',
+            'Drizzle with the remaining olive oil and serve immediately.'
+        ]
+    },
+    {
+        id: 10,
+        name: 'Caprese salad',
+        imgSrc: 'assets/images/caprese_salad.jpg',
+        author: 'Gaetano Cremonese',
+        type: 'Italian',
+        prepare: '10 min',
+        cook: '0 min',
+        serve: 4,
+        ingredients: [
+            '4 large ripe tomatoes',
+            '250 g buffalo mozzarella',
+            'A bunch of fresh basil leaves',
+            '3 tbsp extra virgin olive oil',
+            'Flaky sea salt',
+            'Freshly ground black pepper',
+            'Balsamic glaze (optional)'
+        ],
+        method: [
+            'Slice the tomatoes and mozzarella into 5 mm thick rounds.',
+            'Arrange them on a platter, alternating and overlapping the slices with basil leaves tucked between.',
+            'Season with sea salt and black pepper.',
+            'Drizzle with olive oil and, if you like, a little balsamic glaze.',
+            'Let the salad sit at room temperature for 5 minutes before serving.'
+        ]
+    },
+    {
+        id: 11,
+        name: 'Mini hamburgers',
+        imgSrc: 'assets/images/mini_hamburgers.jpg',
+        author: 'Julien Ndiaye',
+        type: 'Homemade hamburgers',
+        prepare: '20 min',
+        cook: '10 min',
+        serve: 6,
+        ingredients: [
+            '500 g minced beef',
+            '12 mini burger buns',
+            '6 slices of cheddar, cut in half',
+            '12 small lettuce leaves',
+            '2 tomatoes, thinly sliced',
+            '12 pickle slices',
+            '3 tbsp ketchup',
+            '2 tbsp mustard',
+            'Salt and black pepper',
+            '1 tbsp vegetable oil'
+        ],
+        method: [
+            'Season the beef with salt and pepper and shape into 12 small patties, about 40 g each.',
+            'Heat the oil in a large frying pan over high heat and cook the patties for 2-3 minutes per side.',
+            'Top each patty with a half slice of cheddar and let it melt for 30 seconds.',
+            'Lightly toast the cut sides of the mini buns.',
+            'Spread the buns with ketchup and mustard, then layer with lettuce, tomato, the patty and a pickle slice.',
+            'Secure each burger with a cocktail stick and serve warm.'
+        ]
+    },
+    {
+        id: 12,
+        name: 'Chocolate cake',
+        imgSrc: 'assets/images/chocolate_cake.jpg',
+        author: 'Anja Weisser',
+        type: 'Cake',
+        prepare: '25 min',
+        cook: '35 min',
+        serve: 10,
+        ingredients: [
+            '200 g plain flour',
+            '200 g caster sugar',
+            '75 g unsweetened cocoa powder',
+            '1.5 tsp baking powder',
+            '1 tsp bicarbonate of soda',
+            '2 large eggs',
+            '250 ml milk',
+            '120 ml vegetable oil',
+            '1 tsp vanilla extract',
+            '250 ml hot coffee',
+            '200 g dark chocolate',
+            '200 ml double cream'
+        ],
+        method: [
+            'Preheat the oven to 180°C (160°C fan) and grease and line two 20 cm round cake tins.',
+            'Whisk the flour, sugar, cocoa, baking powder and bicarbonate of soda together in a large bowl.',
+            'In a jug, beat the eggs with the milk, oil and vanilla, then pour into the dry ingredients and mix until smooth.',
+            'Stir in the hot coffee to give a thin batter, then divide it between the tins.',
+            'Bake for 30-35 minutes, until a skewer inserted in the centre comes out clean, then cool in the tins for 10 minutes before turning out onto a wire rack.',
+            'Heat the cream until just steaming, pour it over the broken chocolate and stir until glossy to make a ganache, then let it thicken slightly.',
+            'Sandwich the cooled cakes with some ganache and spread the rest over the top and sides.'
+        ]
+    }
+
+];

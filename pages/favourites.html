@@ -8,14 +8,13 @@
 </head>
 <body>
     <header>     
-    <nav role="navigation" class="hidden">
 
+    <nav role="navigation" class="hidden">
         <button id="toggle-main-menu" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
             <div class="line" id="l1"></div>
             <div class="line" id="l2"></div>
             <div class="line" id="l3"></div>
         </button>
-
         <ul id="nav1" aria-label="main menu">
             <li><button><a href="../index.html">Home</a></button></li>
             <li><button><a href="favourites.html">Favourites ❤️</a></button></li>
@@ -26,15 +25,47 @@
             <li id="sign-up"><button><a href="sign-up.html">Sign up</a></button></li>
         </ul>
     </nav>
+
     <h1>CUCINA</h1>
     <p id="motto">Let's cook together! 🍝</p>
+
     </header>
 
-    <main>
-    
+    <main id="main-content">
 
+    <h2 id="favourites">Favourite recipes</h2>
 
+    <div class="page-layout-wrapper">
+        <aside id="side-menu" aria-labelledby="menu-title">
+            <p id="menu-title">Recipe types:</p>
+            <button id="toggle-button" type="button" aria-expanded="true" aria-controls="cuisine-genres" aria-label="Collapse recipe type menu">➖</button>
+            <ul id="cuisine-genres" class="minus">
+                <li><button type="button" id="show-all" class="filter-btn">SHOW ALL</button></li>
+                <li><button type="button" class="filter-btn">Italian</button></li>
+                <li><button type="button" class="filter-btn">French</button></li>
+                <li><button type="button" class="filter-btn">Meat</button></li>
+                <li><button type="button" class="filter-btn">Spicy</button></li>
+                <li><button type="button" class="filter-btn">Sweet & sour</button></li>
+                <li><button type="button" class="filter-btn">Sashimi and sushi</button></li>
+                <li><button type="button" class="filter-btn">Homemade hamburgers</button></li>
+                <li><button type="button" class="filter-btn">Cake</button></li>
+                <li><button type="button" class="filter-btn">Creamy dessert</button></li>
+            </ul>
+        </aside>
 
+        <section id="recipe-list-container" aria-label="Recipe results">
+            <div id="recipe-list" aria-live="polite" aria-busy="false"></div>
+        </section>
+    </div>
+
+    <section id="subscribe" aria-label="Newsletter subscription">
+        <p id="subscribe-text">Be the first to know about every new recipe!&nbsp;🍰</p>
+        <div>
+            <input type="email" id="subscribe-email" name="subscribe-email" placeholder="Enter your email adress" aria-describedby="subscribe-text">
+            <button type="button">Subscribe</button>
+        </div>
+        <p class="error">This field is required</p>
+    </section>
 
     </main>
 
