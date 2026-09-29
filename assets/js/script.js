@@ -69,7 +69,7 @@ function displayAllRecipes() {
 
     recipes = [
         {id: 1, name: 'Arrabiata pasta', imgSrc: 'assets/images/arrabiata_pasta.jpg', author: 'Sara Kelley', type: 'Italian'},
-        {id: 2, name: 'Roastbeef & potatoes', imgSrc: 'assets/images/roastbeef_potatoes.jpg', author: 'John 0\'Connor', type: 'Meat'},
+        {id: 2, name: 'Roastbeef & potatoes', imgSrc: 'assets/images/roastbeef_potatoes.jpg', author: 'John O\'Connor', type: 'Meat'},
         {id: 3, name: 'Tuna sushi', imgSrc: 'assets/images/tuna_sushi.jpg', author: 'Debbie Birmingham', type: 'Sashimi and sushi'},
         {id: 4, name: 'Spring rolls', imgSrc: 'assets/images/spring_rolls.jpg', author: 'Damien Nguyen', type: 'Sweet & sour'},
         {id: 5, name: 'Four season pizza', imgSrc: 'assets/images/four_season_pizza.jpg', author: 'Giani Livrieri', type: 'Italian'},
