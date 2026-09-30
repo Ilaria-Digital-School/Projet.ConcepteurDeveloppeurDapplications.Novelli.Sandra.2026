@@ -1,4 +1,6 @@
-**🍝 A-CUCINA 🍝**
+# Projet.ConcepteurDeveloppeurDapplications.Novelli.Sandra.2026
+Projet etudiant Ilaria Digital School
+**🍝 CUCINA 🍝**
 
 
 A collaborative cooking website where users can browse a large collection of recipes, filter them to find exactly what they're craving, and share their own creations with the community.
@@ -17,7 +19,7 @@ TECH STACKS
 HTML — page structure and markup
 CSS — styling and layout
 JavaScript — interactivity and dynamic behaviour
-ANgular version 22.0.7 — Single Page Application behaviour
+Angular — single page application
 
 
 GETTING STARTED
@@ -35,14 +37,31 @@ RUNNING THE PROJECT: clone or download this repository.
 
 Clone:
 
-bash -> git clone https://github.com/sandra-black-cat-666/cucina-collaborative-recipes
+bash -> git clone https://github.com/Ilaria-Digital-School/Projet.ConcepteurDeveloppeurDapplications.Novelli.Sandra.2026.git
 
 
 Navigate into the project folder:
 
-bash -> cd cucina
+bash -> cd A-CUCINA
 
-Open index.html in your browser, or use a live server extension in your editor for auto-reloading.
+Angular CLI -> ng s -o
+
+
+QUALITY ASSURANCE TOOLS
+
+GithHub: for code hosting and collaborating
+Wave: to ensure accessibility
+Pytest:	for testing interactions between Flask, the database and other components
+
+
+SECURITY WATCH SOURCES
+
+The following sources will be used to stay informed about cybersecurity threats, vulnerabilities and security best practices:
+
+OWASP: Web application security risks and recommendations — https://owasp.org/
+Python Security: Security information related to Python — https://www.python.org/dev/security/
+GitHub Security Advisories: Security alerts affecting project dependencies — https://github.com/resources/articles?topic=security
+Flask Security Documentation: Official security recommendations for Flask applications — https://flask-security-too.readthedocs.io/en/stable/index.html
 
 
 USAGE
@@ -61,71 +80,11 @@ Add recipe search
 Improve mobile responsiveness
 
 
-CONTRIBUTING
-
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you'd like to contribute.
-
-
 AUTHOR
 
 Created by Sandra Novelli-Riquer AKA sandra-black-cat-666
 
-# ACucina
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.7.
 
-## Development server
 
-To start a local development server, run:
 
-```bash:
-    ng serve --open
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
