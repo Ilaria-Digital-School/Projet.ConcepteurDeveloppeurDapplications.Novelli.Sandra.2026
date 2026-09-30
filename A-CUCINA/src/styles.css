@@ -1,4 +1,21 @@
-app-users-table, app-favourites {
+app-users-table,
+app-favourites {
     margin: 2rem auto;
+    width: 70%;
+}
+
+
+.page-layout-wrapper {
+    display: flex;
+    align-items: flex-start;
+    column-gap: 1.5rem;
+}
+
+
+app-side-menu {
+    width: 24%;
+}
+
+app-recipes {
     width: 70%;
 }

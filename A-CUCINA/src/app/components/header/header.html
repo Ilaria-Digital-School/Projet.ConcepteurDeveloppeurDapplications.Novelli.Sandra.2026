@@ -1,38 +1,45 @@
 <header>
-    <nav>
-        <ul id="nav1">
-            <a routerLink="">
-                <li>Home</li>
-            </a>
-            <a routerLink="/favourites">
-                <li>Favourites ❤️</li>
-            </a>
-            <a routerLink="/add-recipe">
-                <li>Add recipe ➕</li>
-            </a>
-            <a routerLink="/contact">
-                <li>Contact</li>
-            </a>
+    <nav role="navigation" class="hidden">
+
+        <button id="toggle-main-menu" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
+            <div class="line" id="l1"></div>
+            <div class="line" id="l2"></div>
+            <div class="line" id="l3"></div>
+        </button>
+
+        <ul id="nav1" aria-label="main menu">
+            <li><button><a routerLink="">
+                Home
+            </a></button></li>
+            <li><button><a routerLink="/favourites">
+                Favourites ❤️
+            </a></button></li>
+            <li><button><a routerLink="/add-recipe">
+                Add recipe ➕
+            </a></button></li>
+            <li><button><a routerLink="/contact">
+                Contact
+            </a></button></li>
         </ul>
-        <ul id="nav2">
+        <ul id="nav2" aria-label="sign in or login menu">
             @if (getConnectedUser()) {
                 <p id="greetings">Hi! Welcome, {{getConnectedUser().firstName}}</p>
-                <a routerLink="/log-in" (click)="logOut()">
-                    <li>Logout</li>
-                </a>
+                <li><button><a routerLink="/log-in" (click)="logOut()">
+                    Logout
+                </a></button></li>
             }
             @else if (!getConnectedUser()) {
-                <a routerLink="/log-in">
-                    <li>Login</li>
-                </a>
-                <a routerLink="/sign-up">
-                    <li id="sign-up-btn">Sign up</li>
-                </a>
+                <li><button><a routerLink="/log-in">
+                    Login
+                </a></button></li>
+                <li><button id="sign-up-btn"><a routerLink="/sign-up">
+                    Sign up
+                </a></button></li>
             }
             @if (getConnectedUser()?.admin) {
-                <a routerLink="/admin">
-                    <li id="admin-btn">Admin</li>
-                </a>
+                <li><button id="admin-btn"><a routerLink="/admin">
+                    <li >Admin</li>
+                </a></button></li>
             }
         </ul>
     </nav>
