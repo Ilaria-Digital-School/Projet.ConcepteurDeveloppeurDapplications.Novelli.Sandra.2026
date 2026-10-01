@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+:root {
+    --header-height: 19.9rem;
+    --highlight-background-color: rgba(50, 50, 50, 0.2);
+}
+
 body {
     height: 100%;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -13,10 +18,18 @@ header {
     width: 100%;
     background-color: black;
     padding: 1rem;
+    height: var(--header-height);
 }
 
 main {
-    margin: 2rem;
+    width: 90%;
+    margin: 2rem auto;
+    /* height: 100%; */
+    min-height: 80vh;
+}
+
+button {
+    cursor: pointer;
 }
 
 a {
@@ -24,8 +37,17 @@ a {
     color: blueviolet;
 }
 
+/* Header */
+
+/* Navigation menu */
+
+#toggle-main-menu {
+    display: none;
+}
+
 nav {
     display: flex;
+    justify-content: space-between;
 }
 
 nav a {
@@ -34,40 +56,46 @@ nav a {
 
 nav ul {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 #nav1 {
-    flex-direction: flex-start;
-    width: 80%;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* width: 40%; */
 }
 
 #nav2 {
-    flex-direction: flex-end;
-    width: 20%;
+    flex-direction: row;
+    justify-content: flex-end;
+    /* margin-left: auto; */
+    /* width: 30%; */
 }
 
 nav li {
+    margin: 0 0.6rem;
+    list-style: none;
+    border: 1px solid silver;
+    border-radius: 28px;
+}
+
+nav button {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 10rem;
     height: 3rem;
+    background-color: transparent;
     padding: 6px 10px;
-    border: 1px solid silver;
-    border-radius: 25px;
+    border: none;
     color: silver;
-    border-collapse: separate;
-    margin: 0 0.6rem;
-    list-style: none;
     font-size: 1.2em;
 }
 
 nav li:hover {
     cursor: pointer;
     color: turquoise;
-    background-color:  rgba(50, 50, 50, 0.6);
+    background-color: var(--highlight-background-color);
     box-shadow: 0 0 6px 4px turquoise;
 }
 
@@ -81,7 +109,8 @@ nav li:hover {
     color: turquoise;
 }
 
-h1, p#motto {
+h1,
+p#motto {
     display: block;
     text-align: center;
     padding-top: 3rem;
@@ -93,6 +122,18 @@ p#motto {
     padding: 1rem;
     font-size: 2em;
 }
+
+h2 {
+    display: block;
+    text-align: center;
+    /* margin: 3rem; */
+    padding: 1.5rem;
+}
+
+
+/* HOMEPAGE */
+
+/* Banner */
 
 .banner {
     position: relative;
@@ -106,22 +147,34 @@ p#motto {
     width: 100%;
 }
 
-#img-text {
+#banner-text {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    z-index: 100;
+    z-index: 1;
     color: whitesmoke;
     font-size: 2.6em;
     font-weight: bold;
-    width: 26rem;
+    width: 40%;
     background-color: rgba(50, 50, 50, 0.2);
 }
 
+
+/* MAIN SECTION */
+
+.page-layout-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+
+/* Side menu */
+
 #side-menu {
-    display: inline-block;
+    /* display: inline-block; */
     position: relative;
-    width: 26%;
+    width: 24%;
     background-color: blueviolet;
 }
 
@@ -129,43 +182,51 @@ p#motto {
     font-size: 1.85em;
 }
 
-#toggle {
+#toggle-button {
     cursor: pointer;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.5rem;
+    right: 0.5rem;
     font-size: 1.66em;
 }
 
 #cuisine-genres {
-    margin: 2rem 2.5rem;
+    margin: 1.85rem 0;
+    list-style: none;
+    width: 88%;
 }
 
 #cuisine-genres.minus {
-    visibility: visible;
+    display: inline-block;
 }
 
 #cuisine-genres.plus {
-    visibility: hidden;
+    display: none;
 }
 
-
-.menu-filter, #show-all {
+.filter-btn,
+#show-all {
+    all: unset;
     cursor: pointer;
-    list-style: none;
-    font-size: 1.45em;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    /* list-style: none; */
+    width: 80%;
+    font-size: 1.4em;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    margin-left: 15%;
 }
 
-.menu-filter:hover, #show-all:hover {
+.filter-btn:hover,
+#show-all:hover {
     background-color: rgba(50, 50, 50, 0.2);
 }
 
+
+/* Recipe list */
+
 #recipe-list-container {
-    display: inline-block;
+    /* display: inline-block; */
     width: 70%;
-    margin: 0 auto;
 }
 
 #recipe-list {
@@ -191,8 +252,10 @@ p#motto {
 .recipe-title {
     position: absolute;
     font-size: 1.25em;
-    top: 5%;
+    top: 2.5%;
     left: 5%;
+    width: 66%;
+    /* margin-bottom: 1rem; */
 }
 
 .heart {
@@ -201,45 +264,100 @@ p#motto {
     border: none;
     background: none;
     font-size: 1.5em;
-    top: 5%;
+    top: 2.5%;
     right: 5%;
+}
+
+.heart:hover {
+    background-color: whitesmoke;
+    border-radius: 10px;
 }
 
 .recipe-box img {
     position: absolute;
     left: 50%;
-    bottom: 8%;
+    bottom: 6%;
     transform: translate(-50%, -8%);
     width: 90%;
     font-size: 1.5em;
     border-radius: 25px;
+
+    height: 66%;
+    margin-bottom: 1rem;
 }
 
 .author {
     position: absolute;
     left: 5%;
-    bottom: 4%;
+    bottom: 2%;
 }
 
+.view-recipe {
+    position: absolute;
+    right: 5%;
+    bottom: 4%;
+    background-color: #2b58d4;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    width: 15%;
+    height: 8%;
+}
+
+.view-recipe:hover {
+    box-shadow: 0 0 6px 2px #2b58d4;
+}
+
+
+/* Subscribe section */
+
 #subscribe {
-    position: relative;
-    height: 20rem;
-    width: 66%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: space-around;
+    flex-direction: column;
+    gap: 2rem;
+    height: 17rem;
+    width: 60%;
     margin: 4rem auto;
-    border-radius: 25px;;
+    border-radius: 25px;
     background-color: orangered;
 }
 
 #subscribe div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 66%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
 }
 
-#subscribe p, button {
-    display: inline-block;
+#subscribe-text {
+    width: 60%;
+    margin: 0 auto;
+    font-style: italic;
+    font-size: 1.6em;
+    text-align: center;
 }
+
+#subscribe div input {
+    width: 60%;
+    border-radius: 25px;
+    outline: none;
+}
+
+#subscribe div button {
+    border-radius: 25px;
+    width: 6rem;
+    height: 2.5rem;
+}
+
+
+/* LOGIN PAGE */
 
 #log-in-main {
     display: flex;
@@ -248,6 +366,138 @@ p#motto {
     flex-wrap: wrap;
 }
 
+#sign-up-box {
+    display: flex;
+    height: 14rem;
+    /* width: 50%; */
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    border: 1px dashed blue;
+    border-radius: 25px;
+}
+
+#sign-up-prompt {
+    text-align: center;
+    font-size: 1.25em;
+}
+
+
+/* Forms */
+
+.forms {
+    /* display: flex;
+    flex-direction: column; */
+    width: 32rem;
+    margin: 0 auto;
+    background-color: aqua;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 0 6px 6px aqua;
+    padding: 1rem;
+
+}
+
+fieldset {
+    border: 2px solid silver;
+    padding: 1rem;
+    margin: 1rem auto;
+}
+
+.info {
+    /* padding: 0 0.5rem; */
+    margin-bottom: 0.15rem;
+}
+
+.forms label,
+input,
+textarea,
+p,
+.error {
+    display: block;
+    width: 100%;
+    /* margin-bottom: 0.15rem; */
+    padding: 0.6rem;
+    border-radius: 14px;
+}
+
+textarea {
+    max-width: 100%;
+    min-height: 10rem;
+}
+
+.additional-info label,
+input {
+    display: inline;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="select"] {
+    margin: 0 0.2rem;
+    padding: 0.6rem;
+    width: unset;
+    display: inline;
+}
+
+form input:focus,
+textarea:focus {
+    outline: none
+}
+
+.info.success input,
+.info.success textarea {
+    border-color: rgb(47, 255, 64);
+}
+
+.info.failure input,
+.info.failure textarea {
+    border-color: crimson;
+}
+
+.error {
+    color: crimson;
+    font-size: 0.85em;
+    visibility: hidden
+}
+
+.info.success .error {
+    visibility: hidden;
+}
+
+.info.failure .error {
+    visibility: visible;
+}
+
+.submit-btn,
+#join-us-btn {
+    display: block;
+    width: 6rem;
+    height: 2.5rem;
+    margin: 0.5rem auto;
+    text-align: center;
+    color: white;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 1em;
+    background-color: blue;
+    border: none;
+    border-radius: 14px;
+
+    a {
+        color: white;
+    }
+
+}
+
+.submit-btn:hover,
+#join-us-btn:hover {
+    box-shadow: 0 0 6px 4px rgb(0, 89, 255);
+}
+
+
+/* Footer */
+
 footer {
     bottom: 0;
     width: 100%;
@@ -255,4 +505,264 @@ footer {
     padding: 1.5em;
     text-align: center;
     background-color: aqua;
+}
+
+
+
+/* Tablet version */
+
+@media only screen and (max-width: 1274px) {
+
+    .banner {
+        width: 90%;
+        min-width: 350px;
+    }
+
+    #banner-text {
+        font-size: 2em;
+    }
+
+    .page-layout-wrapper {
+        flex-direction: column;
+    }
+
+    #recipe-list-container {
+        display: block;
+        width: 89%;
+        margin: 2rem auto;
+    }
+
+    #side-menu {
+
+        display: block;
+        width: 40%;
+
+        #menu-title {
+            font-size: 1.66em;
+        }
+
+        #toggle-button {
+            font-size: 1.5em;
+        }
+
+        #cuisine-genres {
+            margin: 1.85rem 0.5rem;
+            width: 85%;
+        }
+    }
+
+    #subscribe {
+
+        #subscribe-text {
+            font-size: 1.3em;
+            width: 80%;
+        }
+
+        div {
+            width: 90%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        div input {
+            width: 90%;
+        }
+
+    }
+
+}
+
+
+@media only screen and (max-width: 942px) {
+
+    nav {
+        display: block;
+        position: fixed;
+        /* flex-direction: column; */
+        /* justify-content: flex-end; */
+        /* align-items: flex-start; */
+        background-color: black;
+        width: 100%;
+        height: 18rem;
+        justify-content: space-between;
+        z-index: 2;
+        /* margin: 0;   
+        padding: 0;  */
+        box-shadow: 0 0 6px 6px black;
+        border-radius: 10px;
+    }
+
+    ul {
+        transition: opacity 0.4s ease-in-out;
+    }
+
+    #toggle-main-menu {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        /* flex-direction: column; */
+        width: 2.5rem;
+        height: 2.5rem;
+
+        .line {
+            position: absolute;
+            display: block;
+            background-color: silver;
+            width: 100%;
+            height: 2px;
+        }
+    }
+
+    #nav1,
+    #nav2 {
+        flex-direction: column;
+        align-items: center;
+        /* justify-content: flex-start; */
+    }
+
+    nav li {
+        margin: unset;
+        border: none;
+        border-radius: 28px;
+        width: 8rem;
+    }
+
+    nav button,
+    #sign-up {
+        /* display: flex; */
+        justify-content: left;
+        /* align-items: center; */
+        width: 8rem;
+        height: 2.5rem;
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        /* font-size: 1em; */
+    }
+
+    nav li:hover,
+    #sign-up:hover {
+        all: unset;
+        background-color: grey;
+    }
+
+    nav.visible {
+
+        ul {
+            display: flex;
+            opacity: 1;
+        }
+
+        #l2 {
+            visibility: hidden;
+        }
+
+        #l1 {
+            transform: rotate(45deg);
+        }
+
+        #l3 {
+            transform: rotate(-45deg);
+        }
+    }
+
+    nav.hidden {
+
+        background-color: transparent;
+        box-shadow: none;
+
+        ul {
+            opacity: 0;
+        }
+
+        #l2 {
+            visibility: visible;
+        }
+
+        #l1 {
+            top: 0;
+        }
+
+        #l2 {
+            top: 47%;
+        }
+
+        #l3 {
+            bottom: 0;
+        }
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    main {
+        width: 90%;
+    }
+
+    .banner {
+        width: 100%;
+        min-width: 350px;
+    }
+
+    #banner-text {
+        font-size: 1.6em;
+    }
+
+    #side-menu {
+        display: block;
+        margin: auto;
+        width: 80%;
+        min-width: 289px;
+
+        #menu-title {
+            /* font-size: 1.66em; */
+            font-size: 1.5em;
+        }
+
+        #toggle-button {
+            /* font-size: 1.5em; */
+            font-size: 1.2em;
+        }
+
+        #cuisine-genres {
+            margin-top: 0.7rem;
+        }
+
+        .filter-btn,
+        #show-all {
+            margin-left: 10%;
+        }
+
+        .filter-btn {
+            /* font-size: 1.4; */
+            font-size: 1.2em;
+        }
+    }
+
+    #subscribe {
+
+        width: 95%;
+        height: 20rem;
+
+        #subscribe div {
+            width: 90%;
+        }
+
+        div input {
+            width: 90%;
+        }
+
+    }
+
+    .forms {
+        width: 90%;
+    }
+
+    #sign-up-box {
+        margin-top: 2rem;
+    }
+
 }

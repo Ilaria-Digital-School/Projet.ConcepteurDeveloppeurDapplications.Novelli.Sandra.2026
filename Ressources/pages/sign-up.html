@@ -7,16 +7,23 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <header>     
-    <nav>
-        <ul id="nav1">
-            <a href="../index.html" target="_blank"><li>Home</li></a>
-            <a href="favourites.html" target="_blank"><li>Favourites ❤️</li></a>
-            <a href="contact.html" target="_blank"><li>Contact</li></a>
+    <header>
+    <nav role="navigation" class="hidden">
+
+        <button id="toggle-main-menu" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
+            <div class="line" id="l1"></div>
+            <div class="line" id="l2"></div>
+            <div class="line" id="l3"></div>
+        </button>
+
+        <ul id="nav1" aria-label="main menu">
+            <li><button><a href="../index.html">Home</a></button></li>
+            <li><button><a href="favourites.html">Favourites ❤️</a></button></li>
+            <li><button><a href="contact.html" aria-current="page">Contact</a></button></li>
         </ul>
-        <ul id="nav2">
-            <a href="log-in.html" target="_blank"><li>Sign in</li></a>
-            <a href="sign-up.html" target="_blank"><li id="sign-up">Sign up</li></a>
+        <ul id="nav2" aria-label="sign in or login menu">
+            <li><button><a href="log-in.html">Login</a></button></li>
+            <li id="sign-up"><button><a href="sign-up.html">Sign up</a></button></li>
         </ul>
     </nav>
     <h1>CUCINA</h1>
@@ -24,10 +31,92 @@
     </header>
 
     <main>
-    
 
+    <form class="forms" id="signup-form" novalidate aria-labelledby="signup-heading">
+        <h2 id="signup-heading">Register with us</h2>
 
+        <fieldset>
+            <legend>Personnal details</legend>
+            <div class="info">
+                <label for="name">Name: </label>
+                <input type="text" name="familyName" id="name" data-label="Name" placeholder="Your family name" required aria-required="true" aria-describedby="name-error">
+                <p class="error" id="name-error" role="alert" aria-live="polite" hidden>This field is required</p>
+            </div>
+            <div class="info">
+                <label for="firstname">Firstname: </label>
+                <input type="text" name="firstName" id="firstname" data-label="Firstname" placeholder="Your firstname" required aria-required="true" aria-describedby="firstname-error">
+                <p class="error" id="firstname-error" role="alert" aria-live="polite" hidden>This field is required</p>
+            </div>
+            <div class="info">
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" data-label="Email" placeholder="exemple@email.com" required aria-required="true" aria-describedby="email-error">
+                <p class="error" id="email-error" role="alert" aria-live="polite" hidden>This field is required</p>
+            </div>
+            <div class="info">
+                <label for="pwd">Password: </label>
+                <input type="password" id="pwd" name="password" data-label="Password" placeholder="Enter your password" required aria-required="true" aria-describedby="pwd-error">
+                <p class="error" id="pwd-error" role="alert" aria-live="polite" hidden>This field is required</p>
+            </div>
+            <div class="info">
+                <label for="pwd2">Confirm your password: </label>
+                <input type="password" id="pwd2" name="password2" placeholder="Enter your password again" required aria-required="true" aria-describedby="pwd2-error">
+                <p class="error" id="pwd2-error" role="alert" aria-live="polite" hidden>This field is required</p>
+            </div>
+        </fieldset>
 
+        <fieldset class="additional-info">
+            <legend>Additional information</legend>
+
+            <!-- Radio group -->
+            <div class="info">
+                <legend>Gender:</legend>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female"> Female </label>
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male"> Male </label>
+            </div>
+
+            <!-- Checkbox group -->
+            <div class="info">
+                <legend>Interests:</legend>
+                <input type="checkbox" name="interets" id="browsing" value="vetements">
+                <label for="browsing">Browsing </label>
+
+                <input type="checkbox" name="interets" id="contributing" value="accessoires">
+                <label for="contributing">Contributing </label>
+            </div>
+
+            <!-- Multiple choice -->
+            <div class="info">
+                <label for="country">Country:</label>
+                <select name="country" id="country" required aria-required="true" aria-describedby="country-error">
+                    <option value="uk">UK</option>
+                    <option value="ireland">Ireland</option>
+                    <option value="us">US</option>
+                    <option value="canada">Canada</option>
+                    <option value="netherlands">Netherlands</option>
+                    <option value="germany">Germany</option>
+                    <option value="france">France</option>
+                    <option value="spain">Spain</option>
+                    <option value="italy">Italy</option>
+                    <option value="switzerland">Suisse</option>
+                    <option value="belgium">Belgium</option>
+                    <option value="senegal">Senegal</option>
+                    <option value="angola">Angola</option>
+                    <option value="other">Other</option>
+                </select>
+                <p class="error" id="country-error" role="alert" aria-live="polite" hidden>This field is required</p>
+            </div>
+        </fieldset>
+
+        <button class="submit-btn" type="submit">Sign up</button>
+
+        <div>
+            <p>Already have an account?
+                <a href="log-in.html">Log in</a>
+            </p>
+        </div>
+    </form>
 
     </main>
 
