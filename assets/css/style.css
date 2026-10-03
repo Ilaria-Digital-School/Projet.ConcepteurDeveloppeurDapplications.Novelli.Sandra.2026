@@ -570,10 +570,10 @@ footer {
 
     }
 
-}
+/* } */
 
 
-@media only screen and (max-width: 942px) {
+/* @media only screen and (max-width: 942px) { */
 
     nav {
         display: block;

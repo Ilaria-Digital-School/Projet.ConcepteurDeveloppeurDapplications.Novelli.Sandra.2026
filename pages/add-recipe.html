@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cucina : let's cook together !</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header>   
+          
+        <button id="toggle-main-menu" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
+            <div class="line" id="l1"></div>
+            <div class="line" id="l2"></div>
+            <div class="line" id="l3"></div>
+        </button>
+
+    <nav role="navigation" class="hidden">
+        <ul id="nav1" aria-label="main menu">
+            <li><button><a href="../index.html">Home</a></button></li>
+            <li><button><a href="favourites.html">Favourites ❤️</a></button></li>
+            <li><button><a href="contact.html">Contact</a></button></li>
+            <li><button><a href="add-recipe.html" aria-current="page">Add recipe ➕</a></button></li>
+        </ul>
+        <ul id="nav2" aria-label="sign in or login menu">
+            <li><button><a href="log-in.html">Login</a></button></li>
+            <li id="sign-up"><button><a href="sign-up.html">Sign up</a></button></li>
+        </ul>
+    </nav>
+    <h1>CUCINA</h1>
+    <p id="motto">Let's cook together! 🍝</p>
+    </header>
+
+<h2>Add recipe</h2>
+
+<form class="forms" id="recipe-form">
+
+    <div class="info">
+        <label for="recipeName" class="form-label">Recipe</label>
+        <input type="text" class="form-control" id="recipeName" name="recipeName" required>
+        <div class="error">This field is required</div>
+    </div>
+    
+    <div class="info">
+        <label for="img-url" class="form-label">Image URL</label>
+        <input type="text" class="form-control" id="img-url" name="imgSrc">
+        <div class="error">This field is required</div>
+    </div>
+    
+    <div class="info">
+        <label for="recipe-author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="recipe-author" name="author">
+        <div class="error">This field is required</div>
+    </div>
+    
+    <div class="info">
+        <label for="recipe-type" class="form-label">Type</label>
+        <select class="form-control" id="recipe-type" name="type">
+            <option value="italian">Italian</option>
+            <option value="french">French</option>
+            <option value="meat">Meat</option>
+            <option value="spicy">Spicy</option>
+            <option value="sweet & sour">Sweet & sour</option>
+            <option value="sashimi & sushi">Sashimi & sushi</option>
+            <option value="homemade hamburgers">Homemade hamburgers</option>
+            <option value="creamy dessert">Creamy dessert</option>
+            <option value="cake">Cake</option>
+            <option value="other">Other</option>
+        </select>
+        <div class="error">This field is required</div>
+    </div>
+    
+    <div class="info">
+        <label for="recipe-ingredients" class="form-label">Ingredients</label>
+        <input type="text" class="form-control" id="recipe-ingredients" name="ingredients">
+        <div class="error">This field is required</div>
+    </div>
+    
+    <div class="info">
+        <label for="instructions">Instructions</label>
+        <textarea id="instructions" formControlName="instructions" placeholder="Type in your instructions..." required></textarea> <br>
+        <div class="error">This field is required</div>
+    </div>
+
+    <button class="submit-btn" type="submit">Add</button>
+</form>
+
+
+    <footer role="footer">
+        <p>© 2026 - Cucina - Made in Plymouth, England</p>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>
