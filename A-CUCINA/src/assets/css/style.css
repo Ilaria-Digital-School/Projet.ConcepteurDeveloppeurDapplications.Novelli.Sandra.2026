@@ -1,0 +1,455 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+header {
+    width: 100%;
+    background-color: black;
+    padding: 1rem;
+}
+
+main {
+    margin: 2rem;
+}
+
+a {
+    text-decoration: none;
+    color: blueviolet;
+}
+
+nav {
+    display: flex;
+}
+
+nav a {
+    color: silver;
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#nav1 {
+    justify-content: flex-start;
+    width: 50%;
+}
+
+#nav2 {
+    justify-content: flex-end;
+    width: 50%;
+}
+
+nav li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    padding: 6px 10px;
+    border: 1px solid silver;
+    border-radius: 25px;
+    color: silver;
+    border-collapse: separate;
+    margin: 0 0.6rem;
+    list-style: none;
+    font-size: 1.2em;
+}
+
+nav li:hover {
+    cursor: pointer;
+    color: turquoise;
+    background-color:  rgba(50, 50, 50, 0.6);
+    box-shadow: 0 0 6px 4px turquoise;
+}
+
+#greetings {
+    color: silver;
+    width: 26%;
+    font-size: 1.4em;
+}
+
+#sign-up-btn {
+    border: 3px solid silver;
+    color: silver;
+    background-color: blue;
+}
+
+#sign-up-btn:hover {
+    color: turquoise;
+}
+
+#admin-btn {
+    background-color: blueviolet;
+    color:silver;
+}
+
+button {
+    cursor: pointer;
+    border: 1px solid silver;
+    color: silver;
+    background-color: blue;
+    margin: 0 auto;
+}
+
+
+button:hover {
+    box-shadow: 0 0 6px 4px turquoise;
+}
+
+h1, p#motto {
+    display: block;
+    text-align: center;
+    padding-top: 3rem;
+    color: silver;
+    font-size: 4em;
+}
+
+p#motto {
+    padding: 1rem;
+    font-size: 2em;
+}
+
+h2 {
+    margin: 1rem auto;
+    max-width: max-content;
+}
+
+h3 {
+    margin: 3rem auto 1.5rem;
+    text-decoration: underline;
+}
+
+.banner {
+    position: relative;
+    margin: 0 auto 3rem;
+    width: 60%;
+}
+
+#banner-img {
+    display: block;
+    border-radius: 25px;
+    width: 100%;
+}
+
+#img-text {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 100;
+    color: whitesmoke;
+    font-size: 2.6em;
+    font-weight: bold;
+    width: 26rem;
+    background-color: rgba(50, 50, 50, 0.2);
+}
+
+#side-menu {
+    display: inline-block;
+    position: relative;
+    width: 26%;
+    background-color: blueviolet;
+}
+
+#menu-title {
+    font-size: 1.85em;
+}
+
+#toggle-menu {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.66em;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+#toggle-menu:hover {
+    box-shadow: none;
+    background-color: silver;
+}
+
+#cooking-genres {
+    margin: 2rem 2.5rem;
+}
+
+#cooking-genres.minus {
+    visibility: visible;
+}
+
+#cooking-genres.plus {
+    visibility: hidden;
+}
+
+
+.menu-filter, #show-all {
+    cursor: pointer;
+    list-style: none;
+    font-size: 1.45em;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.menu-filter:hover, #show-all:hover {
+    background-color: rgba(50, 50, 50, 0.2);
+}
+
+.search-bar-container {
+    width: 60%;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+#recipe-list-container {
+    margin: 0 2.15rem;
+    background-color: blue;
+    display: inline-block;
+    width: 70%;
+    height: fit-content;
+}
+
+.recipe-list {
+    width: 100%;
+    display: grid;
+    /* grid-template-columns: 200px 200px; */
+    /* grid-template-columns: repeat(3, 1fr); */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
+    gap: 4rem;
+    /* column-gap: 10px;
+    row-gap: 10px; */
+    justify-items: center;
+    align-items: center;
+    background-color: beige;
+    flex-wrap: wrap;
+}
+
+.recipe-box {
+    position: relative;
+    height: 20rem;
+    width: 22rem;
+    background-color: aqua;
+}
+
+.recipe-title {
+    position: absolute;
+    font-size: 1.25em;
+    top: 5%;
+    left: 5%;
+}
+
+.heart {
+    position: absolute;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 1.5em;
+    top: 5%;
+    right: 5%;
+}
+
+.recipe-box img {
+    position: absolute;
+    left: 50%;
+    bottom: 8%;
+    transform: translate(-50%, -8%);
+    width: 90%;
+    font-size: 1.5em;
+    border-radius: 25px;
+}
+
+.author {
+    position: absolute;
+    left: 5%;
+    bottom: 4%;
+}
+
+.view-recipe {
+    position: absolute;
+    right: 5%;
+    bottom: 3%;
+    background-color: #2b58d4;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    width: 15%;
+    height: 8%;
+}
+
+.view-recipe:hover {
+    box-shadow: 0 0 6px 6px silver;
+}
+
+.recipe-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.recipe-details img {
+    width: 50%;
+    border-radius: 26px;
+    margin: 1rem auto;
+}
+
+
+
+.forms {
+    background-color: white;
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid rgb(175, 171, 171);
+    border-radius: 10px;
+}
+
+fieldset {
+    border: 1px solid rgb(175, 171, 171);
+    padding: 15px 50px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+legend {
+    font-weight: 900;
+    padding: 5px;
+}
+
+.forms div {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 6rem;
+    padding-bottom: 6rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(175, 171, 171);
+    border-radius: 5px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+input,
+textarea,
+select {
+    margin-top: 0.5rem;
+}
+
+.error {
+    color: red;
+    font-size: 0.85em;
+    /* padding: 0.5rem 0; */
+    margin-top: 5px;
+}
+
+textarea {
+    max-width: 100%;
+    min-height: 14rem;
+}
+
+.forms button {
+    background-color: #2b58d4;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+}
+
+
+.btn-disabled {
+    cursor: not-allowed;
+    background-color: grey;
+    color: #fff;
+}
+
+
+#subscribe {
+    position: relative;
+    height: 20rem;
+    width: 66%;
+    margin: 4rem auto;
+    border-radius: 25px;;
+    background-color: orangered;
+}
+
+#subscribe div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#subscribe p, button {
+    display: inline-block;
+}
+
+#log-in-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+table {
+    width: 100%;
+    height: 100px;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: antiquewhite;
+}
+
+th, td {
+    /* border-width:2px;
+    border-style: solid;
+    border-color: grey; */
+    border: 2px solid gray;
+    padding: 10px;
+    text-align: center;
+}
+
+table button {
+    font-size: 0.85em;
+    font-weight: bold;
+    width: 60%;
+    padding: 0.8rem;
+    border-radius: 10px;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    margin-top: 4rem;
+    padding: 1.5em;
+    text-align: center;
+    background-color: aqua;
+}
