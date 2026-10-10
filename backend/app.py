@@ -2,10 +2,12 @@ from flask import Flask, request
 from flask_cors import CORS
 import sqlite3
 
-
+import json
+from pathlib import Path
 
 app = Flask(__name__)
 CORS(app)
+
 
 connection = sqlite3.connect('message.db')
 cursor = connection.cursor()
@@ -59,6 +61,29 @@ def contact():
         except Exception as error:
             print(f"✗ Error inserting data: {error}")
             
-    # No return = data sent but error in the UI!    
+    
+    file_path = Path('c:/Users/sandr/ILARIA/PROJET-SNR/backend/messages.json')
+    print(f'My path: {file_path}')
+
+    if file_path.is_file():
+        with open('message.json', 'a', encoding='utf-8') as json_file:
+            json.dump(user_input, json_file, indent=2)
+            json_file.write(',\n')
+    else:
+        with open('message.json', 'w', encoding='utf-8') as json_file:
+            json.dump(user_input, json_file, indent=2)
+            json_file.write(',\n')
+    
+    # if file_path.is_file():
+    #     with open('messages.txt', 'a', encoding='utf-8') as txt_file:
+    #         json.dump(user_input, txt_file, indent=2)
+    #         txt_file.write('\n')
+    # else:
+    #     with open('messages.txt', 'w', encoding='utf-8') as txt_file:
+    #         json.dump(user_input, txt_file, indent=2)
+    #         txt_file.write('\n')
+        
+    
+    # No return = data sent but error in the UI!
     return user_input
 
