@@ -79,12 +79,12 @@ export class SignUp {
 
     this.userService.addUser(userFinal).subscribe({
       next: (res: any) => {
-        alert('Account added successfully')
+        alert('Account added successfully.')
         this.router.navigate(['/log-in']);
       },
       error: (err) => {
         console.log((err));
-        alert('Failed to subscribe');
+        alert('Failed to subscribe. Please try again.');
       }
     })
 

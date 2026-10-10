@@ -8,7 +8,7 @@ import { AddRecipe } from '../components/add-recipe/add-recipe';
 
 export class RecipeService {
 
-    recipeURL: string = 'http://localhost:3000/recipes';
+    recipeURL: string = 'http://localhost:5000/recipes';
 
     private httpClient = inject(HttpClient);
 

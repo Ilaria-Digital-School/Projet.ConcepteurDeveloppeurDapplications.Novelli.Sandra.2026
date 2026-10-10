@@ -1,9 +1,0 @@
-<aside id="side-menu">
-    <p id="menu-title">Recipe types:</p>
-    <button id="toggle-menu" (click)="toggleSideMenu()">{{listIsVisible === true ? '➖' : '➕'}}</button>
-    <ul id="cooking-genres" [class.minus]="listIsVisible" [class.plus]="!listIsVisible">
-        @for (option of menu; track menu[i].id; let i=$index) {
-            <li (click)="pickYourGenre()" class="menu-filter">{{option.name}}</li>
-        }
-    </ul>
-</aside>
