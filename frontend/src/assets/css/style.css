@@ -309,7 +309,8 @@ h3 {
 
 
 .forms {
-    background-color: white;
+    background-color: aqua;
+    box-shadow: 0 0 6px 6px aqua;
     padding: 20px;
     max-width: 500px;
     margin: 20px auto;
@@ -359,6 +360,7 @@ input,
 textarea,
 select {
     margin-top: 0.5rem;
+    outline: none;
 }
 
 .error {
@@ -383,6 +385,9 @@ textarea {
     margin: 10px auto;
 }
 
+.forms button:hover {
+    box-shadow: 0 0 6px 3px #2b58d4;
+}
 
 .btn-disabled {
     cursor: not-allowed;

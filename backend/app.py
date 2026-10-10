@@ -9,6 +9,15 @@ app = Flask(__name__)
 CORS(app)
 
 
+
+@app.route('/', methods=['GET'])
+def homepage():
+    pass
+
+
+
+
+
 connection = sqlite3.connect('message.db')
 cursor = connection.cursor()
 
@@ -45,7 +54,6 @@ def contact():
             'message': data['msg'],
         }
         
-        print(user_input)
         
         if not user_input:
             return 'Failed to get data'
@@ -66,11 +74,11 @@ def contact():
     print(f'My path: {file_path}')
 
     if file_path.is_file():
-        with open('message.json', 'a', encoding='utf-8') as json_file:
+        with open('messages.json', 'a', encoding='utf-8') as json_file:
             json.dump(user_input, json_file, indent=2)
             json_file.write(',\n')
     else:
-        with open('message.json', 'w', encoding='utf-8') as json_file:
+        with open('messages.json', 'w', encoding='utf-8') as json_file:
             json.dump(user_input, json_file, indent=2)
             json_file.write(',\n')
     
@@ -82,7 +90,7 @@ def contact():
     #     with open('messages.txt', 'w', encoding='utf-8') as txt_file:
     #         json.dump(user_input, txt_file, indent=2)
     #         txt_file.write('\n')
-        
+    
     
     # No return = data sent but error in the UI!
     return user_input
