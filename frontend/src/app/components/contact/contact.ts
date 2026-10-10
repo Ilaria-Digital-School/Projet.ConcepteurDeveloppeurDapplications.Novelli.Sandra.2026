@@ -15,6 +15,7 @@ export class Contact {
   private formBuilder = inject(FormBuilder);
   private contactService = inject(ContactService); 
 
+
   ngOnInit(): void {
 
     this.contactForm = this.formBuilder.group({
@@ -25,6 +26,7 @@ export class Contact {
     });
 
   }
+
 
   sendMessage() {
 
@@ -40,6 +42,8 @@ export class Contact {
     this.contactService.saveMessage(messageFinal).subscribe({
       next: (res: any) => {
         alert('Message sent successfully')
+        this.contactForm.reset();
+        console.log(messageFinal);
       },
       error: (err) => {
         console.log(err);

@@ -29,14 +29,18 @@ connection.close()
 
 @app.route('/contact', methods=['POST', 'GET'])
 def contact():
+    
     user_input = {}
     
-    if request == 'POST':
+    if request.method == 'POST':
+        
+        data = request.get_json()
+        
         user_input = {
-            'name': request.form['username'],
-            'email': request.form['email'],
-            'subject': request.form['subject'],
-            'message': request.form['message'],
+            'name': data['username'],
+            'email': data['email'],
+            'subject': data['subject'],
+            'message': data['msg'],
         }
         
         print(user_input)
@@ -45,10 +49,16 @@ def contact():
             return 'Failed to get data'
             
         # Insert message:
-        connection = sqlite3.connect('contact.db')
-        cursor = connection.cursor()
-        cursor.execute('INSERT INTO message(name, email, subject, message) VALUES (?, ?, ?, ?)', (user_input['name'], user_input['email'], user_input['subject'], user_input['message']))
-        connection.commit()
-        connection.close()
-        
+        try:
+            connection = sqlite3.connect('message.db')
+            cursor = connection.cursor()
+            cursor.execute('INSERT INTO message(name, email, subject, message) VALUES (?, ?, ?, ?)', (user_input['name'], user_input['email'], user_input['subject'], user_input['message']))
+            connection.commit()
+            connection.close()
+            print("✓ Data inserted successfully")
+        except Exception as error:
+            print(f"✗ Error inserting data: {error}")
+            
+    # No return = data sent but error in the UI!    
     return user_input
+
