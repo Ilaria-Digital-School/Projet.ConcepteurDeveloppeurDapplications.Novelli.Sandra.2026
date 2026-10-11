@@ -52,7 +52,7 @@ export class FavouriteService {
             this.addToFavourites(recipeObj);
         }
     }
-    }
+}
 
 
 

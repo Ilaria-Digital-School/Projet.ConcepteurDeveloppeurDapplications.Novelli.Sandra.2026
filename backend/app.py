@@ -10,17 +10,16 @@ CORS(app)
 
 
 
-@app.route('/', methods=['GET'])
-def homepage():
+@app.route('/', methods=['GET', 'POST'])
+def recipes():
     pass
 
 
 
 
 
-connection = sqlite3.connect('message.db')
+connection = sqlite3.connect('messages.db')
 cursor = connection.cursor()
-
 
 cursor.execute('''
             CREATE TABLE IF NOT EXISTS message(
@@ -54,13 +53,12 @@ def contact():
             'message': data['msg'],
         }
         
-        
         if not user_input:
             return 'Failed to get data'
             
         # Insert message:
         try:
-            connection = sqlite3.connect('message.db')
+            connection = sqlite3.connect('messages.db')
             cursor = connection.cursor()
             cursor.execute('INSERT INTO message(name, email, subject, message) VALUES (?, ?, ?, ?)', (user_input['name'], user_input['email'], user_input['subject'], user_input['message']))
             connection.commit()

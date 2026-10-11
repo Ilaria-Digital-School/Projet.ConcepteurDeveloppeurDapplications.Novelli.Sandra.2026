@@ -1,24 +1,6 @@
 {
   "name": "Sandra",
   "email": "sandra@novelli-riquer.fr",
-  "subject": "Python & Flask",
-  "message": "Hi from Python and Flask!"
-},
-{
-  "name": "Sandra",
-  "email": "sandra@novelli-riquer.fr",
-  "subject": "Care for another one?",
-  "message": "I bloody love homemade chocolate cake!"
-},
-{
-  "name": "Sandra",
-  "email": "sandra@novelli-riquer.fr",
-  "subject": "Python cooking",
-  "message": "I love cooking Python and JavaScript recipes."
-},
-{
-  "name": "Sandra",
-  "email": "sandra@novelli-riquer.fr",
-  "subject": "One more",
-  "message": "I'm not getting tired of this..."
+  "subject": "Chocolate cake",
+  "message": "Hello, this is a Flask and Angular recipe!"
 },
