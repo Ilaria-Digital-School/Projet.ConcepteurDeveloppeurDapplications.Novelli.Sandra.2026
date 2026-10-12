@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AddRecipe } from '../components/add-recipe/add-recipe';
+import {Recipe} from '../models/recipe-model';
 
 @Injectable({
     providedIn: 'root',
@@ -13,13 +14,15 @@ export class RecipeService {
     private httpClient = inject(HttpClient);
 
     getAllRecipes() {
-        return this.httpClient.get(this.recipeURL);
+        return this.httpClient.get<Recipe[]>(this.recipeURL);
+        // return this.httpClient.get(this.recipeURL);
         // return this.httpClient.get<any[]>(this.recipeURL);
     }
 
     // Response - productObj || null
     getRecipeById(id: string) {
-        return this.httpClient.get(`${this.recipeURL}/${id}`);
+        return this.httpClient.get<Recipe[]>(`${this.recipeURL}/${id}`);
+        // return this.httpClient.get(`${this.recipeURL}/${id}`);
     }
 
     addRecipe(recipeObj: any) {

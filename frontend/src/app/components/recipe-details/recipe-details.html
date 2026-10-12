@@ -1,7 +1,18 @@
 <section class="recipe-details">
+
     <h2>{{recipe().name}}</h2>
     <p>By {{recipe().author}}</p>
-    <img [src]="recipe().imgSrc" alt="">
+
+    <img [src]="recipe().imgSrc" alt="{{ recipe().name }} picture">
+
+    <p>Added on {{ recipe().createdOn }}</p>
+    
+    <h3>Preparation:</h3>
+    <p>{{ recipe().prepTime }}</p>
+    
+    <h3>Cooking:</h3>
+    <p>{{ recipe().cookTime }}</p>
+    
     <h3>Ingredients:</h3>
     <ul>
         @for (ingredient of recipe().ingredients; track ingredient) {

@@ -259,6 +259,10 @@ h3 {
     right: 5%;
 }
 
+.heart:hover {
+    border-radius: 10px;
+}
+
 .recipe-box img {
     position: absolute;
     left: 50%;
@@ -290,7 +294,8 @@ h3 {
 }
 
 .view-recipe:hover {
-    box-shadow: 0 0 6px 6px silver;
+    box-shadow: 0 0 6px 3px #2b58d4;
+;
 }
 
 .recipe-details {
@@ -360,7 +365,11 @@ input,
 textarea,
 select {
     margin-top: 0.5rem;
-    outline: none;
+}
+
+form input:focus,
+form textarea:focus {
+    outline: none
 }
 
 .error {

@@ -1,0 +1,105 @@
+CREATE TABLE user_account(
+	user_id INT PRIMARY KEY AUTO_INCREMENT,
+	firstname VARCHAR(50) NOT NULL,
+	lastname VARCHAR(50) NOT NULL,
+	email VARCHAR(100) UNIQUE NOT NULL,
+	password_hash VARCHAR(255) NOT NULL,
+	country VARCHAR(100) NOT NULL,
+	gender VARCHAR(50),
+	role VARCHAR(50) NOT NULL
+	);
+
+
+CREATE TABLE interest(
+	interest_id INT PRIMARY KEY AUTO_INCREMENT,
+	interest_name VARCHAR(100) UNIQUE
+	);
+
+
+CREATE TABLE user_interest(
+	user_id INT,
+	interest_id INT,
+	PRIMARY KEY(user_id, interest_id),
+	FOREIGN KEY(user_id) REFERENCES user_account(user_id) ON DELETE CASCADE,
+	FOREIGN KEY(interest_id) REFERENCES interest(interest_id)
+	);
+
+
+CREATE TABLE recipe(
+	recipe_id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT,
+	recipe_name VARCHAR(200) NOT NULL,
+	img_url TEXT DEFAULT '../assets/images/default_image1.jpg',
+	prep_time INT NOT NULL,
+	cook_time INT NOT NULL,
+	servings INT NOT NULL,
+	created_on DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY(user_id) REFERENCES user_account(user_id) ON DELETE SET NULL
+	);
+
+
+CREATE TABLE ingredient(
+	ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
+	ingredient_name VARCHAR(100) NOT NULL UNIQUE
+	);
+
+
+CREATE TABLE recipe_ingredient(
+	recipe_id INT,
+	ingredient_id INT,
+	quantity DECIMAL(8, 2),
+	unit VARCHAR(50),
+	PRIMARY KEY(recipe_id, ingredient_id),
+	FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id) ON DELETE CASCADE,
+	FOREIGN KEY(ingredient_id) REFERENCES ingredient(ingredient_id)
+	);
+
+
+CREATE TABLE preparation_step(
+	step_id INT PRIMARY KEY AUTO_INCREMENT,
+	step_number INT NOT NULL,
+	instruction VARCHAR(500) NOT NULL
+	);
+	
+
+CREATE TABLE recipe_step(
+	recipe_id INT,
+	step_id INT,
+    	step_number INT NOT NULL,
+	UNIQUE (recipe_id, step_number),
+	PRIMARY KEY(recipe_id, step_id),
+	FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id) ON DELETE CASCADE,
+	FOREIGN KEY(step_id) REFERENCES preparation_step(step_id)
+	);
+
+
+CREATE TABLE category(
+	category_id INT PRIMARY KEY AUTO_INCREMENT,
+	category_name VARCHAR(50) NOT NULL UNIQUE
+	);
+
+
+CREATE TABLE recipe_category(
+	recipe_id INT,
+	category_id INT,
+	PRIMARY KEY(recipe_id, category_id),
+	FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id) ON DELETE CASCADE,
+	FOREIGN KEY(category_id) REFERENCES category(category_id)
+	);
+
+
+CREATE TABLE review(
+	review_id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT NOT NULL,
+	recipe_id INT NOT NULL,
+	rating INT NOT NULL CHECK(rating BETWEEN 1 AND 5),
+	comment VARCHAR(500) NOT NULL,
+	created_on DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(user_id, recipe_id),
+	FOREIGN KEY (user_id) REFERENCES user_account(user_id) ON DELETE CASCADE,
+   	FOREIGN KEY (recipe_id) REFERENCES recipe(recipe_id) ON DELETE CASCADE
+	);
+	
+	
+	
+	
