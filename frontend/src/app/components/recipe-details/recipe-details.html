@@ -7,24 +7,24 @@
 
     <p>Added on {{ recipe().createdOn }}</p>
     
-    <h3>Preparation:</h3>
-    <p>{{ recipe().prepTime }}</p>
+    <h3>Preparation</h3>
+    <p>{{ recipe().prepTime }} min</p>
     
-    <h3>Cooking:</h3>
-    <p>{{ recipe().cookTime }}</p>
+    <h3>Cooking</h3>
+    <p>{{ recipe().cookTime }} min</p>
     
     <h3>Ingredients:</h3>
     <ul>
-        @for (ingredient of recipe().ingredients; track ingredient) {
-            <li>{{ ingredient }}</li>
+        @for (ingredient of recipe().ingredients; track ingredient.name) {
+            <li class="ingredient">{{ ingredient.quantity }} {{ingredient.unit }} {{ ingredient.name }}</li>
         } @empty {
             <li>No ingredients listed yet.</li>
         }
     </ul>
     <h3>Preparation steps:</h3>
     <ul>
-        @for (instruction of recipe().instructions; track instruction; let i = $index) {
-            <p>{{ i + 1 }}. {{ instruction }}</p>
+        @for (step of recipe().steps; track step.stepNumber; let i = $index) {
+            <li class="prep-step">{{ i + 1 }}. {{ step.instruction }}</li>
         } @empty {
             <p>No instructions listed yet.</p>
         }

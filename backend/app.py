@@ -45,36 +45,47 @@ def get_one_recipe(id):
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
         cursor.execute('''SELECT 
-                        r.recipe_id as id,
-                        (u.firstname || ' ' || u.lastname) as author,
-                        r.recipe_name as name,
-                        r.img_url as imgSrc,
-                        r.prep_time as prepTime,
-                        r.cook_time as cookTime,
-                        r.servings,
-                        r.created_on as createdOn,
-                        i.ingredient_name,
-                        p.instruction
-                        FROM recipe AS r
-                        LEFT JOIN user_account AS u ON r.user_id = u.user_id
-                        INNER JOIN recipe_ingredient AS ri ON r.recipe_id = ri.recipe_id
-                        INNER JOIN ingredient AS i ON ri.ingredient_id = i.ingredient_id
-                        INNER JOIN recipe_step AS rs ON r.recipe_id = rs.recipe_id
-                        INNER JOIN preparation_step AS p ON rs.step_id = p.step_id
-                        WHERE recipe_id = ?
+                    r.recipe_id as id,
+                    (u.firstname || ' ' || u.lastname) as author,
+                    r.recipe_name as name,
+                    r.img_url as imgSrc,
+                    r.prep_time as prepTime,
+                    r.cook_time as cookTime,
+                    r.servings,
+                    r.created_on as createdOn
+                    FROM recipe AS r
+                    LEFT JOIN user_account AS u ON r.user_id = u.user_id
+                    WHERE r.recipe_id = ?
                     ''', (id,))
-        recipe = cursor.fetchall()
+        recipe_simple_rows = cursor.fetchone()
+        cursor.execute('''
+                    SELECT i.ingredient_name AS name, ri.quantity, ri.unit
+                    FROM recipe_ingredient ri
+                    JOIN ingredient i ON ri.ingredient_id = i.ingredient_id
+                    WHERE ri.recipe_id = ?
+                ''', (id,))
+        ingredients = [dict(r) for r in cursor.fetchall()]
+
+        cursor.execute('''
+                    SELECT rs.step_number AS stepNumber, p.instruction
+                    FROM recipe_step rs
+                    JOIN preparation_step p ON rs.step_id = p.step_id
+                    WHERE rs.recipe_id = ?
+                    ORDER BY rs.step_number
+                ''', (id,))
+        steps = [dict(r) for r in cursor.fetchall()]
+
+        recipe = dict(recipe_simple_rows)
+        recipe['ingredients'] = ingredients
+        recipe['steps'] = steps
         connection.close()
         
-        recipe_dict = [dict(row) for row in recipe]
-
-        return jsonify(recipe_dict)
-    
+        return jsonify(recipe)
+        
     except Exception as error:
         print(f'Error fetching data: {error}')
     
         
-    
     
 @app.route('/recipes', methods=['POST'])
 def add_recipe():

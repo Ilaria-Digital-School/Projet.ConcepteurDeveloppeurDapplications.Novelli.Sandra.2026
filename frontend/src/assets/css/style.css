@@ -311,7 +311,14 @@ h3 {
     margin: 1rem auto;
 }
 
+.prep-step {
+    list-style: none;
+    padding: 1rem;
+}
 
+.ingredient {
+    padding: 0.5rem;
+}
 
 .forms {
     background-color: aqua;

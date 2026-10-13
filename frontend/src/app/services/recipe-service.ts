@@ -21,7 +21,7 @@ export class RecipeService {
 
     // Response - productObj || null
     getRecipeById(id: string) {
-        return this.httpClient.get<Recipe[]>(`${this.recipeURL}/${id}`);
+        return this.httpClient.get<Recipe>(`${this.recipeURL}/${id}`);
         // return this.httpClient.get(`${this.recipeURL}/${id}`);
     }
 
