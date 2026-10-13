@@ -185,14 +185,7 @@ def contact():
     else:
         with open('messages.json', 'w', encoding='utf-8') as json_file:
             json.dump([user_input], json_file, indent=2)
-            
-    # if file_path.is_file():
-    #     with open('messages.txt', 'a', encoding='utf-8') as txt_file:
-    #         txt_file.write(',\n')
-    #         json.dump(user_input, txt_file, indent=2)
-    # else:
-    #     with open('messages.txt', 'w', encoding='utf-8') as txt_file:
-    #         json.dump(user_input, txt_file, indent=2)
+
             
     
     '''No return = data sent but error in the UI!'''
