@@ -1,14 +1,23 @@
-from flask import Flask, request, jsonify
-import secrets
+from flask import Flask, request, jsonify, session, render_template
 from flask_cors import CORS
+import os
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 import sqlite3
 
 import json
 from pathlib import Path
 
 app = Flask(__name__)
+# app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
+# CSRF = CSRFProtect(app)
 CORS(app)
 
+
+
+'''For CSRF security'''
+# @app.route('/')
+# def index():
+#     return render_template('index.html', csrf_token=generate_csrf())
 
 
 @app.route('/recipes', methods=['GET'])
@@ -59,6 +68,10 @@ def get_one_recipe(id):
                     WHERE r.recipe_id = ?
                     ''', (id,))
         recipe_simple_rows = cursor.fetchone()
+        
+        if recipe_simple_rows is None:
+            return jsonify({'error': 'Recipe not found'})
+        
         cursor.execute('''
                     SELECT i.ingredient_name AS name, ri.quantity, ri.unit
                     FROM recipe_ingredient ri
@@ -100,7 +113,7 @@ def update_recipe():
     
 
     
-@app.route('/recipes', methods=['DELETE'])
+@app.route('/recipes/<int:id>', methods=['DELETE'])
 def delete_recipe(id):
     connection = sqlite3.connect('cookbook.db')
     cursor = connection.cursor()
@@ -158,23 +171,29 @@ def contact():
         except Exception as error:
             print(f'Error inserting data: {error}')
             
-    # elif request.mehtod == 'GET':
-    #     my_csrf = secrets.token_urlsafe(40)
-    #     if 'csrf' not in session:
-    #         session['csrf'] = my_csrf
     
-    file_path = Path('messages.txt')
+    file_path = Path('messages.json')
     print(f'My path: {file_path}')
     
+    
     if file_path.is_file():
-        with open('messages.txt', 'a', encoding='utf-8') as txt_file:
-            json.dump(user_input, txt_file, indent=2)
-            txt_file.write(',\n')
+        with open('messages.json', 'r', encoding='utf-8') as json_file:
+            content = json.load(json_file)
+        content.append(user_input)
+        with open('messages.json', 'w', encoding='utf-8') as json_file:    
+            json.dump(content, json_file, indent=2)
     else:
-        with open('messages.txt', 'w', encoding='utf-8') as txt_file:
-            json.dump(user_input, txt_file, indent=2)
-            txt_file.write(',\n')
+        with open('messages.json', 'w', encoding='utf-8') as json_file:
+            json.dump([user_input], json_file, indent=2)
+            
+    # if file_path.is_file():
+    #     with open('messages.txt', 'a', encoding='utf-8') as txt_file:
+    #         txt_file.write(',\n')
+    #         json.dump(user_input, txt_file, indent=2)
+    # else:
+    #     with open('messages.txt', 'w', encoding='utf-8') as txt_file:
+    #         json.dump(user_input, txt_file, indent=2)
+            
     
-    
-    # No return = data sent but error in the UI!
+    '''No return = data sent but error in the UI!'''
     return user_input
