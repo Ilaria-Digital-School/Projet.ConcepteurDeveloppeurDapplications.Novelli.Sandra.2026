@@ -21,6 +21,7 @@
             <li>No ingredients listed yet.</li>
         }
     </ul>
+
     <h3>Preparation steps:</h3>
     <ul>
         @for (step of recipe().steps; track step.stepNumber; let i = $index) {
@@ -29,4 +30,5 @@
             <p>No instructions listed yet.</p>
         }
     </ul>
+    
 </section>

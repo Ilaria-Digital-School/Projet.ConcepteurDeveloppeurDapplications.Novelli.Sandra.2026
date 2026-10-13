@@ -21,7 +21,7 @@ export class Contact {
     this.contactForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      subject: ['', [Validators.required, Validators.minLength(5)]],
+      subject: ['', [Validators.required, Validators.minLength(2)]],
       msg: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(600)]]
     });
 

@@ -32,6 +32,7 @@ def get_all_recipes():
         recipes_list = [dict(r) for r in recipes]
 
         return jsonify(recipes_list)
+    
     except Exception as error:
         print(f'Error fetching data: {error}')
 
@@ -162,27 +163,17 @@ def contact():
     #     if 'csrf' not in session:
     #         session['csrf'] = my_csrf
     
-    file_path = Path('messages.json')
+    file_path = Path('messages.txt')
     print(f'My path: {file_path}')
-
-
-    if file_path.is_file():
-        with open(file_path, 'a', encoding='utf-8') as json_file:
-            json.dump(user_input, json_file, indent=2)
-            json_file.write(',\n')
-    else:
-        with open(file_path, 'w', encoding='utf-8') as json_file:
-            json.dump(user_input, json_file, indent=2)
-            json_file.write(',\n')
     
-    # if file_path.is_file():
-    #     with open('messages.txt', 'a', encoding='utf-8') as txt_file:
-    #         json.dump(user_input, txt_file, indent=2)
-    #         txt_file.write('\n')
-    # else:
-    #     with open('messages.txt', 'w', encoding='utf-8') as txt_file:
-    #         json.dump(user_input, txt_file, indent=2)
-    #         txt_file.write('\n')
+    if file_path.is_file():
+        with open('messages.txt', 'a', encoding='utf-8') as txt_file:
+            json.dump(user_input, txt_file, indent=2)
+            txt_file.write(',\n')
+    else:
+        with open('messages.txt', 'w', encoding='utf-8') as txt_file:
+            json.dump(user_input, txt_file, indent=2)
+            txt_file.write(',\n')
     
     
     # No return = data sent but error in the UI!
