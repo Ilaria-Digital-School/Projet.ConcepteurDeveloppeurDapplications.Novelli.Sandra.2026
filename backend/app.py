@@ -28,12 +28,16 @@ def get_all_recipes():
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
         cursor.execute('''SELECT 
-                        r.recipe_id as id,
-                        r.recipe_name as name,
-                        r.img_url as imgSrc,
-                        (u.firstname || ' ' || u.lastname) as author
-                        FROM recipe AS r
-                        LEFT JOIN user_account AS u ON r.user_id = u.user_id
+                    r.recipe_id AS id,
+                    r.recipe_name AS name,
+                    r.img_url AS imgSrc,
+                    (u.firstname || ' ' || u.lastname) AS author,
+                    c.category_name AS type
+                    FROM recipe r
+                    LEFT JOIN user_account u ON u.user_id = r.user_id
+                    LEFT JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
+                    LEFT JOIN category c ON c.category_id = rc.category_id
+                    ORDER BY r.recipe_id
                     ''')
         recipes = cursor.fetchall()
         connection.close()
@@ -55,14 +59,14 @@ def get_one_recipe(id):
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
         cursor.execute('''SELECT 
-                    r.recipe_id as id,
+                    r.recipe_id AS id,
                     (u.firstname || ' ' || u.lastname) as author,
-                    r.recipe_name as name,
-                    r.img_url as imgSrc,
-                    r.prep_time as prepTime,
-                    r.cook_time as cookTime,
+                    r.recipe_name AS name,
+                    r.img_url AS imgSrc,
+                    r.prep_time AS prepTime,
+                    r.cook_time AS cookTime,
                     r.servings,
-                    r.created_on as createdOn
+                    r.created_on AS createdOn
                     FROM recipe AS r
                     LEFT JOIN user_account AS u ON r.user_id = u.user_id
                     WHERE r.recipe_id = ?
