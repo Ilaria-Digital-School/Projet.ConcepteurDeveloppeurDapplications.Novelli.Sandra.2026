@@ -43,7 +43,7 @@ def get_all_recipes():
         return jsonify(recipes_list)
     
     except Exception as error:
-        print(f'Error fetching data: {error}')
+        return f'Error fetching data: {error}'
 
 
 
@@ -97,7 +97,7 @@ def get_one_recipe(id):
         return jsonify(recipe)
         
     except Exception as error:
-        print(f'Error fetching data: {error}')
+        return f'Error fetching data: {error}'
     
         
     
@@ -107,7 +107,7 @@ def add_recipe():
 
 
     
-@app.route('/recipes', methods=['PUT'])
+@app.route('/recipes/<int:id>', methods=['PUT'])
 def update_recipe():
     ...
     
@@ -117,13 +117,13 @@ def update_recipe():
 def delete_recipe(id):
     connection = sqlite3.connect('cookbook.db')
     cursor = connection.cursor()
-    cursor.execute('DELETE FROM recipe WHERE recipe_id = ?', (id))
+    cursor.execute('DELETE FROM recipe WHERE recipe_id = ?', (id,))
     connection.commit()
     connection.close()
     
 
 
-# Initilize message database.
+# Initialize message database.
 connection = sqlite3.connect('messages.db')
 cursor = connection.cursor()
 
@@ -151,10 +151,10 @@ def contact():
         data = request.get_json()
         
         user_input = {
-            'name': data['username'],
-            'email': data['email'],
-            'subject': data['subject'],
-            'message': data['msg'],
+            'name': data['username'].strip(),
+            'email': data['email'].strip(),
+            'subject': data['subject'].strip(),
+            'message': data['msg'].strip(),
         }
         
         if not user_input:
@@ -169,24 +169,23 @@ def contact():
             connection.close()
             print('Data inserted successfully')
         except Exception as error:
-            print(f'Error inserting data: {error}')
+            return f'Error inserting data: {error}'
             
-    
-    file_path = Path('messages.json')
-    print(f'My path: {file_path}')
-    
-    
-    if file_path.is_file():
-        with open('messages.json', 'r', encoding='utf-8') as json_file:
-            content = json.load(json_file)
-        content.append(user_input)
-        with open('messages.json', 'w', encoding='utf-8') as json_file:    
-            json.dump(content, json_file, indent=2)
-    else:
-        with open('messages.json', 'w', encoding='utf-8') as json_file:
-            json.dump([user_input], json_file, indent=2)
+    try:
+        file_path = Path('messages.json')
+        print(f'My path: {file_path}')
+        
+        if file_path.is_file():
+            with open('messages.json', 'r', encoding='utf-8') as json_file:
+                content = json.load(json_file)
+            content.append(user_input)
+            with open('messages.json', 'w', encoding='utf-8') as json_file:    
+                json.dump(content, json_file, indent=2)
+        else:
+            with open('messages.json', 'w', encoding='utf-8') as json_file:
+                json.dump([user_input], json_file, indent=2)
+    except Exception as error:
+        return f'File error: {error}'   
 
-            
-    
-    '''No return = data sent but error in the UI!'''
+    '''No return => data sent but error in the UI!'''
     return user_input

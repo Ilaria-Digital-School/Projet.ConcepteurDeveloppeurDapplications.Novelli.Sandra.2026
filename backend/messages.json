@@ -10,5 +10,11 @@
     "email": "sandra@novelli-riquer.fr",
     "subject": "Python cooking",
     "message": "Hi, this is a recipe combining Flask and Angular!"
+  },
+  {
+    "name": "Jason",
+    "email": "jason@format.com",
+    "subject": "My language",
+    "message": "Hi, do you speak JSON?"
   }
 ]
