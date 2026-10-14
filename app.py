@@ -154,21 +154,20 @@ def contact():
     return render_template('contact.html')
 
 
-def contact_form():
+def submit_contact():
     
-    user_input = {}
-    if request.method == 'POST':
-        data = request.get_json()
-        
-        user_input = {
-            'name': data['username'].strip(),
-            'email': data['email'].strip(),
-            'subject': data['subject'].strip(),
-            'message': data['msg'].strip(),
-        }
-        
-        if not user_input:
-            return 'Failed to get data'
+    try:
+        user_input = {}
+        if request.method == 'POST':
+            data = request.get_json()
+            
+            user_input = {
+                'name': data['username'].strip(),
+                'email': data['email'].strip(),
+                'subject': data['subject'].strip(),
+                'message': data['msg'].strip(),
+            }
+            
             
         # Insert message into DB:
         try:
@@ -181,21 +180,25 @@ def contact_form():
         except Exception as error:
             return f'Error inserting data: {error}'
             
-    try:
-        file_path = Path('messages.json')
-        print(f'My path: {file_path}')
-        
-        if file_path.is_file():
-            with open('messages.json', 'r', encoding='utf-8') as json_file:
-                content = json.load(json_file)
-            content.append(user_input)
-            with open('messages.json', 'w', encoding='utf-8') as json_file:    
-                json.dump(content, json_file, indent=2)
-        else:
-            with open('messages.json', 'w', encoding='utf-8') as json_file:
-                json.dump([user_input], json_file, indent=2)
+        try:
+            file_path = Path('messages.json')
+            print(f'My path: {file_path}')
+            
+            if file_path.is_file():
+                with open('messages.json', 'r', encoding='utf-8') as json_file:
+                    content = json.load(json_file)
+                content.append(user_input)
+                with open('messages.json', 'w', encoding='utf-8') as json_file:    
+                    json.dump(content, json_file, indent=2)
+            else:
+                with open('messages.json', 'w', encoding='utf-8') as json_file:
+                    json.dump([user_input], json_file, indent=2)
+        except Exception as error:
+            return f'File error: {error}'   
+    
     except Exception as error:
-        return f'File error: {error}'   
+        return f'Failed to get data. Error: {error}'   
+    
 
     '''No return => data sent but error in the UI!'''
     return user_input
@@ -203,7 +206,7 @@ def contact_form():
 
 @app.route('/favourites', methods=['GET', 'POST'])
 def favourites():
-    return render_template('favourites.html')
+    return render_template('favourites.html', cuisine_genres=data.CUISINE_GENRES)
 
 
 
@@ -215,6 +218,6 @@ def log_in():
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
-    return render_template('sign-up.html')
+    return render_template('sign-up.html', countries=data.COUNTRIES)
 
 

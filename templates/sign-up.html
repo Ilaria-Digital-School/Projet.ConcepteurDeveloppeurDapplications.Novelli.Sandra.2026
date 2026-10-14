@@ -2,8 +2,6 @@
 
 {% block content %}
 
-    <main>
-
     <form class="forms" id="signup-form" novalidate aria-labelledby="signup-heading">
         <h2 id="signup-heading">Register with us</h2>
 
@@ -61,22 +59,12 @@
             <!-- Multiple choice -->
             <div class="info">
                 <label for="country">Country:</label>
-                <select name="country" id="country" required aria-required="true" aria-describedby="country-error">
-                    <option value="uk">UK</option>
-                    <option value="ireland">Ireland</option>
-                    <option value="us">US</option>
-                    <option value="canada">Canada</option>
-                    <option value="netherlands">Netherlands</option>
-                    <option value="germany">Germany</option>
-                    <option value="france">France</option>
-                    <option value="spain">Spain</option>
-                    <option value="italy">Italy</option>
-                    <option value="switzerland">Suisse</option>
-                    <option value="belgium">Belgium</option>
-                    <option value="senegal">Senegal</option>
-                    <option value="angola">Angola</option>
-                    <option value="other">Other</option>
-                </select>
+                    <select name="country" id="country" required aria-required="true" aria-describedby="country-error">
+                        <option value="">Choose a country… </option>
+                        {% for country in countries %}
+                        <option value="{{ country }}">{{ country }}</option>
+                        {% endfor %}
+                    </select>
                 <p class="error" id="country-error" role="alert" aria-live="polite" hidden>This field is required</p>
             </div>
         </fieldset>
@@ -90,12 +78,5 @@
         </div>
     </form>
 
-    </main>
 
 {% endblock %}
-
-
-        <option value="">Choisissez…</option>
-        {% for s in sujets %}
-          <option {% if saisie.sujet == s %}selected{% endif %}>{{ s }}</option>
-        {% endfor %}

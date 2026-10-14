@@ -21,11 +21,11 @@ header {
     height: var(--header-height);
 }
 
-main {
+main.all {
     width: 90%;
-    margin: 2rem auto;
-    /* height: 100%; */
-    min-height: 80vh;
+    margin: 4rem auto;
+    height: 100%;
+    min-height: 100vh;
 }
 
 button {
