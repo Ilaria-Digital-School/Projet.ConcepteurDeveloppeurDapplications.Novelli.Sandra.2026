@@ -1,35 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cucina : let's cook together !</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-    <header>
-    <nav role="navigation" class="hidden">
+{% extends "base.html" %}
 
-        <button id="toggle-main-menu" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
-            <div class="line" id="l1"></div>
-            <div class="line" id="l2"></div>
-            <div class="line" id="l3"></div>
-        </button>
+{% block content %}
 
-        <ul id="nav1" aria-label="main menu">
-            <li><button><a href="../index.html">Home</a></button></li>
-            <li><button><a href="favourites.html">Favourites ❤️</a></button></li>
-            <li><button><a href="contact.html">Contact</a></button></li>
-            <li><button><a href="add-recipe.html">Add recipe ➕</a></button></li>
-        </ul>
-        <ul id="nav2" aria-label="sign in or login menu">
-            <li><button><a href="log-in.html" aria-current="page">Login</a></button></li>
-            <li id="sign-up"><button><a href="sign-up.html">Sign up</a></button></li>
-        </ul>
-    </nav>
-    <h1>CUCINA</h1>
-    <p id="motto">Let's cook together! 🍝</p>
-    </header>
 
     <main id="log-in-main">
 
@@ -59,10 +31,5 @@
     </section>
     </main>
 
-    <footer>
-        <p>© 2026 - Cucina - Made in Plymouth, England</p>
-    </footer>
 
-    <script src="../assets/js/script.js"></script>
-</body>
-</html>
+{% endblock %}

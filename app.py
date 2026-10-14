@@ -4,6 +4,8 @@ import os
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 import sqlite3
 
+import data
+
 import json
 from pathlib import Path
 
@@ -20,7 +22,11 @@ CORS(app)
 #     return render_template('index.html', csrf_token=generate_csrf())
 
 
-@app.route('/recipes', methods=['GET'])
+@app.route('/index', methods=['GET'])
+def index():
+    return render_template('index.html', cuisine_genres=data.CUISINE_GENRES)
+
+
 def get_all_recipes():
     try:
         connection = sqlite3.connect('cookbook.db')
@@ -47,7 +53,7 @@ def get_all_recipes():
 
 
 
-@app.route('/recipes/<int:id>', methods=['GET'])
+@app.route('/recipe/<int:id>', methods=['GET'])
 def get_one_recipe(id):
     try:
         connection = sqlite3.connect('cookbook.db')
@@ -101,19 +107,19 @@ def get_one_recipe(id):
     
         
     
-@app.route('/recipes', methods=['POST'])
+@app.route('/add-recipe', methods=['GET', 'POST'])
 def add_recipe():
-    ...
+    return render_template('add-recipe.html')
 
 
     
-@app.route('/recipes/<int:id>', methods=['PUT'])
+@app.route('/add-recipe/<int:id>', methods=['GET', 'PUT'])
 def update_recipe():
-    ...
+    return render_template('add-recipe.html')
     
 
     
-@app.route('/recipes/<int:id>', methods=['DELETE'])
+@app.route('/recipes/<int:id>', methods=['GET', 'DELETE'])
 def delete_recipe(id):
     connection = sqlite3.connect('cookbook.db')
     cursor = connection.cursor()
@@ -143,8 +149,12 @@ connection.commit()
 connection.close()
 
 
-@app.route('/contact', methods=['POST'])
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    return render_template('contact.html')
+
+
+def contact_form():
     
     user_input = {}
     if request.method == 'POST':
@@ -189,3 +199,22 @@ def contact():
 
     '''No return => data sent but error in the UI!'''
     return user_input
+
+
+@app.route('/favourites', methods=['GET', 'POST'])
+def favourites():
+    return render_template('favourites.html')
+
+
+
+@app.route('/log-in', methods=['GET', 'POST'])
+def log_in():
+    return render_template('log-in.html')
+
+
+
+@app.route('/sign-up', methods=['GET', 'POST'])
+def sign_up():
+    return render_template('sign-up.html')
+
+

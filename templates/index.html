@@ -1,39 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cucina : let's cook together !</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
+{% extends "base.html" %}
 
-    <header>
-    <nav role="navigation" class="hidden">
-
-        <button id="toggle-main-menu" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
-            <div class="line" id="l1"></div>
-            <div class="line" id="l2"></div>
-            <div class="line" id="l3"></div>
-        </button>
-
-        <ul id="nav1" aria-label="main menu">
-            <li><button><a href="index.html" aria-current="page">Home</a></button></li>
-            <li><button><a href="pages/favourites.html">Favourites ❤️</a></button></li>
-            <li><button><a href="pages/contact.html">Contact</a></button></li>
-            <li><button><a href="pages/add-recipe.html">Add recipe ➕</a></button></li>
-        </ul>
-        <ul id="nav2" aria-label="sign in or login menu">
-            <li><button><a href="pages/log-in.html">Login</a></button></li>
-            <li id="sign-up"><button><a href="pages/sign-up.html">Sign up</a></button></li>
-        </ul>
-    </nav>
-    
-    <h1>CUCINA</h1>
-    <p id="motto">Let's cook together! 🍝</p>
-    </header>
-
-    <main id="main-content">
+{% block content %}
 
     <section class="banner">
         <img id="banner-img" src="assets/images/pexels-freestockpro-321598.jpg" alt="woman sitting at a table outdoors with a plate full of food">
@@ -46,15 +13,9 @@
             <button id="toggle-button" type="button" aria-expanded="true" aria-controls="cuisine-genres" aria-label="Collapse recipe type menu">➖</button>
             <ul id="cuisine-genres" class="minus">
                 <li><button type="button" id="show-all" class="filter-btn">SHOW ALL</button></li>
-                <li><button type="button" class="filter-btn">Italian</button></li>
-                <li><button type="button" class="filter-btn">French</button></li>
-                <li><button type="button" class="filter-btn">Meat</button></li>
-                <li><button type="button" class="filter-btn">Spicy</button></li>
-                <li><button type="button" class="filter-btn">Sweet & sour</button></li>
-                <li><button type="button" class="filter-btn">Sashimi and sushi</button></li>
-                <li><button type="button" class="filter-btn">Homemade hamburgers</button></li>
-                <li><button type="button" class="filter-btn">Cake</button></li>
-                <li><button type="button" class="filter-btn">Creamy dessert</button></li>
+                {% for c in cuisine_genres %}
+                <li><button type="button" class="filter-btn">{{ c }}</button></li>
+                {% endfor %}
             </ul>
         </aside>
 
@@ -72,12 +33,4 @@
         <p class="error">This field is required</p>
     </section>
 
-    </main>
-
-    <footer>
-        <p>© 2026 - Cucina - Made in Plymouth, England</p>
-    </footer>
-
-    <script src="assets/js/script.js"></script>
-</body>
-</html>
+{% endblock %}
