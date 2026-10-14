@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Sandra",
+    "email": "sandra@novelli-riquer.fr",
+    "subject": "Chocolate cake",
+    "message": "So, how did this cake turn out?"
+  },
+  {
+    "name": "Sandra",
+    "email": "sandra@novelli-riquer.fr",
+    "subject": "Python cooking",
+    "message": "Hi, this is a recipe combining Flask and Angular!"
+  }
+]
