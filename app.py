@@ -27,6 +27,7 @@ def index():
     return render_template('index.html', cuisine_genres=data.CUISINE_GENRES)
 
 
+@app.route('/api/recipes', methods=['GET'])
 def get_all_recipes():
     try:
         connection = sqlite3.connect('cookbook.db')

@@ -44,57 +44,91 @@ if (toggleButton) {
 
 
 
-let recipes = [];
 let recipeList = document.querySelector('#recipe-list');
 
 function createRecipeBox(recipe) {
-
+    
     let recipeBox = document.createElement('div');
-
+    
     recipeBox.innerHTML = `
     <div class="recipe-box">
     <img src="${recipe.imgSrc}" alt="">
     <button class="heart" data-id="${recipe.id}">🩶</button>
     <p class="recipe-title">${recipe.name}</p>
-    <p class="author">By ${recipe.author}</p>
+    <p class="author">By ${recipe.author || 'Anonymous'}</p>
     <button class="view-recipe" data-id="${recipe.id}">View</button>
     </div>
     `;
-
+    
     recipeList.appendChild(recipeBox);
 }
 
 
-function displayAllRecipes() {
 
-    recipes = [
-        {id: 1, name: 'Arrabiata pasta', imgSrc: 'assets/images/arrabiata_pasta.jpg', author: 'Sara Kelley', type: 'Italian'},
-        {id: 2, name: 'Roastbeef & potatoes', imgSrc: 'assets/images/roastbeef_potatoes.jpg', author: 'John O\'Connor', type: 'Meat'},
-        {id: 3, name: 'Tuna sushi', imgSrc: 'assets/images/tuna_sushi.jpg', author: 'Debbie Birmingham', type: 'Sashimi and sushi'},
-        {id: 4, name: 'Spring rolls', imgSrc: 'assets/images/spring_rolls.jpg', author: 'Damien Nguyen', type: 'Sweet & sour'},
-        {id: 5, name: 'Four season pizza', imgSrc: 'assets/images/four_season_pizza.jpg', author: 'Giani Livrieri', type: 'Italian'},
-        {id: 6, name: 'Tiramisù', imgSrc: 'assets/images/tiramisu.jpg', author: 'Anja Weisser', type: 'Cake'},
-        {id: 7, name: 'Blue cheese hamburger', imgSrc: 'assets/images/blue_cheese_hamburger.jpg', author: 'Wendy Heyward', type: 'Homemade hamburgers'},
-        {id: 8, name: 'Cheesecake', imgSrc: 'assets/images/cheesecake.jpg', author: 'Sandra Novelli-Riquer', type: 'Cake'},
-        {id: 9, name: 'Bruschetta', imgSrc: 'assets/images/bruschetta.jpg', author: 'Sandra Novelli-Riquer', type: 'Italian'},
-        {id: 10, name: 'Caprese salad', imgSrc: 'assets/images/caprese_salad.jpg', author: 'Gaetano Cremonese', type: 'Italian'},
-        {id: 11, name: 'Mini hamburgers', imgSrc: 'assets/images/mini_hamburgers.jpg', author: 'Julien Ndiaye', type: 'Homemade hamburgers'},
-        {id: 12, name: 'Chocolate cake', imgSrc: 'assets/images/chocolate_cake.jpg', author: 'Anja Weisser', type: 'Cake'},
+// FORMER VERSION.
 
-    ];
+// let recipes = [];
 
-    recipeList = document.querySelector('#recipe-list');
+// function displayAllRecipes() {
 
-    recipes.forEach((recipe) => {
-        createRecipeBox(recipe);
-    });
+//     recipes = [
+//         {id: 1, name: 'Arrabiata pasta', imgSrc: 'assets/images/arrabiata_pasta.jpg', author: 'Sara Kelley', type: 'Italian'},
+//         {id: 2, name: 'Roastbeef & potatoes', imgSrc: 'assets/images/roastbeef_potatoes.jpg', author: 'John O\'Connor', type: 'Meat'},
+//         {id: 3, name: 'Tuna sushi', imgSrc: 'assets/images/tuna_sushi.jpg', author: 'Debbie Birmingham', type: 'Sashimi and sushi'},
+//         {id: 4, name: 'Spring rolls', imgSrc: 'assets/images/spring_rolls.jpg', author: 'Damien Nguyen', type: 'Sweet & sour'},
+//         {id: 5, name: 'Four season pizza', imgSrc: 'assets/images/four_season_pizza.jpg', author: 'Giani Livrieri', type: 'Italian'},
+//         {id: 6, name: 'Tiramisù', imgSrc: 'assets/images/tiramisu.jpg', author: 'Anja Weisser', type: 'Cake'},
+//         {id: 7, name: 'Blue cheese hamburger', imgSrc: 'assets/images/blue_cheese_hamburger.jpg', author: 'Wendy Heyward', type: 'Homemade hamburgers'},
+//         {id: 8, name: 'Cheesecake', imgSrc: 'assets/images/cheesecake.jpg', author: 'Sandra Novelli-Riquer', type: 'Cake'},
+//         {id: 9, name: 'Bruschetta', imgSrc: 'assets/images/bruschetta.jpg', author: 'Sandra Novelli-Riquer', type: 'Italian'},
+//         {id: 10, name: 'Caprese salad', imgSrc: 'assets/images/caprese_salad.jpg', author: 'Gaetano Cremonese', type: 'Italian'},
+//         {id: 11, name: 'Mini hamburgers', imgSrc: 'assets/images/mini_hamburgers.jpg', author: 'Julien Ndiaye', type: 'Homemade hamburgers'},
+//         {id: 12, name: 'Chocolate cake', imgSrc: 'assets/images/chocolate_cake.jpg', author: 'Anja Weisser', type: 'Cake'},
 
-    return recipes;
+//     ];
+
+//     recipeList = document.querySelector('#recipe-list');
+
+//     recipes.forEach((recipe) => {
+//         createRecipeBox(recipe);
+//     });
+
+//     return recipes;
+// }
+
+
+async function fetchRecipes() {
+
+    try {
+        const response = await fetch('/api/recipes');
+
+        if (!response.ok) {
+            throw new Error(`Failed to get recipes: ${response.status}`)
+        }
+
+        const recipes = await response.json();
+
+        recipeList = document.querySelector('#recipe-list');
+    
+        recipes.forEach((recipe) => {
+            createRecipeBox(recipe);
+        })
+
+    }
+
+    catch (error) {
+        console.log(`Failed to get data: ${error}`)
+    }
+
 }
+
+
 
 if (banner) {
 
-    displayAllRecipes();
+    document.addEventListener('DOMContentLoaded', fetchRecipes);
+
+    // displayAllRecipes();
     
 
     // Filter menu.
