@@ -68,8 +68,8 @@ def get_all_recipes():
 
 
 @app.route('/recipe/<int:id>', methods=['GET'])
-def recipe():
-    render_template('recipe.html')
+def recipe(id):
+    return render_template('recipe.html')
 
 
 @app.route('/api/recipe/<int:id>', methods=['GET'])
@@ -187,7 +187,6 @@ def submit_contact():
                 'subject': data['subject'].strip(),
                 'message': data['msg'].strip(),
             }
-            
             
         # Insert message into DB:
         try:
