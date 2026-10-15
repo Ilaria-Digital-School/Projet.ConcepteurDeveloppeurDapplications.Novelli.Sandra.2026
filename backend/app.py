@@ -68,6 +68,11 @@ def get_all_recipes():
 
 
 @app.route('/recipe/<int:id>', methods=['GET'])
+def recipe():
+    render_template('recipe.html')
+
+
+@app.route('/api/recipe/<int:id>', methods=['GET'])
 def get_one_recipe(id):
     try:
         connection = sqlite3.connect('cookbook.db')
@@ -168,6 +173,7 @@ def contact():
     return render_template('contact.html')
 
 
+@app.route('/api/contact', methods=['GET', 'POST'])
 def submit_contact():
     
     try:
@@ -216,6 +222,7 @@ def submit_contact():
 
     '''No return => data sent but error in the UI!'''
     return user_input
+
 
 
 @app.route('/favourites', methods=['GET', 'POST'])
