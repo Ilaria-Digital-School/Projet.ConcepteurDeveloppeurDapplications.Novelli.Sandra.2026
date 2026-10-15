@@ -1,2 +1,3 @@
-A-CUCINA
-frontend
+A-CUCINA/
+.venv/
+__pycache__/
