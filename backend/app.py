@@ -1,13 +1,18 @@
 from flask import Flask, request, jsonify, session, render_template
 from flask_cors import CORS
 import os
-from flask_wtf.csrf import CSRFProtect, generate_csrf
+# from flask_wtf.csrf import CSRFProtect, generate_csrf
 import sqlite3
 
 import json
 from pathlib import Path
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder="../frontend/templates",
+    static_folder="../frontend/static",
+    static_url_path="/static",
+)
 # app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
 # CSRF = CSRFProtect(app)
 CORS(app)
