@@ -1,0 +1,456 @@
+const toggleButton = document.querySelector('#toggle-button');
+const cuisineGenres = document.querySelector('#cuisine-genres');
+const showAll = document.querySelector('#show-all');
+const toggleMainMenu = document.querySelector('#toggle-main-menu');
+const nav = document.querySelector('nav');
+const banner = document.querySelector('.banner');
+const favourites = document.querySelector('#favourites');
+
+
+// Mobile version: toggle main menu.
+
+function hideMainMenu() {
+    nav.classList.replace('visible', 'hidden');
+}
+
+function showMainMenu() {
+    nav.classList.replace('hidden', 'visible');
+}
+
+
+toggleMainMenu.addEventListener('click', function() {
+    nav.className === 'visible' ? hideMainMenu() : showMainMenu();
+})
+
+
+
+// Showing or hiding side menu.
+
+function hideSideMenu() {
+    cuisineGenres.classList.replace('minus', 'plus');
+    toggleButton.innerText = '➕';
+}
+
+function showSideMenu() {
+    cuisineGenres.classList.replace('plus', 'minus');
+    toggleButton.innerText = '➖';
+}
+
+if (toggleButton) {
+    toggleButton.addEventListener('click', function() {
+        cuisineGenres.className === 'minus' ? hideSideMenu() : showSideMenu();
+    });
+}
+
+
+
+let recipeList = document.querySelector('#recipe-list');
+
+function createRecipeBox(recipe) {
+    
+    let recipeBox = document.createElement('div');
+    
+    recipeBox.innerHTML = `
+    <div class="recipe-box">
+    <img src="${recipe.imgSrc}" alt="">
+    <button class="heart" data-id="${recipe.id}">🩶</button>
+    <p class="recipe-title">${recipe.name}</p>
+    <p class="author">By ${recipe.author || 'Anonymous'}</p>
+    <button class="view-recipe" data-id="${recipe.id}">View</button>
+    </div>
+    `;
+    
+    recipeList.appendChild(recipeBox);
+}
+
+
+
+// FORMER VERSION.
+
+// let recipes = [];
+
+// function displayAllRecipes() {
+
+//     recipes = [
+//         {id: 1, name: 'Arrabiata pasta', imgSrc: 'assets/images/arrabiata_pasta.jpg', author: 'Sara Kelley', type: 'Italian'},
+//         {id: 2, name: 'Roastbeef & potatoes', imgSrc: 'assets/images/roastbeef_potatoes.jpg', author: 'John O\'Connor', type: 'Meat'},
+//         {id: 3, name: 'Tuna sushi', imgSrc: 'assets/images/tuna_sushi.jpg', author: 'Debbie Birmingham', type: 'Sashimi and sushi'},
+//         {id: 4, name: 'Spring rolls', imgSrc: 'assets/images/spring_rolls.jpg', author: 'Damien Nguyen', type: 'Sweet & sour'},
+//         {id: 5, name: 'Four season pizza', imgSrc: 'assets/images/four_season_pizza.jpg', author: 'Giani Livrieri', type: 'Italian'},
+//         {id: 6, name: 'Tiramisù', imgSrc: 'assets/images/tiramisu.jpg', author: 'Anja Weisser', type: 'Cake'},
+//         {id: 7, name: 'Blue cheese hamburger', imgSrc: 'assets/images/blue_cheese_hamburger.jpg', author: 'Wendy Heyward', type: 'Homemade hamburgers'},
+//         {id: 8, name: 'Cheesecake', imgSrc: 'assets/images/cheesecake.jpg', author: 'Sandra Novelli-Riquer', type: 'Cake'},
+//         {id: 9, name: 'Bruschetta', imgSrc: 'assets/images/bruschetta.jpg', author: 'Sandra Novelli-Riquer', type: 'Italian'},
+//         {id: 10, name: 'Caprese salad', imgSrc: 'assets/images/caprese_salad.jpg', author: 'Gaetano Cremonese', type: 'Italian'},
+//         {id: 11, name: 'Mini hamburgers', imgSrc: 'assets/images/mini_hamburgers.jpg', author: 'Julien Ndiaye', type: 'Homemade hamburgers'},
+//         {id: 12, name: 'Chocolate cake', imgSrc: 'assets/images/chocolate_cake.jpg', author: 'Anja Weisser', type: 'Cake'},
+
+//     ];
+
+//     recipeList = document.querySelector('#recipe-list');
+
+//     recipes.forEach((recipe) => {
+//         createRecipeBox(recipe);
+//     });
+
+//     return recipes;
+// }
+
+let recipes = [];
+
+async function fetchRecipes() {
+
+    try {
+        const response = await fetch('/api/recipes');
+
+        if (!response.ok) {
+            throw new Error(`Failed to get recipes: ${response.status}`)
+        }
+
+        recipes = await response.json();
+        // console.log(recipes)
+
+        recipeList = document.querySelector('#recipe-list');
+    
+        recipes.forEach((recipe) => {
+            createRecipeBox(recipe);
+        })
+
+        return recipes;
+
+    }
+
+    catch (error) {
+        console.log(`Failed to get data: ${error}`)
+    }
+
+}
+
+
+
+if (banner) {
+
+    document.addEventListener('DOMContentLoaded', ()=> {
+        fetchRecipes();
+    })
+
+    // displayAllRecipes();
+    
+
+    // Filter menu.
+
+    const filters = document.querySelectorAll('.filter-btn');
+
+    filters.forEach(type => type.addEventListener('click', function() {
+        recipeList.innerHTML = '';
+        console.log('Menu button clicked')
+        console.log(recipes);
+        for (let recipe of recipes) {
+            if (type.innerText === recipe.type) {
+                createRecipeBox(recipe);
+            }
+        }
+    }));
+
+    showAll.addEventListener('click', function() {
+        fetchRecipes();
+    })
+}
+
+
+
+// Adding recipes to favourites.
+
+let favouriteRecipes = [];
+
+if (banner || favourites) {
+
+    recipeList.addEventListener('click', function(e) {
+        
+        const heartButton = e.target.closest('.heart');
+        
+        // To avoid errors if user clicks elsewhere on the recipeList.
+        if (!heartButton) {
+            return;
+        }
+
+        // console.log(heartButton);
+        // console.log(heartButton.dataset.id);
+        // console.log(recipes);
+        
+        const heartId = Number(heartButton.dataset.id);
+
+        let isFavourite = function() {
+            for (let fave of favouriteRecipes) {
+                if (fave.id === heartId) {
+                    return true;
+                }    
+            }
+            return false;
+        } 
+        
+        console.log(isFavourite());
+
+        if (!isFavourite()) {
+            for (let recipe of recipes) {
+                if (recipe.id === heartId) {
+                    // console.log(recipe);
+                    favouriteRecipes.push(recipe);
+                    heartButton.innerText = '❤️';
+                }
+            }
+        }
+
+        else {
+
+            const indexToRemove = favouriteRecipes.findIndex(fave => fave.id === heartId)
+
+            if (indexToRemove !== -1) {
+                favouriteRecipes.splice(indexToRemove, 1);
+                heartButton.innerText = '🩶';
+            }
+
+        }
+
+        console.log(favouriteRecipes);
+        
+    });
+}
+
+
+// let hearts = document.querySelectorAll('.heart');
+
+// hearts.forEach(heart => heart.addEventListener('click', function() {
+
+//     heart.innerText == '🩶' ? heart.innerText = '❤️' : heart.innerText = '🩶';
+
+//     // console.log(heart.parentElement.innerHTML);
+
+        
+//         // if (favouriteRecipes.indexOf(heart.parentElement.innerHTML) === -1) {
+//         //         favouriteRecipes.push(heart.parentElement.innerHTML);
+//         //     }
+            
+//         // if (!favouriteRecipes.includes(heart.parentElement.innerHTML)) {
+//         //         favouriteRecipes.push(heart.parentElement.innerHTML);
+//         //     }
+                
+//         // let favouriteRecipesSet = new Set(favouriteRecipes);
+//         // console.log(favouriteRecipesSet);
+        
+//         console.log(favouriteRecipes);
+//     }
+// ));
+         
+                
+
+                
+// function getFavourites() {
+//     return JSON.parse(localStorage.getItem('favourites'))  || [];
+// }
+
+// function saveFavourites(arr) {
+//     localStorage.setItem('favourites', JSON.stringify(arr));
+// }
+
+// recipeList.addEventListener('click', function(e) {
+
+//     const button = e.target.closest(".heart")
+    
+//     if (!button) {
+//         return;
+//     }
+
+//     const favouriteList = getFavourites();
+    
+//     let isFavourite = favouriteList.some(recipe => recipe.id === Number(button.dataset.id));
+//     console.log(`result = ${!isFavourite}`);
+//     if (!isFavourite) {
+//         const recipe = recipes.find(item => item.id === Number(button.dataset.id));
+
+//         favouriteList.push(recipe);
+//         saveFavourites(favouriteList);
+//         button.innerText = '❤️';
+//     }
+//     else {
+//         const index = favouriteList.findIndex(recipe => recipe.id === Number(button.dataset.id));
+//         if (index !== -1) {
+//             favouriteList.splice(index, 1);
+//             saveFavourites(favouriteList);
+//             button.innerText = '🩶';
+//         }
+//     }
+
+//     console.log(favouriteList);
+//     isFavourite = getFavourites().some(recipe => recipe.id === button.dataset.id);
+
+// });
+
+
+
+// Displaying recipe details.
+
+const recipeDetails = document.querySelector('#recipe-details');
+
+function showRecipeDetails(recipe) {
+    
+    let recipePage = document.createElement('div');
+    
+    recipePage.innerHTML = `
+    <h2>${recipe.name}</h2>
+    <p>By ${recipe.author}</p>
+    <img src="${recipe.imgSrc}">
+    <img src="${recipe.createdOn}">
+    <p>By ${recipe.prepTime}</p>
+    <p>By ${recipe.cookTime}</p>
+    <p>By ${recipe.servings}</p>
+
+    `
+
+    recipeDetails.appendChild(recipePage);
+
+}
+
+
+if (recipeList || banner) {
+
+    recipeList.addEventListener('click', function(e) {
+        // window.location.href = 'pages/recipe.html';
+
+        const viewButton = e.target.closest('.view-recipe'); 
+        
+        // To avoid errors if user clicks elsewhere on the recipeList.
+        if (!viewButton) {
+            return;
+        }
+        
+        console.log(viewButton.dataset.id);
+
+        const viewButtonId = Number(viewButton.dataset.id);
+
+        for (let recipe of recipes) {
+            if (recipe.id === viewButtonId) {
+                console.log(recipe);
+            }
+        }
+
+        location.href = `https://http://127.0.0.1:5000/recipe/${viewButtonId}`;
+        showRecipeDetails();
+        }
+    );
+}
+
+
+
+// Displaying favourite recipes.
+
+if (favourites) {
+    console.log('Favourite page')
+}
+
+
+
+// Form error handling.
+
+const forms = document.querySelectorAll('.forms');
+
+const contactForm = document.querySelector('#contact-form');
+const name = document.querySelector('#name');
+const email = document.querySelector('#email');
+const formMsg = document.querySelector('#form-msg');
+
+const signupForm = document.querySelector('#signup-form');
+const firstname = document.querySelector('#firstname');
+const pwd = document.querySelector('#pwd');
+const pwd2 = document.querySelector('#pwd2');
+const country = document.querySelector('#country');
+
+const loginForm = document.querySelector('#login-form');
+const loginErrorMsg = document.querySelector('#login-error');
+
+const fields = document.querySelectorAll(`
+    #contact-form input,
+    #contact-form textarea,
+    #signup-form input:not([type="radio"]):not([type="checkbox"]),
+    #signup-form select
+`);
+
+const errorMsg = document.querySelectorAll('.error');
+
+
+function showError(element) {
+    element.parentElement.classList.remove('success');
+    element.parentElement.classList.add('failure');
+}
+
+function showSuccess(element) {
+    element.parentElement.classList.remove('failure');
+    element.parentElement.classList.add('success');
+}
+
+function checkRequired(element) {
+    element.value.trim() === '' ? showError(element) : showSuccess(element);
+}
+
+if (errorMsg) {
+
+    function checkLength(element, minLength) {
+        element.value.length < minLength ? showError(element) : showSuccess(element);
+        const errorMsg = element.parentElement.querySelector('.error'); 
+        errorMsg.innerText =`${element.dataset.label} must be at least ${minLength} characters`;
+    }
+
+    function isValidEmail(email) {
+        !email.value.includes('@') || !email.value.includes('.') ? showError(email) : showSuccess(email);
+        const errorMsg = email.parentElement.querySelector('.error'); 
+        errorMsg.innerText = `Invalid email format`
+    }
+
+    function matchingPasswords(pwd, pwd2) {
+        pwd.value !== pwd2.value ? showError(pwd2) : showSuccess(pwd2);
+        const errorMsg = pwd2.parentElement.querySelector('.error'); 
+        errorMsg.innerText = `Passwords do not match`
+    }
+
+    
+    fields.forEach(f => f.addEventListener('input', function(e) {
+        
+        checkRequired(e.target);
+        
+        if (e.target === name) {checkLength(name, 3)}
+        else if (e.target === email) {checkLength(email, 8); isValidEmail(email)}
+        else if (e.target === formMsg) {checkLength(formMsg, 20)}
+        else if (e.target === firstname) {checkLength(firstname, 2)}
+        else if (e.target === pwd) {checkLength(pwd, 12)}
+        else if (e.target === pwd2) {matchingPasswords(pwd, pwd2)}
+        
+    }))
+    
+}
+
+
+// Under construct.
+
+forms.forEach(f => f.addEventListener('submit', function(e) {
+    e.preventDefault()
+    
+}))
+
+
+
+// Login form error handling.
+
+if (loginForm) {
+    loginForm.addEventListener('submit', function() {
+        // if email or password is invalid:
+        loginErrorMsg.style.visibility = 'visible';
+    })
+}
+
+
+// Reset forms on reload.
+
+window.addEventListener('load', function() {
+    forms.forEach(form => form.reset());
+    console.log(forms);
+})
