@@ -1,9 +1,8 @@
-<section id="favourite-list-container">
+<section id="favourite-list-container" aria-label="Recipe results">
 
     <h2>Your favourite recipes</h2>
 
-    <div class="recipe-list">
-
+    <div class="recipe-list" aria-live="polite" aria-busy="false">
         
         @for (recipe of favouriteService.favouriteRecipes(); track recipe.id) {
             <div class="recipe-box">

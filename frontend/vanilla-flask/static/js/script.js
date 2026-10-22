@@ -294,9 +294,7 @@ const recipeDetails = document.querySelector('#recipe-details');
 
 function showRecipeDetails(recipe) {
     
-    let recipePage = document.createElement('div');
-    
-    recipePage.innerHTML = `
+    recipeDetails.innerHTML = `
     <h2>${recipe.name}</h2>
     <p>By ${recipe.author}</p>
     <img src="${recipe.imgSrc}">
@@ -306,8 +304,33 @@ function showRecipeDetails(recipe) {
     <p>By ${recipe.servings}</p>
 
     `
+}
 
-    recipeDetails.appendChild(recipePage);
+
+
+async function fetchOneRecipe() {
+
+    let url = window.location.href;
+    let urlList = url.split('/');
+    let recipeId = urlList.splice(urlList.length, 1).toString();
+
+    try {
+        const response = await fetch(`/api/recipe/${recipeId}`);
+
+        if (!response.ok) {
+            throw new Error(`Failed to get recipe: ${response.status}`)
+        }
+
+        let recipe = await response.json();
+        // console.log(recipe)
+    
+        return recipe;
+        
+        }
+
+    catch (error) {
+        console.log(`Failed to get data: ${error}`)
+    }
 
 }
 
@@ -315,7 +338,6 @@ function showRecipeDetails(recipe) {
 if (recipeList || banner) {
 
     recipeList.addEventListener('click', function(e) {
-        // window.location.href = 'pages/recipe.html';
 
         const viewButton = e.target.closest('.view-recipe'); 
         
@@ -335,7 +357,7 @@ if (recipeList || banner) {
         }
 
         location.href = `https://http://127.0.0.1:5000/recipe/${viewButtonId}`;
-        showRecipeDetails();
+        // showRecipeDetails(viewButtonId);
         }
     );
 }

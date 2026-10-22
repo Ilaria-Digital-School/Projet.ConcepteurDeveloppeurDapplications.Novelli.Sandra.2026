@@ -17,6 +17,18 @@ header {
 
 main {
     margin: 2rem;
+    max-width: 95%;
+}
+
+h2 {
+    margin: 1rem auto;
+    max-width: max-content;
+    display: block;
+}
+
+h3 {
+    margin: 3rem auto 1.5rem;
+    text-decoration: underline;
 }
 
 a {
@@ -24,8 +36,31 @@ a {
     color: blueviolet;
 }
 
+
+/* HEADER */
+
+/* Navigation menu */
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: blueviolet;
+}
+
+/* Header */
+
+/* Navigation menu */
+
+#toggle-main-menu {
+    display: none;
+}
+
 nav {
     display: flex;
+    justify-content: space-between;
 }
 
 nav a {
@@ -34,41 +69,56 @@ nav a {
 
 nav ul {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 #nav1 {
+    flex-direction: row;
     justify-content: flex-start;
-    width: 50%;
+    /* width: 40%; */
 }
 
 #nav2 {
+    flex-direction: row;
     justify-content: flex-end;
-    width: 50%;
+    /* margin-left: auto; */
+    /* width: 30%; */
 }
 
 nav li {
+    margin: 0 0.6rem;
+    list-style: none;
+}
+
+nav button {
+    border: 1px solid silver;
+    border-radius: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 10rem;
     height: 3rem;
+    background-color: transparent;
     padding: 6px 10px;
-    border: 1px solid silver;
-    border-radius: 25px;
     color: silver;
-    border-collapse: separate;
-    margin: 0 0.6rem;
-    list-style: none;
     font-size: 1.2em;
 }
 
-nav li:hover {
+nav button:hover {
     cursor: pointer;
     color: turquoise;
-    background-color:  rgba(50, 50, 50, 0.6);
+    background-color: var(--highlight-background-color);
     box-shadow: 0 0 6px 4px turquoise;
+}
+
+#sign-up {
+    border: 3px solid silver;
+    color: silver;
+    background-color: blue;
+}
+
+#sign-up:hover {
+    color: turquoise;
 }
 
 #greetings {
@@ -118,15 +168,8 @@ p#motto {
     font-size: 2em;
 }
 
-h2 {
-    margin: 1rem auto;
-    max-width: max-content;
-}
 
-h3 {
-    margin: 3rem auto 1.5rem;
-    text-decoration: underline;
-}
+/* Banner */
 
 .banner {
     position: relative;
@@ -140,23 +183,37 @@ h3 {
     width: 100%;
 }
 
-#img-text {
+#banner-text {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    z-index: 100;
+    z-index: 1;
     color: whitesmoke;
     font-size: 2.6em;
     font-weight: bold;
-    width: 26rem;
+    width: 40%;
     background-color: rgba(50, 50, 50, 0.2);
 }
+
+
+/* Side menu, searchbar and recipes */
+
+.page-layout-wrapper {
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+/* Side menu */
 
 #side-menu {
     display: inline-block;
     position: relative;
-    width: 26%;
+    width: 24%;
     background-color: blueviolet;
+    padding: 0.5rem;
 }
 
 #menu-title {
@@ -166,8 +223,8 @@ h3 {
 #toggle-menu {
     cursor: pointer;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.5rem;
+    right: 0.5rem;
     font-size: 1.66em;
     background-color: whitesmoke;
     border-radius: 5px;
@@ -203,21 +260,27 @@ h3 {
     background-color: rgba(50, 50, 50, 0.2);
 }
 
+
+/* Search bar */
+
 .search-bar-container {
     width: 60%;
     margin: 2rem auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     gap: 2rem;
 }
 
+
+/* Recipes */
+
 #recipe-list-container {
-    margin: 0 2.15rem;
+    margin: 0 auto;
     background-color: blue;
     display: inline-block;
     width: 70%;
-    height: fit-content;
+    /* height: fit-content; */
 }
 
 .recipe-list {
@@ -226,9 +289,8 @@ h3 {
     /* grid-template-columns: 200px 200px; */
     /* grid-template-columns: repeat(3, 1fr); */
     grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
-    gap: 4rem;
-    /* column-gap: 10px;
-    row-gap: 10px; */
+    column-gap: 2.5rem;
+    row-gap: 2.5rem;
     justify-items: center;
     align-items: center;
     background-color: beige;
@@ -350,6 +412,9 @@ h3 {
 #subscribe div button:hover {
     box-shadow: 0 0 6px 6px silver;
 }
+
+
+/* RECIPE DETAILS */
 
 .recipe-details {
     display: flex;
@@ -507,4 +572,261 @@ footer {
     padding: 1.5em;
     text-align: center;
     background-color: aqua;
+}
+
+
+
+
+/* Tablet version */
+
+@media only screen and (max-width: 1274px) {
+
+    .banner {
+        width: 90%;
+        min-width: 350px;
+    }
+
+    #banner-text {
+        font-size: 2em;
+    }
+
+    .page-layout-wrapper {
+        flex-direction: column;
+    }
+
+    #recipe-list-container {
+        display: block;
+        width: 89%;
+        margin: 2rem auto;
+    }
+
+    #side-menu {
+
+        display: block;
+        width: 40%;
+
+        #menu-title {
+            font-size: 1.66em;
+        }
+
+        #toggle-button {
+            font-size: 1.5em;
+        }
+
+        #cuisine-genres {
+            margin: 1.85rem 0.5rem;
+            width: 85%;
+        }
+    }
+
+    #subscribe {
+
+        #subscribe-text {
+            font-size: 1.3em;
+            width: 80%;
+        }
+
+        div {
+            width: 90%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        div input {
+            width: 90%;
+        }
+
+    }
+
+/* } */
+
+
+/* @media only screen and (max-width: 942px) { */
+
+    nav {
+        display: block;
+        position: fixed;
+        /* flex-direction: column; */
+        /* justify-content: flex-end; */
+        /* align-items: flex-start; */
+        background-color: black;
+        /* width: 80%; */
+        height: 18rem;
+        justify-content: space-between;
+        z-index: 2;
+        /* margin: 0;   
+        padding: 0;  */
+        box-shadow: 0 0 6px 6px black;
+        border-radius: 10px;
+    }
+
+    ul {
+        transition: opacity 0.4s ease-in-out;
+    }
+
+    #toggle-main-menu {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        /* flex-direction: column; */
+        width: 2.5rem;
+        height: 2.5rem;
+
+        .line {
+            position: absolute;
+            display: block;
+            background-color: silver;
+            width: 100%;
+            height: 2px;
+        }
+    }
+
+    #nav1,
+    #nav2 {
+        flex-direction: column;
+        align-items: center;
+        /* justify-content: flex-start; */
+    }
+
+    nav li {
+        margin: unset;
+        border: none;
+        border-radius: 28px;
+        width: 8rem;
+    }
+
+    nav button,
+    #sign-up {
+        /* display: flex; */
+        justify-content: left;
+        /* align-items: center; */
+        width: 8rem;
+        height: 2.5rem;
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        /* font-size: 1em; */
+    }
+
+    nav li:hover,
+    #sign-up:hover {
+        all: unset;
+        background-color: grey;
+    }
+
+    nav.visible {
+
+        ul {
+            display: flex;
+            opacity: 1;
+        }
+
+        #l2 {
+            visibility: hidden;
+        }
+
+        #l1 {
+            transform: rotate(45deg);
+        }
+
+        #l3 {
+            transform: rotate(-45deg);
+        }
+    }
+
+    nav.hidden {
+
+        background-color: transparent;
+        box-shadow: none;
+
+        ul {
+            opacity: 0;
+        }
+
+        #l2 {
+            visibility: visible;
+        }
+
+        #l1 {
+            top: 0;
+        }
+
+        #l2 {
+            top: 47%;
+        }
+
+        #l3 {
+            bottom: 0;
+        }
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    .banner {
+        width: 100%;
+        min-width: 350px;
+    }
+
+    #banner-text {
+        font-size: 1.6em;
+    }
+
+    #side-menu {
+        display: block;
+        margin: auto;
+        width: 80%;
+        min-width: 289px;
+
+        #menu-title {
+            /* font-size: 1.66em; */
+            font-size: 1.5em;
+        }
+
+        #toggle-button {
+            /* font-size: 1.5em; */
+            font-size: 1.2em;
+        }
+
+        #cuisine-genres {
+            margin-top: 0.7rem;
+        }
+
+        .filter-btn,
+        #show-all {
+            margin-left: 10%;
+        }
+
+        .filter-btn {
+            /* font-size: 1.4; */
+            font-size: 1.2em;
+        }
+    }
+
+    #subscribe {
+
+        width: 95%;
+        height: 20rem;
+
+        #subscribe div {
+            width: 90%;
+        }
+
+        div input {
+            width: 90%;
+        }
+
+    }
+
+    .forms {
+        width: 90%;
+    }
+
+    #sign-up-box {
+        margin-top: 2rem;
+    }
+
 }
