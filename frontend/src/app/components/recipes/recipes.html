@@ -1,27 +1,28 @@
-<section id="recipe-list-container" aria-label="Recipe results">
+<h2>Our recipes</h2>
 
-    <h2>Our recipes</h2>
+<section id="recipe-list-and-searchbar" aria-label="Recipe results">
 
-        <div class="search-bar-container">
-            <input type="text" placeholder="Search..." (input)="search($event.target.value)">
+    <div class="search-bar-container">
+        <h3>Find your favourite recipes!</h3>
+        <input id="searchbar" type="text" placeholder="Search..." (input)="search($event.target.value)">
+    </div>
+
+    <div class="recipe-list" aria-live="polite" aria-busy="false">
+
+        @for (recipe of filteredRecipes(); track recipe.id) {
+        <div class="recipe-box">
+            <img [src]="recipe.imgSrc" alt="">
+            <button class="heart" [attr.data-id]="recipe.id" (click)="faveOrUnfave(recipe)">{{ favouriteService.isFavourite(recipe.id) ? '❤️' : '🩶' }}</button>
+            <p class="recipe-title">{{recipe.name}}</p>
+            <p class="author">By {{recipe.author}}</p>
+            <button (click)="viewRecipeDetails(recipe.id)"class="view-recipe">View</button>
         </div>
+        }
 
-        <div class="recipe-list" aria-live="polite" aria-busy="false">
-
-            @for (recipe of filteredRecipes(); track recipe.id) {
-            <div class="recipe-box">
-                <img [src]="recipe.imgSrc" alt="">
-                <button class="heart" [attr.data-id]="recipe.id" (click)="faveOrUnfave(recipe)">{{ favouriteService.isFavourite(recipe.id) ? '❤️' : '🩶' }}</button>
-                <p class="recipe-title">{{recipe.name}}</p>
-                <p class="author">By {{recipe.author}}</p>
-                <button (click)="viewRecipeDetails(recipe.id)"class="view-recipe">View</button>
-            </div>
-            }
-
-            @empty {
-                <p>There are no recipes to display here</p>
-            }
-        
-        </div>
+        @empty {
+            <p>There are no recipes to display here</p>
+        }
+    
+    </div>
 
 </section>

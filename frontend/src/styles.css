@@ -3,3 +3,40 @@ app-users-table, app-favourites {
     width: 70%;
 }
 
+app-side-menu {
+    width: 24%;
+}
+
+app-recipes {
+    width: 72%;
+}
+
+
+@media only screen and (max-width: 1274px) {
+
+    app-side-menu, app-recipes {
+        display: block;
+        margin: auto;
+    }
+
+    app-side-menu {
+        width: 26rem;
+    }
+
+    app-recipes {
+        width: 85%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    app-recipes {
+        width: 100%;
+    }
+
+    app-side-menu {
+        width: 19rem;
+    }
+
+}

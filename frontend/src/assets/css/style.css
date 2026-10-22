@@ -17,7 +17,7 @@ header {
 
 main {
     margin: 2rem auto;
-    max-width: 95%;
+    width: 95%;
 }
 
 h2 {
@@ -29,6 +29,7 @@ h2 {
 h3 {
     margin: 3rem auto 1.5rem;
     text-decoration: underline;
+    text-align: center;
 }
 
 a {
@@ -139,7 +140,7 @@ nav button:hover {
 
 #admin-btn {
     background-color: blueviolet;
-    color:silver;
+    color: silver;
 }
 
 button {
@@ -155,7 +156,8 @@ button:hover {
     box-shadow: 0 0 6px 4px turquoise;
 }
 
-h1, p#motto {
+h1,
+p#motto {
     display: block;
     text-align: center;
     padding-top: 3rem;
@@ -174,7 +176,7 @@ p#motto {
 .banner {
     position: relative;
     margin: 0 auto 3rem;
-    width: 80%;
+    width: 66%;
 }
 
 #banner-img {
@@ -199,10 +201,11 @@ p#motto {
 /* Side menu, searchbar and recipes */
 
 .page-layout-wrapper {
+    width: 100%;
     display: flex;
-    /* align-items: center; */
-    flex-direction: column;
-    gap: 1.5rem;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 2%;
     margin: 4rem auto;
 }
 
@@ -212,9 +215,10 @@ p#motto {
 #side-menu {
     display: inline-block;
     position: relative;
-    width: 26%;
+    width: 100%;
     background-color: blueviolet;
     padding: 0.5rem;
+    margin-bottom: 2rem;
 }
 
 #toggle-menu-title {
@@ -222,8 +226,6 @@ p#motto {
     /* position: absolute; */
     top: 0.5rem;
     left: 0.5rem;
-    /* padding-bottom: 2rem; */
-    /* height: 10%; */
 }
 
 #toggle-menu {
@@ -265,50 +267,63 @@ p#motto {
     padding-bottom: 0.5rem;
 }
 
-.filter-btn:hover, #show-all:hover {
+.filter-btn:hover,
+#show-all:hover {
     background-color: rgba(50, 50, 50, 0.2);
+}
+
+
+/* Recipe list and searchbar block */
+
+#recipe-list-and-searchbar {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    /* height: fit-content; */
 }
 
 
 /* Search bar */
 
 .search-bar-container {
-    width: 60%;
-    margin: 2rem auto;
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    /* justify-content: space-evenly; */
-    gap: 2rem;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem 0;
+    background-color: blue;
+}
+
+.search-bar-container h3 {
+    margin: 0;
+}
+
+#searchbar {
+    width: 60%;
 }
 
 
 /* Recipes */
 
-#recipe-list-container {
-    margin: 0 auto;
-    background-color: blue;
-    display: inline-block;
-    width: 70%;
-    /* height: fit-content; */
-}
-
 .recipe-list {
+    margin: 2rem auto;
     width: 100%;
     display: grid;
     /* grid-template-columns: 200px 200px; */
     /* grid-template-columns: repeat(3, 1fr); */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
-    column-gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    column-gap: 1rem;
     row-gap: 2.5rem;
     justify-items: center;
     align-items: center;
     background-color: beige;
-    flex-wrap: wrap;
+    margin: 1rem auto;
 }
 
 .recipe-box {
     position: relative;
-    height: 20rem;
+    height: 21rem;
     width: 22rem;
     background-color: aqua;
 }
@@ -337,8 +352,8 @@ p#motto {
 .recipe-box img {
     position: absolute;
     left: 50%;
-    bottom: 8%;
-    transform: translate(-50%, -8%);
+    bottom: 10%;
+    transform: translate(-50%, -10%);
     width: 90%;
     font-size: 1.5em;
     border-radius: 25px;
@@ -462,7 +477,7 @@ p#motto {
 
 fieldset {
     border: 1px solid rgb(175, 171, 171);
-    padding: 15px 50px;
+    padding: 1px 40px;
     margin-bottom: 20px;
     border-radius: 5px;
 }
@@ -473,13 +488,14 @@ legend {
 }
 
 .forms div {
-    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
 label {
     font-weight: bold;
-    margin-bottom: 6rem;
-    padding-bottom: 6rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 input[type="text"],
@@ -542,12 +558,29 @@ textarea {
 }
 
 
+/* LOG-IN */
 
 #log-in-main {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
+}
+
+#sign-up-box {
+    display: flex;
+    height: 14rem;
+    /* width: 50%; */
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    border: 1px dashed blue;
+    border-radius: 25px;
+}
+
+#sign-up-prompt {
+    text-align: center;
+    font-size: 1.25em;
 }
 
 table {
@@ -560,7 +593,8 @@ thead {
     background-color: antiquewhite;
 }
 
-th, td {
+th,
+td {
     /* border-width:2px;
     border-style: solid;
     border-color: grey; */
@@ -606,16 +640,8 @@ footer {
         flex-direction: column;
     }
 
-    #recipe-list-container {
-        display: block;
-        width: 89%;
-        margin: 2rem auto;
-    }
 
     #side-menu {
-
-        display: block;
-        width: 40%;
 
         #toggle-menu-title {
             font-size: 1.66em;
@@ -647,9 +673,6 @@ footer {
     }
 
 
-
-/* @media only screen and (max-width: 942px) { */
-
     nav {
         width: 98%;
         display: block;
@@ -659,7 +682,7 @@ footer {
         /* align-items: flex-start; */
         background-color: black;
         height: 18rem;
-        z-index: 2; 
+        z-index: 2;
         box-shadow: 0 0 6px 6px black;
         border-radius: 10px;
     }
@@ -725,7 +748,6 @@ footer {
     nav.visible {
 
         ul {
-            display: flex;
             opacity: 1;
         }
 
@@ -787,10 +809,6 @@ footer {
     }
 
     #side-menu {
-        display: block;
-        margin: auto;
-        width: 80%;
-        min-width: 289px;
 
         #toggle-menu-title {
             /* font-size: 1.66em; */
@@ -822,6 +840,10 @@ footer {
 
     .forms {
         width: 90%;
+
+        fieldset {
+            padding: 1px 30px;
+        }
     }
 
     #sign-up-box {

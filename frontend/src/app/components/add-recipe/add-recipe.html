@@ -1,6 +1,3 @@
-
-<!-- NAME REQUIRED IN THE HTML -->
-
 <form class="forms" [formGroup]="addRecipeForm" (ngSubmit)="addOrEditRecipe()">
     
     <h2>{{ isOnEditMode ? 'Edit recipe' : 'Add recipe' }}</h2>
@@ -29,6 +26,7 @@
     <div>
         <label for="recipe-type" class="form-label">Type</label>
         <select class="form-control" id="recipe-type" name="type" formControlName="type">
+            <option value="">Select a type...</option>
             <option value="italian">Italian</option>
             <option value="french">French</option>
             <option value="meat">Meat</option>
