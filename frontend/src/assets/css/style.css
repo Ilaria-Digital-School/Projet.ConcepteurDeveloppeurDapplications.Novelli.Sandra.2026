@@ -211,13 +211,18 @@ p#motto {
 #side-menu {
     display: inline-block;
     position: relative;
-    width: 24%;
+    width: 26%;
     background-color: blueviolet;
     padding: 0.5rem;
 }
 
-#menu-title {
+#toggle-menu-title {
     font-size: 1.85em;
+    /* position: absolute; */
+    top: 0.5rem;
+    left: 0.5rem;
+    /* padding-bottom: 2rem; */
+    /* height: 10%; */
 }
 
 #toggle-menu {
@@ -235,20 +240,23 @@ p#motto {
     background-color: silver;
 }
 
-#cooking-genres {
-    margin: 2rem 2.5rem;
-}
-
-#cooking-genres.minus {
-    visibility: visible;
-}
-
-#cooking-genres.plus {
-    visibility: hidden;
+#cuisine-genres {
+    margin: 10%;
 }
 
 
-.menu-filter, #show-all {
+#cuisine-genres.minus {
+    display: block;
+}
+
+#cuisine-genres.plus {
+    display: none;
+}
+
+
+.filter-btn {
+    margin-top: unset;
+    margin-bottom: unset;
     cursor: pointer;
     list-style: none;
     font-size: 1.45em;
@@ -256,7 +264,7 @@ p#motto {
     padding-bottom: 0.5rem;
 }
 
-.menu-filter:hover, #show-all:hover {
+.filter-btn:hover, #show-all:hover {
     background-color: rgba(50, 50, 50, 0.2);
 }
 
@@ -605,18 +613,18 @@ footer {
         display: block;
         width: 40%;
 
-        #menu-title {
+        #toggle-menu-title {
             font-size: 1.66em;
         }
 
-        #toggle-button {
+        #toggle-menu {
             font-size: 1.5em;
         }
 
-        #cuisine-genres {
+        /* #cuisine-genres {
             margin: 1.85rem 0.5rem;
             width: 85%;
-        }
+        } */
     }
 
     #subscribe {
@@ -690,7 +698,7 @@ footer {
         /* justify-content: flex-start; */
     }
 
-    nav li {
+    nav button {
         margin: unset;
         border: none;
         border-radius: 28px;
@@ -710,7 +718,7 @@ footer {
         /* font-size: 1em; */
     }
 
-    nav li:hover,
+    nav button:hover,
     #sign-up:hover {
         all: unset;
         background-color: grey;
@@ -781,29 +789,21 @@ footer {
         width: 80%;
         min-width: 289px;
 
-        #menu-title {
+        #toggle-menu-title {
             /* font-size: 1.66em; */
             font-size: 1.5em;
         }
 
-        #toggle-button {
+        #toggle-menu {
             /* font-size: 1.5em; */
             font-size: 1.2em;
         }
 
-        #cuisine-genres {
-            margin-top: 0.7rem;
-        }
-
-        .filter-btn,
-        #show-all {
-            margin-left: 10%;
-        }
 
         .filter-btn {
-            /* font-size: 1.4; */
             font-size: 1.2em;
         }
+
     }
 
     #subscribe {
