@@ -12,6 +12,7 @@ export class Header {
 
   private router = inject(Router);
   public cartService = inject(FavouriteService);
+  menuIsVisible = false;
 
 
   getConnectedUser() {
@@ -22,6 +23,10 @@ export class Header {
   logOut() {
     localStorage.removeItem('connectedUser');
     this.router.navigate(['/log-in']);
+  }
+
+  toggleHambugerMenu() {
+    this.menuIsVisible === true ? this.menuIsVisible = false : this.menuIsVisible = true;
   }
 
 }

@@ -1,7 +1,7 @@
 <header>
-    <nav role="navigation" class="hidden">
+    <nav role="navigation" [class.hidden]="menuIsVisible" [class.visible]="!menuIsVisible">
 
-        <button id="toggle-main-menu" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
+        <button (click)="toggleHambugerMenu()" id="toggle-main-menu" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
             <div class="line" id="l1"></div>
             <div class="line" id="l2"></div>
             <div class="line" id="l3"></div>

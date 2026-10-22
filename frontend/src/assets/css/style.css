@@ -16,7 +16,7 @@ header {
 }
 
 main {
-    margin: 2rem;
+    margin: 2rem auto;
     max-width: 95%;
 }
 
@@ -174,7 +174,7 @@ p#motto {
 .banner {
     position: relative;
     margin: 0 auto 3rem;
-    width: 60%;
+    width: 80%;
 }
 
 #banner-img {
@@ -203,6 +203,7 @@ p#motto {
     /* align-items: center; */
     flex-direction: column;
     gap: 1.5rem;
+    margin: 4rem auto;
 }
 
 
@@ -379,7 +380,7 @@ p#motto {
     gap: 2rem;
     height: 17rem;
     width: 60%;
-    margin: 4rem auto;
+    margin: 0 auto;
     border-radius: 25px;
     background-color: orangered;
 }
@@ -445,6 +446,9 @@ p#motto {
 .ingredient {
     padding: 0.5rem;
 }
+
+
+/* FORMS */
 
 .forms {
     background-color: aqua;
@@ -621,10 +625,6 @@ footer {
             font-size: 1.5em;
         }
 
-        /* #cuisine-genres {
-            margin: 1.85rem 0.5rem;
-            width: 85%;
-        } */
     }
 
     #subscribe {
@@ -646,24 +646,20 @@ footer {
 
     }
 
-/* } */
 
 
 /* @media only screen and (max-width: 942px) { */
 
     nav {
+        width: 98%;
         display: block;
         position: fixed;
         /* flex-direction: column; */
         /* justify-content: flex-end; */
         /* align-items: flex-start; */
         background-color: black;
-        /* width: 80%; */
         height: 18rem;
-        justify-content: space-between;
-        z-index: 2;
-        /* margin: 0;   
-        padding: 0;  */
+        z-index: 2; 
         box-shadow: 0 0 6px 6px black;
         border-radius: 10px;
     }
@@ -720,7 +716,9 @@ footer {
 
     nav button:hover,
     #sign-up:hover {
-        all: unset;
+        /* all: unset; */
+        border-radius: unset;
+        box-shadow: unset;
         background-color: grey;
     }
 
@@ -774,6 +772,11 @@ footer {
 
 @media only screen and (max-width: 768px) {
 
+    main {
+        width: 95%;
+        margin: 1rem auto;
+    }
+
     .banner {
         width: 100%;
         min-width: 350px;
@@ -810,10 +813,6 @@ footer {
 
         width: 95%;
         height: 20rem;
-
-        #subscribe div {
-            width: 90%;
-        }
 
         div input {
             width: 90%;

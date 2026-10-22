@@ -1,8 +1,9 @@
-<h2>{{ isOnEditMode ? 'Edit recipe' : 'Add recipe' }}</h2>
 
 <!-- NAME REQUIRED IN THE HTML -->
 
-<form class="forms" id="recipe-form" [formGroup]="addRecipeForm" (ngSubmit)="addOrEditRecipe()">
+<form class="forms" [formGroup]="addRecipeForm" (ngSubmit)="addOrEditRecipe()">
+    
+    <h2>{{ isOnEditMode ? 'Edit recipe' : 'Add recipe' }}</h2>
 
     <div>
         <label for="recipeName" class="form-label">Recipe</label>
