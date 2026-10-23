@@ -13,6 +13,7 @@ export class Header {
   private router = inject(Router);
   public cartService = inject(FavouriteService);
   menuIsVisible = false;
+  buttonIsActive = false;
 
 
   getConnectedUser() {
@@ -27,6 +28,7 @@ export class Header {
 
   toggleHambugerMenu() {
     this.menuIsVisible === true ? this.menuIsVisible = false : this.menuIsVisible = true;
+    this.buttonIsActive === true ? this.buttonIsActive = false : this.buttonIsActive = true;
   }
 
 }

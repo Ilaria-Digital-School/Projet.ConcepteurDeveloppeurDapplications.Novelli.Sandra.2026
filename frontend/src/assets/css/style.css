@@ -293,10 +293,11 @@ p#motto {
     gap: 0.5rem;
     padding: 1.5rem 0;
     background-color: blue;
+    border-radius: 15px;
 }
 
 .search-bar-container h3 {
-    margin: 0;
+    margin: unset;
 }
 
 #searchbar {
@@ -672,7 +673,6 @@ footer {
 
     }
 
-
     nav {
         width: 98%;
         display: block;
@@ -681,14 +681,11 @@ footer {
         /* justify-content: flex-end; */
         /* align-items: flex-start; */
         background-color: black;
-        height: 18rem;
+        height: 15.5rem;
         z-index: 2;
         box-shadow: 0 0 6px 6px black;
         border-radius: 10px;
-    }
-
-    ul {
-        transition: opacity 0.4s ease-in-out;
+        transition: opacity 0.6s ease-in-out;
     }
 
     #toggle-main-menu {
@@ -696,10 +693,13 @@ footer {
         display: flex;
         justify-content: center;
         align-items: center;
-        position: relative;
+        position: fixed;
+        z-index: 3;
         /* flex-direction: column; */
         width: 2.5rem;
         height: 2.5rem;
+        background-color: transparent;
+        border: none;
 
         .line {
             position: absolute;
@@ -708,6 +708,10 @@ footer {
             width: 100%;
             height: 2px;
         }
+    }
+
+    #toggle-main-menu:hover {
+        box-shadow: unset;
     }
 
     #nav1,
@@ -739,56 +743,53 @@ footer {
 
     nav button:hover,
     #sign-up:hover {
-        /* all: unset; */
         border-radius: unset;
         box-shadow: unset;
         background-color: grey;
     }
 
     nav.visible {
+        opacity: 1;
+        display: block;
 
-        ul {
-            opacity: 1;
+        @starting-style {
+            opacity: 0;
         }
+    }
 
-        #l2 {
-            visibility: hidden;
-        }
+    #toggle-main-menu.active #l2 {
+        visibility: hidden;
+    }
 
-        #l1 {
-            transform: rotate(45deg);
-        }
+    #toggle-main-menu.active #l1 {
+        transform: rotate(45deg);
+    }
 
-        #l3 {
-            transform: rotate(-45deg);
-        }
+    #toggle-main-menu.active #l3 {
+        transform: rotate(-45deg);
     }
 
     nav.hidden {
-
-        background-color: transparent;
-        box-shadow: none;
-
-        ul {
-            opacity: 0;
-        }
-
-        #l2 {
-            visibility: visible;
-        }
-
-        #l1 {
-            top: 0;
-        }
-
-        #l2 {
-            top: 47%;
-        }
-
-        #l3 {
-            bottom: 0;
-        }
+        opacity: 0;
+        display: none;
     }
+
+    #toggle-main-menu.off #l2 {
+        visibility: visible;
+    }
+
+    #toggle-main-menu.off #l1 {
+        top: 0;
+    }
+
+    #toggle-main-menu.off #l2 {
+        top: 47%;
+    }
+
+    #toggle-main-menu.off #l3 {
+        bottom: 0;
+    }
+
 }
 
 
