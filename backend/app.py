@@ -25,34 +25,71 @@ CORS(app)
 #     return render_template('index.html', csrf_token=generate_csrf())
 
 
+# @app.route('/recipes', methods=['GET'])
+# def get_all_recipes():
+#     try:
+#         connection = sqlite3.connect('cookbook.db')
+#         connection.execute('PRAGMA foreign_keys = ON;')
+#         connection.row_factory = sqlite3.Row
+#         cursor = connection.cursor()
+#         cursor.execute('''SELECT 
+#                     r.recipe_id AS id,
+#                     r.recipe_name AS name,
+#                     r.img_url AS imgSrc,
+#                     (u.firstname || ' ' || u.lastname) AS author,
+#                     c.category_name AS type
+#                     FROM recipe r
+#                     LEFT JOIN user_account u ON u.user_id = r.user_id
+#                     LEFT JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
+#                     LEFT JOIN category c ON c.category_id = rc.category_id
+#                     ORDER BY r.recipe_id
+#                     ''')
+#         recipes = cursor.fetchall()
+#         connection.close()
+        
+#         recipes_list = [dict(r) for r in recipes]
+
+#         return jsonify(recipes_list)
+    
+#     except Exception as error:
+#         return f'Error fetching data: {error}'
+    
+    
 @app.route('/recipes', methods=['GET'])
 def get_all_recipes():
+    connection = None
     try:
         connection = sqlite3.connect('cookbook.db')
         connection.execute('PRAGMA foreign_keys = ON;')
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
-        cursor.execute('''SELECT 
-                    r.recipe_id AS id,
-                    r.recipe_name AS name,
-                    r.img_url AS imgSrc,
-                    (u.firstname || ' ' || u.lastname) AS author,
-                    c.category_name AS type
-                    FROM recipe r
-                    LEFT JOIN user_account u ON u.user_id = r.user_id
-                    LEFT JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
-                    LEFT JOIN category c ON c.category_id = rc.category_id
-                    ORDER BY r.recipe_id
-                    ''')
-        recipes = cursor.fetchall()
-        connection.close()
-        
-        recipes_list = [dict(r) for r in recipes]
+        cursor.execute('''
+            SELECT
+                r.recipe_id AS id,
+                r.recipe_name AS name,
+                r.img_url AS imgSrc,
+                (u.firstname || ' ' || u.lastname) AS author,
+                json_group_array(c.category_name) AS categories
+            FROM recipe r
+            LEFT JOIN user_account u ON u.user_id = r.user_id
+            JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
+            JOIN category c ON c.category_id = rc.category_id
+            GROUP BY r.recipe_id
+            ORDER BY r.recipe_id
+        ''')
+        recipes_list = []
+        for row in cursor.fetchall():
+            recipe = dict(row)
+            recipe['categories'] = json.loads(recipe['categories'])
+            recipes_list.append(recipe)
 
         return jsonify(recipes_list)
-    
+
     except Exception as error:
-        return f'Error fetching data: {error}'
+        return jsonify({'error': f'Error fetching data: {error}'}), 500
+    finally:
+        if connection:
+            connection.close()
 
 
 
@@ -97,7 +134,6 @@ def get_one_recipe(id):
                     ORDER BY rs.step_number
                 ''', (id,))
         steps = [dict(r) for r in cursor.fetchall()]
-
         recipe = dict(recipe_simple_rows)
         recipe['ingredients'] = ingredients
         recipe['steps'] = steps

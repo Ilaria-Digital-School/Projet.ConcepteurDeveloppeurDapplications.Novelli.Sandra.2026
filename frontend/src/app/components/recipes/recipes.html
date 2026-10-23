@@ -4,7 +4,7 @@
 
     <div class="search-bar-container">
         <h3>Find your favourite recipes!</h3>
-        <input id="searchbar" type="text" placeholder="Search..." (input)="search($event.target.value)">
+        <input #searchbar id="searchbar" type="text" placeholder="Search..." (input)="searchValue.set(searchbar.value)">
     </div>
 
     <div class="recipe-list" aria-live="polite" aria-busy="false">

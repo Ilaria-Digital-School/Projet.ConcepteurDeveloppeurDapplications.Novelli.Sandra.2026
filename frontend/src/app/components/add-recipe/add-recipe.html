@@ -4,8 +4,8 @@
 
     <div>
         <label for="recipeName" class="form-label">Recipe</label>
-        <input type="text" class="form-control" id="recipeName" name="recipeName" formControlName="ngModel"
-            formControlName="name" required minlength="3">
+        <input type="text" class="form-control" id="recipeName" name="recipeName" formControlName="recipeName"
+            required minlength="3">
         @if (addRecipeForm.get('recipeName')?.invalid && (addRecipeForm.get('recipeName')?.touched || addRecipeForm.get('recipeName')?.dirty)) {
             @if (addRecipeForm.get('recipeName')?.errors?.['required']) {
                 <div class="error">This field is required</div>
@@ -46,12 +46,12 @@
         <div>
         <label for="instructions">Instructions</label>
         <textarea id="instructions" formControlName="instructions" placeholder="Type in your instructions..." required></textarea> <br>
-        @if (addRecipeForm.get('instructions')?.invalid && addRecipeForm.get('instructions')?.touched || addRecipeForm.get('instructions')?.dirty) {
+        @if (addRecipeForm.get('instructions')?.invalid && (addRecipeForm.get('instructions')?.touched || addRecipeForm.get('instructions')?.dirty)) {
             @if (addRecipeForm.get('instructions')?.errors?.['required']) {
-            <div class="error">This field is required</div>
+                <div class="error">This field is required</div>
             }
             @else if (addRecipeForm.get('instructions')?.errors?.['minlength']) {
-            <div class="error">Instructions must be at least 20 characters</div>
+                <div class="error">Instructions must be at least 20 characters</div>
             }
         }
     </div>

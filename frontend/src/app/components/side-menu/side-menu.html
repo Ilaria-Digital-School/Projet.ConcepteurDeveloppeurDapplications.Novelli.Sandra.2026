@@ -1,11 +1,15 @@
-<aside id="side-menu" aria-labelledby="menu-title">
+<aside id="side-menu" aria-labelledby="toggle-menu-title">
+    
     <p id="toggle-menu-title">Recipe types:</p>
+    
     <button id="toggle-menu" type="button" aria-expanded="true" aria-controls="cuisine-genres" aria-label="Collapse recipe type menu"
     (click)="toggleSideMenu()">{{listIsVisible === true ? '➖' : '➕'}}</button>
+    
     <ul id="cuisine-genres" [class.minus]="listIsVisible" [class.plus]="!listIsVisible">
-        <li id="show-all" class="filter-btn">SHOW ALL</li>
-        @for (option of menu; track menu[i].id; let i=$index) {
-            <li (click)="pickYourGenre()" class="filter-btn">{{option.name}}</li>
+        <li><button id="show-all" class="filter-btn" type="button" (click)="pickYourGenre(null)">SHOW ALL</button></li>
+        @for (option of menu; track option.id; let i=$index) {
+            <li><button class="filter-btn" (click)="pickYourGenre(option.name)">{{option.name}}</button></li>
         }
     </ul>
+
 </aside>

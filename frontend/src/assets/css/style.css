@@ -245,6 +245,7 @@ p#motto {
 
 #cuisine-genres {
     margin: 10%;
+    list-style: none;
 }
 
 
@@ -258,19 +259,25 @@ p#motto {
 
 
 .filter-btn {
+    background-color: unset;
     margin-top: unset;
     margin-bottom: unset;
-    cursor: pointer;
+    border: none;
+    color: black;
     list-style: none;
-    font-size: 1.45em;
+    font-size: 1.3em;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    width: 100%;
+    text-align: left;
 }
 
 .filter-btn:hover,
 #show-all:hover {
+    box-shadow: none;
     background-color: rgba(50, 50, 50, 0.2);
 }
+
 
 
 /* Recipe list and searchbar block */
@@ -324,7 +331,7 @@ p#motto {
 
 .recipe-box {
     position: relative;
-    height: 21rem;
+    height: 20.5rem;
     width: 22rem;
     background-color: aqua;
 }
@@ -363,13 +370,13 @@ p#motto {
 .author {
     position: absolute;
     left: 5%;
-    bottom: 4%;
+    bottom: 5%;
 }
 
 .view-recipe {
     position: absolute;
     right: 5%;
-    bottom: 3%;
+    bottom: 5%;
     background-color: #2b58d4;
     cursor: pointer;
     padding: 0.3rem;

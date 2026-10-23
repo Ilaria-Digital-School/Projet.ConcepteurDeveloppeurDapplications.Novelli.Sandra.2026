@@ -29,7 +29,7 @@ export class FavouriteService {
     //     );
     // }
 
-    // BETA TESTING
+    
 
     addToFavourites(recipeObj: any) {
         this.favouriteRecipes.update(recipes => [...recipes, recipeObj]);

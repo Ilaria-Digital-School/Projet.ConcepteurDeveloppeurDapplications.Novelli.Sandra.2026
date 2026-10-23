@@ -17,14 +17,14 @@ export class AddRecipe {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
 
-  recipeID!: string;
+  recipeId!: string;
   recipes: any[] = [];
   recipe: any = {};
   isOnEditMode = false;
 
   ngOnInit(): void {
 
-    this.recipeID = this.activatedRoute.snapshot.paramMap.get('id') || '';
+    this.recipeId = this.activatedRoute.snapshot.paramMap.get('id') || '';
 
     this.addRecipeForm = this.formBuilder.group({
       recipeName: ['', [Validators.required, Validators.minLength(3)]],
@@ -35,10 +35,10 @@ export class AddRecipe {
       instructions: ['', [Validators.required]],
     })
 
-    if (this.recipeID) {
+    if (this.recipeId) {
       this.isOnEditMode = true;
 
-      this.recipeService.getRecipeById(this.recipeID).subscribe({
+      this.recipeService.getRecipeById(this.recipeId).subscribe({
         next: (res: any) => {
           this.recipe = res;
         },
@@ -68,6 +68,7 @@ export class AddRecipe {
 
     this.recipeService.addRecipe(recipeFinal).subscribe({
       next: (res: any) => {
+        console.log(res);
         alert('Recipe added successfullly');
         this.router.navigate(['/home']);
       },
