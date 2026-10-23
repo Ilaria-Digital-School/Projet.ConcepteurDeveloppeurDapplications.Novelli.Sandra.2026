@@ -290,8 +290,8 @@ p#motto {
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.5rem 0;
+    gap: 1.5rem;
+    padding: 2.5rem 0;
     background-color: blue;
     border-radius: 15px;
 }
@@ -301,7 +301,7 @@ p#motto {
 }
 
 #searchbar {
-    width: 60%;
+    width: 66%;
 }
 
 
@@ -815,6 +815,10 @@ footer {
         bottom: 0;
     }
 
+    .recipe-details img {
+        width: 70%;
+    }
+
 }
 
 
@@ -853,6 +857,10 @@ footer {
 
     }
 
+    #searchbar {
+        width: 80%;
+    }
+
     #subscribe {
 
         width: 95%;
@@ -862,6 +870,10 @@ footer {
             width: 90%;
         }
 
+    }
+
+    .recipe-details img {
+        width: 91%;
     }
 
     .forms {

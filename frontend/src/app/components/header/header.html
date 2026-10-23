@@ -1,12 +1,12 @@
 <header>
 
-    <button (click)="toggleHambugerMenu()" id="toggle-main-menu" [class.active]="!buttonIsActive" [class.off]="buttonIsActive" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
+    <button (click)="toggleHambugerMenu()" id="toggle-main-menu" [class.active]="buttonIsActive" [class.off]="!buttonIsActive" aria-label="Menu" aria-expanded="false" aria-controls="nav1 nav2">
         <div class="line" id="l1"></div>
         <div class="line" id="l2"></div>
         <div class="line" id="l3"></div>
     </button>
 
-    <nav role="navigation" class="hidden" [class.visible]="!menuIsVisible" [class.hidden]="menuIsVisible">
+    <nav role="navigation" [class.hidden]="!menuIsVisible" [class.visible]="menuIsVisible">
 
         <ul id="nav1" aria-label="main menu">
             <li><button><a routerLink="/">Home</a></button></li>
