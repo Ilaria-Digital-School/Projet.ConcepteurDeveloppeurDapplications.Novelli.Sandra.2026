@@ -1,4 +1,4 @@
-<div id="#log-in-main">
+<div id="log-in-container">
 
     <section id="log-in-box">
         <form class="forms" class="forms" id="log-in-form" [formGroup]="logInForm" (ngSubmit)="logIn()">
@@ -21,7 +21,7 @@
                 <button type="submit">Submit</button>
 
                 <div>
-                    <p>Not registered yet? <a routerLink="/sign-up">Create your account</a></p>
+                    <p>Not registered yet? Create your account!</p>
                 </div>
             </fieldset>
 
@@ -30,7 +30,7 @@
 
     <section id="sign-up-box" aria-labelledby="signup-prompt">
         <p id="sign-up-prompt">Hello there! If you haven't got an account yet, join our cooking community.</p>
-        <button id="join-us-btn"><a href="sign-up.html">Sign up</a></button>
+        <button id="join-us-btn"><a routerLink="/sign-up">Sign up</a></button>
     </section>
 
 </div>

@@ -2,7 +2,7 @@
 
     <h2>Your favourite recipes</h2>
 
-    <div class="recipe-list" aria-live="polite" aria-busy="false">
+    <div class="recipe-list favourites" aria-live="polite" aria-busy="false">
         
         @for (recipe of favouriteService.favouriteRecipes(); track recipe.id) {
             <div class="recipe-box">
