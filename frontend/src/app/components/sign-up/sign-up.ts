@@ -12,7 +12,6 @@ import { UserService } from '../../services/user-service';
 })
 export class SignUp {
 
-
   signUpForm!: FormGroup;
   users: any[] = [];
 
@@ -21,7 +20,6 @@ export class SignUp {
   private userService = inject(UserService);
 
   ngOnInit(): void {
-    console.log('Hi, ngOnInit is running!');
 
     this.signUpForm = this.formBuilder.group({
       familyName: ['', [Validators.required, Validators.minLength(3)]],

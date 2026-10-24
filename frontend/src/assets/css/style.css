@@ -663,6 +663,16 @@ footer {
 
 @media only screen and (max-width: 1274px) {
 
+    #sign-up-btn, #admin-btn {
+        background-color: transparent;
+        border: none;
+        border-radius: none;
+    }
+
+    #nav2 li {
+        background-color: rgba(50, 50, 50, 0.2);
+    }
+
     .banner {
         width: 90%;
         min-width: 350px;

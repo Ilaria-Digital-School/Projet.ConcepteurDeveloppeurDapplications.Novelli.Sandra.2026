@@ -4,7 +4,7 @@
     <fieldset class="inscription-fieldset">
         <legend>Personnal details</legend>
         <div>
-            <label for="name">Name : </label>
+            <label for="name">Name</label>
             <input type="text" name="familyName" id="name" formControlName="familyName" placeholder="Your family Name" required>
             @if (signUpForm.get('familyName')?.invalid && (signUpForm.get('familyName')?.touched || signUpForm.get('familyName')?.dirty)) {
                 @if (signUpForm.get('familyName')?.errors?.['required']) {
@@ -16,7 +16,7 @@
             }
         </div>
         <div>
-            <label for="firstname">Firstname: </label>
+            <label for="firstname">Firstname</label>
             <input type="text" name="firstName" id="firstname" formControlName="firstName" placeholder="Your firstname" required>
             @if (signUpForm.get('firstName')?.invalid && (signUpForm.get('firstName')?.touched || signUpForm.get('firstName')?.dirty)) {
                 @if (signUpForm.get('firstname')?.errors?.['required']) {
@@ -29,7 +29,7 @@
         </div>
 
         <div>
-            <label for="email">Email: </label>
+            <label for="email">Email</label>
             <input type="email" id="email" name="email" formControlName="email" placeholder="exemple@email.com" required>
             @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched || signUpForm.get('email')?.dirty) {
                 @if (signUpForm.get('email')?.errors?.['required']) {
@@ -42,7 +42,7 @@
         </div>
 
         <div>
-            <label for="pwd">Mot de passe : </label>
+            <label for="pwd">Password</label>
             <input type="password" id="pwd" name="password" formControlName="pwd" placeholder="Enter your password" required>
             @if (signUpForm.get('pwd')?.invalid && signUpForm.get('pwd')?.touched || signUpForm.get('pwd')?.dirty) {
                 @if (signUpForm.get('pwd')?.errors?.['required']) {
@@ -57,7 +57,7 @@
             }
         </div>
         <div>
-            <label for="pwd2">Confirm your password: </label>
+            <label for="pwd2">Confirm your password</label>
             <input type="password" id="pwd2" name="password2" formControlName="pwd2" placeholder="Enter your password again" required>
             @if (signUpForm.get('pwd2')?.touched || signUpForm.get('pwd2')?.dirty) {
                 @if (signUpForm.get('pwd2')?.errors?.['required']) {
@@ -77,7 +77,7 @@
         <legend>Additional information</legend>
         <!-- Radio -->
         <div>
-            <label>Gender: </label>
+            <label>Gender (optional): </label><br>
             <input type="radio" id="female" name="gender" formControlName="gender" value="female">
             <label for="female"> Female </label>
             <input type="radio" id="male" name="gender" formControlName="gender" value="male">
@@ -86,7 +86,7 @@
 
         <!-- Checkbox -->
         <div>
-            <label>Interests: </label>
+            <label>Interests (optional): </label><br>
             <input type="checkbox" name="interets" id="browsing" formControlName="browsing" value="vetements">
             <label for="browsing">Browsing </label>
 

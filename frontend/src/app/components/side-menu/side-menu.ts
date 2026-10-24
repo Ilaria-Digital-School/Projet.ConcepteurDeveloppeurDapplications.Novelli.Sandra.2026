@@ -14,8 +14,6 @@ export class SideMenu {
   toggleButton!: string;
   listIsVisible = true;
 
-  // private recipeService = inject(RecipeService);
-
   private filterService = inject(FilterService);
   selectedCategory = this.filterService.selectedCategory;
 
