@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   // Destination
   userURL: string = 'http://localhost:5000/users';
+  loginURL: string = 'http://localhost:5000/login';
 
   // Delivery person
   private httpClient = inject(HttpClient);
@@ -29,15 +30,12 @@ export class UserService {
     return this.httpClient.delete(`${this.userURL}/${id}`);
   }
 
-  // ! '/userObj.id only necessary when using db.json.
   updateUser(userObj: any) {
-    return this.httpClient.put(this.userURL + '/' + userObj.id, userObj);
+    return this.httpClient.put(this.userURL, userObj);
   }
 
-  // ! GET + actual data if json-server but NOT while using actual back-end.
-  logIn(loginData: {email: string, pwd: string}): Observable<any>
-  {
-    return this.httpClient.get<any[]>(`${this.userURL}?email=${loginData.email}&pwd=${loginData.pwd}`);
+  logIn(loginData: {email: string, pwd: string}): Observable<any> {
+    return this.httpClient.post<any>(this.loginURL, loginData);
   }
 
   

@@ -57,7 +57,6 @@ CORS(app)
     
 @app.route('/recipes', methods=['GET'])
 def get_all_recipes():
-    connection = None
     try:
         connection = sqlite3.connect('cookbook.db')
         connection.execute('PRAGMA foreign_keys = ON;')
@@ -70,26 +69,25 @@ def get_all_recipes():
                 r.img_url AS imgSrc,
                 (u.firstname || ' ' || u.lastname) AS author,
                 json_group_array(c.category_name) AS categories
-            FROM recipe r
-            LEFT JOIN user_account u ON u.user_id = r.user_id
-            JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
-            JOIN category c ON c.category_id = rc.category_id
-            GROUP BY r.recipe_id
-            ORDER BY r.recipe_id
-        ''')
+                FROM recipe r
+                LEFT JOIN user_account u ON u.user_id = r.user_id
+                JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
+                JOIN category c ON c.category_id = rc.category_id
+                GROUP BY r.recipe_id
+                ORDER BY r.recipe_id
+            ''')
         recipes_list = []
         for row in cursor.fetchall():
             recipe = dict(row)
             recipe['categories'] = json.loads(recipe['categories'])
             recipes_list.append(recipe)
 
+        connection.close()
+        
         return jsonify(recipes_list)
 
     except Exception as error:
-        return jsonify({'error': f'Error fetching data: {error}'}), 500
-    finally:
-        if connection:
-            connection.close()
+        return jsonify({'error': f'Error fetching data: {error}'})
 
 
 
@@ -234,3 +232,56 @@ def contact():
 
     '''No return => data sent but error in the UI!'''
     return user_input
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    pwd = data.get('pwd')
+
+    if not email or not pwd:
+        return jsonify({'error': 'Email and password required'})
+
+    try:
+        connection = sqlite3.connect('cookbook.db')
+        connection.row_factory = sqlite3.Row
+        cursor = connection.cursor()
+        cursor.execute('''
+            SELECT user_id AS id, firstname, email, password, role
+            FROM user_account
+            WHERE email = ?
+        ''', (email,))
+        row = cursor.fetchone()
+        connection.close()
+
+        if row and pwd == row['password']:  # Use bcrypt.checkpw() for hashed passwords
+            return jsonify({'id': row['id'], 'firstname': row['firstname'], 'email': row['email'], 'role': row['role']})
+        else:
+            return jsonify({'error': 'Invalid credentials'})
+
+    except Exception as error:
+        return jsonify({'error': f'Server error: {error}'})
+
+        
+
+@app.route('/login', methods=['POST'])
+def sign_up():
+    
+    user_input = {}
+    if request.method == 'POST':
+        data = request.get_json()
+        
+        user_input = {
+            'firstname': data['firstname'].strip(),
+            'lastname': data['lastname'].strip(),
+            'email': data['email'].strip(),
+            'pwd': data['pwd'].strip(),
+            'pwd2': data['pwd2'].strip(),
+            'gender': data['gender'].strip(),
+            'interest': data['interest'],
+            'country': data['country']
+        }
+        
+        if not user_input:
+            return jsonify('Failed to get data')

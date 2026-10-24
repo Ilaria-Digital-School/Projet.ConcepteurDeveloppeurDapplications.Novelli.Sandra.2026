@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AddRecipe } from '../components/add-recipe/add-recipe';
 import {Recipe} from '../models/recipe-model';
 
 @Injectable({

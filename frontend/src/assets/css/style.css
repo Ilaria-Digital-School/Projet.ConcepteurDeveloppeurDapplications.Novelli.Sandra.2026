@@ -112,7 +112,7 @@ nav button:hover {
     box-shadow: 0 0 6px 4px turquoise;
 }
 
-#sign-up {
+#sign-up-btn {
     border: 3px solid silver;
     color: silver;
     background-color: blue;
@@ -122,9 +122,12 @@ nav button:hover {
     color: turquoise;
 }
 
+#admin-btn {
+    background-color: blueviolet;
+}
+
 #greetings {
     color: silver;
-    width: 26%;
     font-size: 1.4em;
 }
 

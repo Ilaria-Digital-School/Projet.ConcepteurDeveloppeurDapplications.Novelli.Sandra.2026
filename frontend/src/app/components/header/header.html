@@ -15,18 +15,22 @@
             <li><button><a routerLink="/contact">Contact</a></button></li>
         </ul>
 
+        @if (getConnectedUser()) {
+        <p id="greetings">Hello, welcome {{getConnectedUser().firstname}}!</p>
+            }
+            
         <ul id="nav2" aria-label="sign in or login menu">
-            @if (getConnectedUser()) {
-            <p id="greetings">Hi! Welcome, {{getConnectedUser().firstName}}</p>
-            <li><button><a routerLink="/log-in" (click)="logOut()">Logout</a></button></li>
-            }
-            @else if (!getConnectedUser()) {
+        @if (!getConnectedUser()) {
             <li><button><a routerLink="/log-in">Login</a></button></li>
-            <li><button id="sign-up"><a routerLink="/sign-up">Sign up</a></button></li>
+            <li><button id="sign-up-btn"><a routerLink="/sign-up">Sign up</a></button></li>
             }
-        @if (getConnectedUser().admin) {
-            <li><button><a routerLink="/admin">Admin</a></button></li>
+        @else if (getConnectedUser()) {
+            <li><button><a routerLink="/log-in" (click)="logOut()">Logout</a></button></li>
+            @if (getConnectedUser().role === 'admin') {
+                <li><button id="admin-btn"><a routerLink="/admin">Admin</a></button></li>
+                }
             }
+
         </ul>
     </nav>
 

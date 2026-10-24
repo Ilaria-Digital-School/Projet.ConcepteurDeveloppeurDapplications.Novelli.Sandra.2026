@@ -12,12 +12,12 @@ import { adminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
     {path: '', component: Home},
+    {path: 'recipe-details/:id', component: RecipeDetails},
     {path: 'favourites', component: Favourites},
     {path: 'add-recipe', component: AddRecipe},
     {path: 'contact', component: Contact},
     {path: 'log-in', component: LogIn},
     {path: 'sign-up', component: SignUp},
     {path: 'admin', component: Admin, canActivate: [adminGuard]},
-    {path: 'recipe-details/:id', component: RecipeDetails},
 
 ];

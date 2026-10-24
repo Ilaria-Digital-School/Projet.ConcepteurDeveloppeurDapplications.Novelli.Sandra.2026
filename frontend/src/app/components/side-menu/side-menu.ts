@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RecipeService } from '../../services/recipe-service';
+// import { RecipeService } from '../../services/recipe-service';
 import { Subject } from 'rxjs';
 import { FilterService } from '../../services/filter-service';
 
@@ -14,7 +14,7 @@ export class SideMenu {
   toggleButton!: string;
   listIsVisible = true;
 
-  private recipeService = inject(RecipeService);
+  // private recipeService = inject(RecipeService);
 
   private filterService = inject(FilterService);
   selectedCategory = this.filterService.selectedCategory;

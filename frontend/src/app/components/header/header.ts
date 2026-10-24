@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { FavouriteService } from '../../services/favourite-service';
+import { AuthService } from '../../services/auth-service';
+
 
 @Component({
   selector: 'app-header',
@@ -11,18 +12,20 @@ import { FavouriteService } from '../../services/favourite-service';
 export class Header {
 
   private router = inject(Router);
-  public cartService = inject(FavouriteService);
+  private authService = inject(AuthService);
+
   menuIsVisible = false;
   buttonIsActive = false;
+  
 
-
+  userOnline = this.authService.connectedUser;
+  
   getConnectedUser() {
-    const user = JSON.parse(localStorage.getItem('connectedUser') || 'null');
-    return user
+    return this.userOnline();
   }
 
   logOut() {
-    localStorage.removeItem('connectedUser');
+    this.authService.logOut();
     this.router.navigate(['/log-in']);
   }
 

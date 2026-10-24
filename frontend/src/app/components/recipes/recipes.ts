@@ -31,7 +31,7 @@ export class Recipes {
 
   filteredRecipes = computed(() => {
     const category = this.filterService.selectedCategory();
-    const search = this.searchValue().toLowerCase().trim();
+    const search = this.searchValue().toLowerCase();
 
     return this.recipes().filter(recipe =>
       (category === null || recipe.categories?.includes(category)) &&

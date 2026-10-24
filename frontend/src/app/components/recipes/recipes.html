@@ -20,7 +20,12 @@
         }
 
         @empty {
+            @if (filteredRecipes().length === 0) {
+                <p>Your search/filter returned no results</p>
+            }
+            @else {
             <p>There are no recipes to display here</p>
+            }
         }
     
     </div>
