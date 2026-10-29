@@ -22,12 +22,12 @@ export class SignUp {
   ngOnInit(): void {
 
     this.signUpForm = this.formBuilder.group({
-      familyName: ['', [Validators.required, Validators.minLength(3)]],
+      lastname: ['', [Validators.required, Validators.minLength(3)]],
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      pwd: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+      pwd: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(255)]],
       pwd2: ['', [Validators.required]],
-      gender: ['', Validators.required],
+      gender: [''],
       browsing: [false],
       contributing: [false],
       country: ['', Validators.required]
@@ -45,8 +45,6 @@ export class SignUp {
 
     // Check if identical.
     if (pwd !== pwd2) {
-      // 'passwordMismatch' doesn't have to be declared.
-      // It could be anything as long as it matches the argument in hasError().
       return { passwordMismatch: true };
     }
     return null;
@@ -60,12 +58,12 @@ export class SignUp {
 
     // To add checkboxes.
     let interests = [];
-    if (formValue.clothes) interests.push('clothes');
-    if (formValue.accessories) interests.push('accessories');
+    if (formValue.browsing) interests.push('browsing');
+    if (formValue.contributing) interests.push('contributing');
 
     // Create final object.
     const userFinal = {
-      familyName: formValue.familyName,
+      lastname: formValue.lastname,
       firstName: formValue.firstName,
       email: formValue.email,
       pwd: formValue.pwd,

@@ -673,6 +673,14 @@ footer {
         background-color: rgba(50, 50, 50, 0.2);
     }
 
+    #greetings {
+        position: fixed;
+        top: 1.25%;
+        right: 2%;
+        color: aqua;
+        font-size: 1rem;
+    }
+
     .banner {
         width: 90%;
         min-width: 350px;

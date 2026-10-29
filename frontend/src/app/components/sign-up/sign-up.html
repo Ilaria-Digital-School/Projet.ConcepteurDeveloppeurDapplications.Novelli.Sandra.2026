@@ -5,20 +5,20 @@
         <legend>Personnal details</legend>
         <div>
             <label for="name">Name</label>
-            <input type="text" name="familyName" id="name" formControlName="familyName" placeholder="Your family Name" required>
-            @if (signUpForm.get('familyName')?.invalid && (signUpForm.get('familyName')?.touched || signUpForm.get('familyName')?.dirty)) {
-                @if (signUpForm.get('familyName')?.errors?.['required']) {
+            <input type="text" name="lastname" id="name" formControlName="lastname" placeholder="Your lastname" required>
+            @if (signUpForm.get('lastname')?.invalid && (signUpForm.get('lastname')?.touched || signUpForm.get('lastname')?.dirty)) {
+                @if (signUpForm.get('lastname')?.errors?.['required']) {
                 <div class="error">This field is required</div>
                 }
-                @else if (signUpForm.get('familyName')?.errors?.['minlength']) {
+                @else if (signUpForm.get('lastname')?.errors?.['minlength']) {
                 <div class="error">Name must be at least 3 characters</div>
                 }    
             }
         </div>
         <div>
             <label for="firstname">Firstname</label>
-            <input type="text" name="firstName" id="firstname" formControlName="firstName" placeholder="Your firstname" required>
-            @if (signUpForm.get('firstName')?.invalid && (signUpForm.get('firstName')?.touched || signUpForm.get('firstName')?.dirty)) {
+            <input type="text" name="firstname" id="firstname" formControlName="firstName" placeholder="Your firstname" required>
+            @if (signUpForm.get('firstName')?.invalid && (signUpForm.get('firstname')?.touched || signUpForm.get('firstname')?.dirty)) {
                 @if (signUpForm.get('firstname')?.errors?.['required']) {
                 <div class="error">This field is required</div>
                 }
@@ -49,7 +49,7 @@
                 <div class="error">This field is required</div>
                 }
                 @else if (signUpForm.get('pwd')?.errors?.['minlength']) {
-                <div class="error">Password must be at least 8 characters</div>
+                <div class="error">Password must be at least 12 characters</div>
                 }
                 @else if (signUpForm.get('pwd')?.errors?.['maxlength']) {
                 <div class="error">Password cannot exceed 20 characters</div>
@@ -108,7 +108,7 @@
                 <option value="france">France</option>
                 <option value="spain">Spain</option>
                 <option value="italy">Italy</option>
-                <option value="switzerland">Suisse</option>
+                <option value="switzerland">Switzerland</option>
                 <option value="belgium">Belgium</option>
                 <option value="senegal">Senegal</option>
                 <option value="angola">Angola</option>
