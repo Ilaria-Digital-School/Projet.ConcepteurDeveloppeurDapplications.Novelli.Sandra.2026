@@ -43,7 +43,6 @@ export class Contact {
       next: (res: any) => {
         alert('Message sent successfully')
         this.contactForm.reset();
-        console.log(messageFinal);
       },
       error: (err) => {
         console.log(err);

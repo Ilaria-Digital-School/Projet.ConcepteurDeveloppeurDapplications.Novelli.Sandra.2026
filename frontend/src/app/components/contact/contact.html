@@ -29,7 +29,7 @@
     
     <div>
         <label for="subject">Subject</label>
-        <input type="text" id="name" name="subject" formControlName="subject" placeholder="Enter your subject" required>
+        <input type="text" id="subject" name="subject" formControlName="subject" placeholder="Enter your subject" required>
         @if (contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched || contactForm.get('subject')?.dirty) {
             @if (contactForm.get('subject')?.errors?.['required']) {
                 <div class="error">This field is required</div>
@@ -41,7 +41,7 @@
     </div>
     <div>
         <label for="form-msg">Message</label>
-        <textarea name="msg" formControlName="msg" placeholder="Type your message" required></textarea> <br>
+        <textarea id="form-msg" name="msg" formControlName="msg" placeholder="Type your message" required></textarea> <br>
         @if (contactForm.get('msg')?.invalid && contactForm.get('msg')?.touched || contactForm.get('msg')?.dirty) {
             @if (contactForm.get('msg')?.errors?.['required']) {
             <div class="error">This field is required</div>

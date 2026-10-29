@@ -6,7 +6,9 @@ import json
 from pathlib import Path
 
 from werkzeug.security import check_password_hash, generate_password_hash
-# from flask_wtf.csrf import CSRFProtect, generate_csrf
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 
 app = Flask(
     __name__,
@@ -14,16 +16,10 @@ app = Flask(
     static_folder="../frontend/static",
     static_url_path="/static",
 )
-# app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
-# CSRF = CSRFProtect(app)
+
+limiter = Limiter(get_remote_address, app=app)
+
 CORS(app)
-
-
-
-'''For CSRF security'''
-# @app.route('/')
-# def index():
-#     return render_template('index.html', csrf_token=generate_csrf())
     
     
 @app.route('/recipes', methods=['GET'])
@@ -202,6 +198,7 @@ with sqlite3.connect('messages.db') as connection:
 
 
 @app.route('/contact', methods=['POST'])
+@limiter.limit('5 per minute; 30 per day')
 def contact():
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
@@ -263,6 +260,7 @@ def contact():
     
 
 @app.route('/login', methods=['POST'])
+@limiter.limit('5 per 15 minutes')
 def login():
     data = request.get_json()
     email = data.get('email')

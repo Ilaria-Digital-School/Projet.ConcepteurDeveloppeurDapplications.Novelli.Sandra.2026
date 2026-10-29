@@ -42,7 +42,6 @@ export class LogIn {
         }
       },
       error: (err) => {
-        console.log(err);
         this.errorMsg = 'Invalid username or password';
       }
     });
