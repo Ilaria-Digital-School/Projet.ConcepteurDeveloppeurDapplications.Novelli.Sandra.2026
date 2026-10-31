@@ -58,8 +58,10 @@ export class SignUp {
 
     // To add checkboxes.
     let interests = [];
-    if (formValue.browsing) interests.push('browsing');
-    if (formValue.contributing) interests.push('contributing');
+    if (formValue.baking) interests.push('baking');
+    if (formValue.grilling) interests.push('grilling');
+    if (formValue.veggie) interests.push('veggie');
+    if (formValue.dessert) interests.push('dessert');
 
     // Create final object.
     const userFinal = {

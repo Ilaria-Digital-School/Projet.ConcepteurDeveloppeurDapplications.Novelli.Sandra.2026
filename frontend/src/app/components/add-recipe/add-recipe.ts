@@ -31,6 +31,9 @@ export class AddRecipe {
       imgSrc: ['', [Validators.required]],
       author: ['', [Validators.required, Validators.minLength(3)]],
       type: ['', [Validators.required]],
+      preparationTime: ['', [Validators.required]],
+      cookTime: ['', [Validators.required]],
+      servings: ['', [Validators.required]],
       ingredients: ['', [Validators.required]],
       instructions: ['', [Validators.required]],
     })
@@ -57,6 +60,10 @@ export class AddRecipe {
 
     const formValue = this.addRecipeForm.value;
 
+    let type = [];
+    let ingredients = [];
+    let steps = []; 
+
     const recipeFinal = {
       recipeName: formValue.recipeName,
       imgSrc: formValue.imgSrc,
@@ -73,7 +80,6 @@ export class AddRecipe {
         this.router.navigate(['/home']);
       },
       error: (err) => {
-        console.log(err);
         alert('Failed to add recipe');
       }
     })
