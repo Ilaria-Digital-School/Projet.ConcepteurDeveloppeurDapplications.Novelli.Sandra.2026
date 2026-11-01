@@ -555,14 +555,15 @@ textarea {
     min-height: 8rem;
 }
 
-.forms button {
+.forms button:not(.btn-add, .btn-remove) {
     background-color: #2b58d4;
     color: white;
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
     display: block;
-    margin: 10px auto;
+    margin: 1.25rem auto;
+    border: none;
 }
 
 .forms button:hover {
@@ -579,13 +580,16 @@ textarea {
 /* ADD RECIPE */
 
 div .dynamic-row {
+
     display: flex;
     flex-direction: row;
     column-gap: 0.5rem;
 
     select,
-    input {
+    input,
+    textarea {
         height: 2.5rem;
+        margin-top: unset;
     }
 }
 
@@ -593,12 +597,14 @@ div .dynamic-row {
 
 .btn-add,
 .btn-remove {
-    all: unset; 
-    max-height: 1rem;
-    width: 0.8rem;
+    background-color: #2b58d4;
+    color: white;
+    height: 2.5rem;
+    min-width: 2.5rem;
     text-align: center;
     font-weight: bold;
-    border-radius: 26px;
+    border-radius: 14px;
+    border: none;
 }
 
 
@@ -689,7 +695,8 @@ footer {
 
 @media only screen and (max-width: 1274px) {
 
-    #sign-up-btn, #admin-btn {
+    #sign-up-btn,
+    #admin-btn {
         background-color: transparent;
         border: none;
         border-radius: none;

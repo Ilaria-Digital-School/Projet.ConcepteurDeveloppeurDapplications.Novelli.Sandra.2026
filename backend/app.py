@@ -156,9 +156,10 @@ def display_favourites(user_id):
 
                     
     
+
 @app.route('/add-recipe', methods=['POST'])
 def add_recipe():
-    
+
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
         return jsonify(error='Invalid JSON'), 400
@@ -171,7 +172,7 @@ def add_recipe():
         if not (min_length <= len(value)):
             return None
         return value
-    
+
     def check_if_number(field, num_type):
         value_str = data.get(field)
         try:
@@ -184,22 +185,71 @@ def add_recipe():
     recipe_name = clean('recipeName', 3)
     img_url = clean('imgSrc', 5)
     author = clean('author', 5)
-    category = data.get('type')
+    categories = data.get('categories')
     prep_time = check_if_number('prepTime', float)
     cook_time = check_if_number('cookTime', float)
     servings = check_if_number('servings', int)
-    ingredients = clean('ingredients', 2)
-    steps = data.get('steps', 3)
-    
+    ingredients = data.get('ingredients')
+    steps = data.get('steps')
 
-    if None in (recipe_name, img_url, author, category, prep_time, cook_time, servings, ingredients, steps):
+    if (
+        None in (recipe_name, img_url, author, prep_time,cook_time, servings)
+        or not isinstance(categories, list)
+        or not categories
+        or not isinstance(ingredients, list)
+        or not ingredients
+        or not isinstance(steps, list)
+        or not steps
+    ):
         return jsonify(error='Invalid input'), 400
-    
+
+    # Validate ingredients
+    clean_ingredients = []
+
+    for ingredient in ingredients:
+        if not isinstance(ingredient, dict):
+            return jsonify(error='Invalid ingredient'), 400
+
+        ingredient_name = ingredient.get('ingredientName')
+
+        if not isinstance(ingredient_name, str):
+            return jsonify(error='Invalid ingredient name'), 400
+
+        ingredient_name = ingredient_name.strip()
+
+        if len(ingredient_name) < 1:
+            return jsonify(error='Invalid ingredient name'), 400
+
+        quantity = ingredient.get('quantity')
+        unit = ingredient.get('unit')
+
+        if quantity == '':
+            quantity = None
+        elif quantity is not None:
+            try:
+                quantity = float(quantity)
+                if quantity < 0:
+                    return jsonify(error='Invalid quantity'), 400
+            except (TypeError, ValueError):
+                return jsonify(error='Invalid quantity'), 400
+
+        if unit == '':
+            unit = None
+        elif unit is not None:
+            if not isinstance(unit, str):
+                return jsonify(error='Invalid unit'), 400
+            unit = unit.strip() or None
+
+        clean_ingredients.append(
+            (ingredient_name, quantity, unit)
+        )
+
     try:
         with sqlite3.connect('cookbook.db') as connection:
             connection.row_factory = sqlite3.Row
             connection.execute('PRAGMA foreign_keys = ON;')
             cursor = connection.cursor()
+
             cursor.execute('''
                 INSERT INTO recipe(
                     recipe_name,
@@ -207,52 +257,88 @@ def add_recipe():
                     author,
                     prep_time,
                     cook_time,
-                    servings)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                    ''',
-                    (recipe_name,
-                    img_url,
-                    author,
-                    prep_time,
-                    cook_time,
-                    servings),)
-            
+                    servings
+                )
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (
+                recipe_name,
+                img_url,
+                author,
+                prep_time,
+                cook_time,
+                servings
+            ))
+
             recipe_id = cursor.lastrowid
-            
-            for c in category:
-                cursor.executemany('''
+
+            for c in categories:
+                cursor.execute('''
                     INSERT INTO recipe_category(recipe_id, category_name)
                     VALUES (?, ?)
                 ''', (recipe_id, c))
 
-            for i in ingredients:
-                cursor.executemany('''
-                    INSERT INTO recipe_ingredient(recipe_id, ingredient_name)
-                    VALUES (?, ?)
-                ''', (recipe_id, i))
+            for ingredient_name, quantity, unit in clean_ingredients:
+
+                ingredient_row = cursor.execute('''
+                    SELECT ingredient_id
+                    FROM ingredient
+                    WHERE ingredient_name = ?
+                ''', (ingredient_name,)).fetchone()
+
+                if ingredient_row is None:
+                    return jsonify(
+                        error=f'Unknown ingredient: {ingredient_name}'
+                    ), 400
+
+                ingredient_id = ingredient_row['ingredient_id']
+
+                cursor.execute('''
+                    INSERT INTO recipe_ingredient(
+                        recipe_id,
+                        ingredient_id,
+                        quantity,
+                        unit
+                    )
+                    VALUES (?, ?, ?, ?)
+                ''', (
+                    recipe_id,
+                    ingredient_id,
+                    quantity,
+                    unit
+                ))
 
             for s in steps:
-                cursor.executemany('''
+                cursor.execute('''
                     INSERT INTO recipe_step(recipe_id, instruction)
                     VALUES (?, ?)
                 ''', (recipe_id, s))
-            
-            cursor.execute('SELECT * FROM recipe WHERE id = ?',
-                           (recipe_id,))
+
+            cursor.execute('''
+                SELECT * FROM recipe WHERE recipe_id = ?
+            ''', (recipe_id,))
+
             recipe_simple_rows = cursor.fetchone()
 
             connection.commit()
 
             recipe = dict(recipe_simple_rows)
-            recipe['category'] = [row['category_name'] for row in category]
-            recipe['ingredient'] = [row['ingredient_name'] for row in ingredients]
-            recipe['steps'] = [row['instruction'] for row in steps]
+            recipe['categories'] = categories
+            recipe['ingredients'] = [
+                {
+                    'ingredientName': ingredient_name,
+                    'quantity': quantity,
+                    'unit': unit
+                }
+                for ingredient_name, quantity, unit in clean_ingredients
+            ]
+            recipe['steps'] = steps
 
             return jsonify(recipe)
 
     except Exception as error:
         print(error)
         return jsonify(error=f'Failed to add recipe: {error}'), 500
+
 
 
     

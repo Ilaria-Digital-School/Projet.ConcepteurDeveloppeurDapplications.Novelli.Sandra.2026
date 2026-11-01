@@ -36,16 +36,17 @@
     <!-- Category (multiple) -->
     <div formArrayName="categories">
         <label class="form-label">Category</label>
-        @for (categoryControl of categories.controls; track $index) {
+        @for (categoryControl of categories.controls; track categoryControl; let i=$index) {
             <div class="dynamic-row">
-                <select class="form-control" [formControlName]="$index" [attr.aria-label]="'category ' + ($index + 1)">
+                <select class="form-control" [formControl]="categoryControl"
+                [attr.aria-label]="'category ' + (i + 1)">
                     <option value="">Select a category...</option>
                     @for (option of categoryOptions; track option.value) {
                         <option [value]="option.value">{{ option.label }}</option>
                     }
                 </select>
                 <button type="button" class="btn-add" (click)="addRow(categories)" aria-label="Add another category">+</button>
-                <button type="button" class="btn-remove" (click)="removeRow(categories, $index)"
+                <button type="button" class="btn-remove" (click)="removeRow(categories, i)"
                     [disabled]="categories.length === 1" aria-label="Remove this type">−</button>
             </div>
             @if (categoryControl.errors?.['required'] && (categoryControl.touched || categoryControl.dirty)) {
@@ -83,31 +84,34 @@
 
     <div formArrayName="ingredients">
         <label class="form-label">Ingredients</label>
-        @for (ingredientControl of ingredients.controls; track $index) {
-            <div class="dynamic-row">
-                <input type="text" class="form-control" [formControlName]="$index"
-                    [attr.aria-label]="'Ingredient ' + ($index + 1)" placeholder="e.g. 200 g flour">
-                <button type="button" class="btn-add" (click)="addRow(ingredients)"aria-label="Add another ingredient">+</button>
-                <button type="button" class="btn-remove" (click)="removeRow(ingredients, $index)"
-                    [disabled]="ingredients.length === 1" aria-label="Remove this ingredient">−</button>
+        @for (ingredient of ingredients.controls; track ingredient; let i = $index) {
+            <div [formGroupName]="i" class="dynamic-row">
+                
+                <!-- Quantity -->
+                <input type="text" class="form-control" formControlName="quantity" placeholder="100, 1.5..." [attr.aria-label]="'Quantity ' + (i + 1)">
+                <!-- Unit -->
+                <input type="text" class="form-control" formControlName="unit" placeholder="g, ml, tbsp..." [attr.aria-label]="'Unit ' + (i + 1)">
+                <!-- Ingredient name -->
+                <input type="text" class="form-control" formControlName="ingredientName" placeholder="chocolate" [attr.aria-label]="'Ingredient ID ' + (i + 1)">
+            
+                <button type="button" class="btn-add" (click)="addIngredient()">+</button>
+                <button type="button" class="btn-remove" (click)="removeRow(ingredients, i)" [disabled]="ingredients.length === 1">−</button>
             </div>
-            @if (ingredientControl.errors?.['required'] && (ingredientControl.touched || ingredientControl.dirty)) {
-                <div class="error">This field is required</div>
-            }
         }
+
     </div>
 
 
     <div formArrayName="steps">
         <label class="form-label">Instructions</label>
-        @for (stepControl of steps.controls; track $index) {
+        @for (stepControl of steps.controls; track stepControl; let i=$index) {
             <div class="dynamic-row">
-                <span class="step-number">{{ $index + 1 }}.</span>
-                <textarea class="form-control" rows="2" [formControlName]="$index"
-                    [attr.aria-label]="'Step ' + ($index + 1)" placeholder="Type in the next step..."></textarea>
-                    <button type="button" class="btn-add" (click)="addRow(steps)" aria-label="Add another step">+</button>
-                    <button type="button" class="btn-remove" (click)="removeRow(steps, $index)"
-                        [disabled]="steps.length === 1" aria-label="Remove this step">−</button>
+                <span class="step-number">{{ i + 1 }}.</span>
+                <textarea class="form-control" [formControl]="stepControl"
+                [attr.aria-label]="'Step ' + (i + 1)" placeholder="Type in the next step..."></textarea>
+                <button type="button" class="btn-add" (click)="addRow(steps)" aria-label="Add another step">+</button>
+                <button type="button" class="btn-remove" (click)="removeRow(steps, i)"
+                    [disabled]="steps.length === 1" aria-label="Remove this step">−</button>
             </div>
             @if (stepControl.errors?.['required'] && (stepControl.touched || stepControl.dirty)) {
                 <div class="error">This field is required</div>
