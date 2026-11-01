@@ -552,7 +552,7 @@ form textarea:focus {
 
 textarea {
     max-width: 100%;
-    min-height: 14rem;
+    min-height: 8rem;
 }
 
 .forms button {
@@ -573,6 +573,32 @@ textarea {
     cursor: not-allowed;
     background-color: grey;
     color: #fff;
+}
+
+
+/* ADD RECIPE */
+
+div .dynamic-row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+
+    select,
+    input {
+        height: 2.5rem;
+    }
+}
+
+
+
+.btn-add,
+.btn-remove {
+    all: unset; 
+    max-height: 1rem;
+    width: 0.8rem;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 26px;
 }
 
 

@@ -52,7 +52,8 @@ def get_all_recipes():
         return jsonify(recipes_list)
 
     except Exception as error:
-        return jsonify({'error': f'Error fetching data: {error}'})
+        print(error)
+        return jsonify(f'Error fetching data: {error}')
 
 
 
@@ -106,7 +107,8 @@ def get_one_recipe(id):
         return jsonify(recipe)
         
     except Exception as error:
-        return f'Error fetching data: {error}'
+        print(error)
+        return jsonify(f'Error fetching data: {error}')
     
     
 @app.route('/favourites/<int:id>', methods=['GET'])
@@ -149,7 +151,8 @@ def display_favourites(user_id):
             return jsonify(recipes_list)
         
     except Exception as error:
-        return f'Error fetching data: {error}'
+        print(error)
+        return jsonify(f'Error fetching data: {error}')
 
                     
     
@@ -160,33 +163,40 @@ def add_recipe():
     if not isinstance(data, dict):
         return jsonify(error='Invalid JSON'), 400
 
-    def sanitize(field, min_len, max_length):
+    def clean(field, min_length):
         value = data.get(field)
         if not isinstance(value, str):
             return None
         value = value.strip()
-        if not (min_len <= len(value) <= max_length):
+        if not (min_length <= len(value)):
             return None
         return value
+    
+    def check_if_number(field, num_type):
+        value_str = data.get(field)
+        try:
+            value = num_type(value_str)
+            if value >= 0:
+                return value
+        except (TypeError, ValueError):
+            return None
 
-    # CHANGE PARAMETERS IN ACCORDANCE WITH SQL DATABASE!!!
-    recipe_name = sanitize('recipeName', 2, 100)
-    img_url = sanitize('imgSrc', 3, 255)
-    author = data.get('author')
-    type = sanitize('type', 12, 255)
-    prep_time = sanitize('prepTime', 12, 255)
-    cook_time = sanitize('cookTime', 12, 255)
-    servings = sanitize('servings', 12, 255)
-    ingredients = data.get('ingredients')
-    instructions = data.get('instructions')
+    recipe_name = clean('recipeName', 3)
+    img_url = clean('imgSrc', 5)
+    author = clean('author', 5)
+    category = data.get('type')
+    prep_time = check_if_number('prepTime', float)
+    cook_time = check_if_number('cookTime', float)
+    servings = check_if_number('servings', int)
+    ingredients = clean('ingredients', 2)
+    steps = data.get('steps', 3)
     
 
-    if None in (recipe_name, img_url, author, type, ingredients, instructions):
+    if None in (recipe_name, img_url, author, category, prep_time, cook_time, servings, ingredients, steps):
         return jsonify(error='Invalid input'), 400
     
     try:
-        
-        with sqlite3.connect('recipes.db') as connection:
+        with sqlite3.connect('cookbook.db') as connection:
             connection.row_factory = sqlite3.Row
             connection.execute('PRAGMA foreign_keys = ON;')
             cursor = connection.cursor()
@@ -209,32 +219,40 @@ def add_recipe():
             
             recipe_id = cursor.lastrowid
             
-            for t in type:
-                cursor.execute('''
+            for c in category:
+                cursor.executemany('''
                     INSERT INTO recipe_category(recipe_id, category_name)
                     VALUES (?, ?)
-                ''', (recipe_id, t))
+                ''', (recipe_id, c))
+
+            for i in ingredients:
+                cursor.executemany('''
+                    INSERT INTO recipe_ingredient(recipe_id, ingredient_name)
+                    VALUES (?, ?)
+                ''', (recipe_id, i))
+
+            for s in steps:
+                cursor.executemany('''
+                    INSERT INTO recipe_step(recipe_id, instruction)
+                    VALUES (?, ?)
+                ''', (recipe_id, s))
             
             cursor.execute('SELECT * FROM recipe WHERE id = ?',
                            (recipe_id,))
             recipe_simple_rows = cursor.fetchone()
 
-            cursor.execute('''
-                    SELECT category_name FROM recipe_category
-                    WHERE recipe_id = ?''',
-                    (recipe_id,))
-            type_rows = cursor.fetchall()
-
             connection.commit()
 
             recipe = dict(recipe_simple_rows)
-            recipe['category'] = [row['category_name'] for row in type_rows]
+            recipe['category'] = [row['category_name'] for row in category]
+            recipe['ingredient'] = [row['ingredient_name'] for row in ingredients]
+            recipe['steps'] = [row['instruction'] for row in steps]
 
             return jsonify(recipe)
 
     except Exception as error:
         print(error)
-        return jsonify(error='Failed to add recipe'), 500
+        return jsonify(error=f'Failed to add recipe: {error}'), 500
 
 
     
@@ -251,9 +269,9 @@ def delete_recipe(id):
         with sqlite3.connect('cookbook.db') as connection:
             connection.execute('DELETE FROM recipe WHERE recipe_id = ?', (id,))
 
-
     except Exception as error:
-        return f'Falied to delete recipe {error}'
+        print(error)
+        return jsonify(f'Failed to delete recipe: {error}')
     
 
 
@@ -280,7 +298,7 @@ def contact():
     if not isinstance(data, dict):
         return jsonify(error='Invalid JSON'), 400
 
-    def sanitize(field, min_len, max_len):
+    def clean(field, min_len, max_len):
         value = data.get(field)
         if not isinstance(value, str):
             return None
@@ -289,13 +307,14 @@ def contact():
             return None
         return value
 
-    name = sanitize('username', 3, 100)
-    email = sanitize('email', 5, 255)
-    subject = sanitize('subject', 2, 150)
-    message = sanitize('msg', 20, 600)
+    name = clean('username', 3, 100)
+    email = clean('email', 5, 255)
+    subject = clean('subject', 2, 150)
+    message = clean('msg', 20, 600)
 
     if None in (name, email, subject, message):
-        return jsonify(error='Invalid input'), 400
+        print(error)
+        return jsonify(error=f'Invalid input: {error}'), 400
 
     user_input = {
         'name': name,
@@ -312,7 +331,8 @@ def contact():
                 (name, email, subject, message),
             )
     except Exception as error:
-        return jsonify(error='Could not save message'), 500
+        print(error)
+        return jsonify(error=f'Could not save message: {error}'), 500
 
     # Save to JSON file
     try:
@@ -329,7 +349,8 @@ def contact():
         with open('messages.json', 'w', encoding='utf-8') as json_file:
             json.dump(content, json_file, indent=2)
     except Exception:
-        return jsonify(error='Could not save to file'), 500
+        print(error)
+        return jsonify(error=f'Could not save to file: {error}'), 500
 
     return jsonify(user_input), 201
 
@@ -363,7 +384,7 @@ def login():
 
     except Exception as error:
         print(error)
-        return jsonify({'error': 'Server error'}), 500
+        return jsonify(error=f'Server error: {error}'), 500
 
         
 
@@ -374,7 +395,7 @@ def sign_up():
     if not isinstance(data, dict):
         return jsonify(error='Invalid JSON'), 400
 
-    def sanitize(field, min_len, max_len):
+    def clean(field, min_len, max_len):
         value = data.get(field)
         if not isinstance(value, str):
             return None
@@ -383,13 +404,13 @@ def sign_up():
             return None
         return value
 
-    firstname = sanitize('firstname', 2, 100)
-    lastname = sanitize('lastname', 3, 100)
-    email = data.get('email')
-    password = sanitize('password', 12, 255)
-    gender = data.get('gender')
-    interests = data.get('interests')
-    country = data.get('country')
+    firstname = clean('firstname', 2, 100)
+    lastname = clean('lastname', 3, 100)
+    email = clean('email', 5, 255)
+    password = clean('password', 12, 255)
+    gender = clean('gender', 0, 20)
+    interests = clean('interests', 0, 20)
+    country = clean('country', 0, 55)
     
 
     if None in (firstname, lastname, email, password, gender, interests, country):
@@ -446,6 +467,6 @@ def sign_up():
 
     except Exception as error:
         print(error)
-        return jsonify(error='Subscription failed'), 500
+        return jsonify(error=f'Subscription failed {error}'), 500
     
     
