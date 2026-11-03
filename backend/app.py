@@ -1,7 +1,5 @@
 from flask import Flask, request, jsonify, session, render_template
 from flask_cors import CORS
-import os
-from flask_wtf.csrf import CSRFProtect, generate_csrf
 import sqlite3
 
 import data
@@ -9,7 +7,9 @@ import data
 import json
 from pathlib import Path
 
-from flask import Flask
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 
 app = Flask(
@@ -19,16 +19,10 @@ app = Flask(
     static_url_path="/static",
 )
 
-# app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
-# CSRF = CSRFProtect(app)
+limiter = Limiter(get_remote_address, app=app)
+
 CORS(app)
 
-
-
-'''For CSRF security'''
-# @app.route('/')
-# def index():
-#     return render_template('index.html', csrf_token=generate_csrf())
 
 
 @app.route('/', methods=['GET'])
@@ -39,31 +33,35 @@ def index():
 @app.route('/api/recipes', methods=['GET'])
 def get_all_recipes():
     try:
-        connection = sqlite3.connect('cookbook.db')
-        connection.execute('PRAGMA foreign_keys = ON;')
-        connection.row_factory = sqlite3.Row
-        cursor = connection.cursor()
-        cursor.execute('''SELECT 
+        with sqlite3.connect('cookbook.db') as connection:
+            connection.execute('PRAGMA foreign_keys = ON;')
+            connection.row_factory = sqlite3.Row
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT
                     r.recipe_id AS id,
                     r.recipe_name AS name,
                     r.img_url AS imgSrc,
                     (u.firstname || ' ' || u.lastname) AS author,
-                    c.category_name AS type
+                    json_group_array(c.category_name) AS categories
                     FROM recipe r
                     LEFT JOIN user_account u ON u.user_id = r.user_id
-                    LEFT JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
-                    LEFT JOIN category c ON c.category_id = rc.category_id
+                    JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
+                    JOIN category c ON c.category_id = rc.category_id
+                    GROUP BY r.recipe_id
                     ORDER BY r.recipe_id
-                    ''')
-        recipes = cursor.fetchall()
-        connection.close()
+                ''')
+            recipes_list = []
+            for row in cursor.fetchall():
+                recipe = dict(row)
+                recipe['categories'] = json.loads(recipe['categories'])
+                recipes_list.append(recipe)
         
-        recipes_list = [dict(r) for r in recipes]
-
         return jsonify(recipes_list)
-    
+
     except Exception as error:
-        return f'Error fetching data: {error}'
+        print(error)
+        return jsonify(f'Error fetching data: {error}')
 
 
 
@@ -81,7 +79,7 @@ def get_one_recipe(id):
         cursor = connection.cursor()
         cursor.execute('''SELECT 
                     r.recipe_id AS id,
-                    (u.firstname || ' ' || u.lastname) AS author,
+                    (u.firstname || ' ' || u.lastname) as author,
                     r.recipe_name AS name,
                     r.img_url AS imgSrc,
                     r.prep_time AS prepTime,
@@ -113,7 +111,6 @@ def get_one_recipe(id):
                     ORDER BY rs.step_number
                 ''', (id,))
         steps = [dict(r) for r in cursor.fetchall()]
-
         recipe = dict(recipe_simple_rows)
         recipe['ingredients'] = ingredients
         recipe['steps'] = steps
@@ -122,29 +119,265 @@ def get_one_recipe(id):
         return jsonify(recipe)
         
     except Exception as error:
-        return f'Error fetching data: {error}'
+        print(error)
+        return jsonify(f'Error fetching data: {error}')
+   
+   
+
+@app.route('/favourites', methods=['GET'])
+def favourites():
+    return render_template('favourites.html')
     
+
+@app.route('/favourites/<int:id>', methods=['GET'])
+def display_favourites(user_id):
+
+    try:
+        with sqlite3.connect('cookbook') as connection:
+            connection.execute('PRAGMA foreign_keys = ON;')
+            connection.row_factory = sqlite3.Row
+            cursor = connection.cursor()
+
+            cursor.execute('''
+                SELECT
+                    r.recipe_id AS id,
+                    r.recipe_name AS name,
+                    r.img_url AS imgSrc,
+                    (u.firstname || ' ' || u.lastname) AS author,
+                    json_group_array(c.category_name) AS categories
+                    FROM recipe AS r
+                    JOIN user_favourite uf
+                    ON uf.recipe_id = r.recipe_id
+                    LEFT JOIN user_account u
+                    ON u.user_id = r.user_id
+                    JOIN recipe_category rc
+                    ON rc.recipe_id = r.recipe_id
+                    JOIN category AS c
+                    ON c.category_id = rc.category_id
+                    WHERE uf.user_id = ?
+                    GROUP BY r.recipe_id
+                    ORDER BY uf.favourited_on DESC
+            ''', (session['user_id'],))
+
+            recipes_list = []
+
+            for row in cursor.fetchall():
+                recipe = dict(row)
+                recipe['categories'] = json.loads(recipe['categories'])
+                recipes_list.append(recipe)
+                
+            return jsonify(recipes_list)
         
+    except Exception as error:
+        print(error)
+        return jsonify(f'Error fetching data: {error}')
+
     
-@app.route('/add-recipe', methods=['GET', 'POST'])
+@app.route('/add-recipe', methods=['GET'])
 def add_recipe():
     return render_template('add-recipe.html')
 
 
-    
-@app.route('/add-recipe/<int:id>', methods=['GET', 'PUT'])
-def update_recipe():
-    return render_template('add-recipe.html')
+@app.route('/add-recipe', methods=['GET', 'POST'])
+def submit_recipe():
+
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify(error='Invalid JSON'), 400
+
+    def clean(field, min_length):
+        value = data.get(field)
+        if not isinstance(value, str):
+            return None
+        value = value.strip()
+        if not (min_length <= len(value)):
+            return None
+        return value
+
+    def check_if_number(field, num_type, minimum=0):
+        value_str = data.get(field)
+        try:
+            value = num_type(value_str)
+            if value >= minimum:
+                return value
+        except (TypeError, ValueError):
+            return None
+
+    recipe_name = clean('recipeName', 3)
+    img_url = clean('imgSrc', 5)
+    author = clean('author', 5)
+    categories = data.get('categories')
+    prep_time = check_if_number('prepTime', float)
+    cook_time = check_if_number('cookTime', float)
+    servings = check_if_number('servings', int, 1)
+    ingredients = data.get('ingredients')
+    steps = data.get('steps')
+
+    if (
+        None in (recipe_name, img_url, author, prep_time,cook_time, servings)
+        or not isinstance(categories, list)
+        or not categories
+        or not isinstance(ingredients, list)
+        or not ingredients
+        or not isinstance(steps, list)
+        or not steps
+    ):
+        return jsonify(error='Invalid input'), 400
+
+    # Validate ingredients
+    clean_ingredients = []
+
+    for ingredient in ingredients:
+        if not isinstance(ingredient, dict):
+            return jsonify(error='Invalid ingredient'), 400
+
+        ingredient_name = ingredient.get('ingredientName')
+
+        if not isinstance(ingredient_name, str):
+            return jsonify(error='Invalid ingredient name'), 400
+
+        ingredient_name = ingredient_name.strip()
+
+        if len(ingredient_name) < 1:
+            return jsonify(error='Invalid ingredient name'), 400
+
+        quantity = ingredient.get('quantity')
+        unit = ingredient.get('unit')
+
+        if quantity == '':
+            quantity = None
+        elif quantity is not None:
+            try:
+                quantity = float(quantity)
+                if quantity < 0:
+                    return jsonify(error='Invalid quantity'), 400
+            except (TypeError, ValueError):
+                return jsonify(error='Invalid quantity'), 400
+
+        if unit == '':
+            unit = None
+        elif unit is not None:
+            if not isinstance(unit, str):
+                return jsonify(error='Invalid unit'), 400
+            unit = unit.strip() or None
+
+        clean_ingredients.append(
+            (ingredient_name, quantity, unit)
+        )
+
+    try:
+        with sqlite3.connect('cookbook.db') as connection:
+            connection.row_factory = sqlite3.Row
+            connection.execute('PRAGMA foreign_keys = ON;')
+            cursor = connection.cursor()
+
+            cursor.execute('''
+                INSERT INTO recipe(
+                    recipe_name,
+                    image_url,
+                    author,
+                    prep_time,
+                    cook_time,
+                    servings
+                )
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (
+                recipe_name,
+                img_url,
+                author,
+                prep_time,
+                cook_time,
+                servings
+            ))
+
+            recipe_id = cursor.lastrowid
+
+            for c in categories:
+                cursor.execute('''
+                    INSERT INTO recipe_category(recipe_id, category_name)
+                    VALUES (?, ?)
+                ''', (recipe_id, c))
+
+            for ingredient_name, quantity, unit in clean_ingredients:
+
+                ingredient_row = cursor.execute('''
+                    SELECT ingredient_id
+                    FROM ingredient
+                    WHERE ingredient_name = ?
+                ''', (ingredient_name,)).fetchone()
+
+                if ingredient_row is None:
+                    return jsonify(
+                        error=f'Unknown ingredient: {ingredient_name}'
+                    ), 400
+
+                ingredient_id = ingredient_row['ingredient_id']
+
+                cursor.execute('''
+                    INSERT INTO recipe_ingredient(
+                        recipe_id,
+                        ingredient_id,
+                        quantity,
+                        unit
+                    )
+                    VALUES (?, ?, ?, ?)
+                ''', (
+                    recipe_id,
+                    ingredient_id,
+                    quantity,
+                    unit
+                ))
+
+            for s in steps:
+                cursor.execute('''
+                    INSERT INTO recipe_step(recipe_id, instruction)
+                    VALUES (?, ?)
+                ''', (recipe_id, s))
+
+            cursor.execute('''
+                SELECT * FROM recipe WHERE recipe_id = ?
+            ''', (recipe_id,))
+
+            recipe_simple_rows = cursor.fetchone()
+
+            connection.commit()
+
+            recipe = dict(recipe_simple_rows)
+            recipe['categories'] = categories
+            recipe['ingredients'] = [
+                {
+                    'ingredientName': ingredient_name,
+                    'quantity': quantity,
+                    'unit': unit
+                }
+                for ingredient_name, quantity, unit in clean_ingredients
+            ]
+            recipe['steps'] = steps
+
+            return jsonify(recipe)
+
+    except Exception as error:
+        print(error)
+        return jsonify(error=f'Failed to add recipe: {error}'), 500
     
 
     
-@app.route('/recipes/<int:id>', methods=['GET', 'DELETE'])
+@app.route('/add-recipe/<int:id>', methods=['GET', 'PUT'])
+def update_recipe():
+    ...
+    
+
+
+@app.route('/recipes/<int:id>', methods=['DELETE'])
 def delete_recipe(id):
-    connection = sqlite3.connect('cookbook.db')
-    cursor = connection.cursor()
-    cursor.execute('DELETE FROM recipe WHERE recipe_id = ?', (id,))
-    connection.commit()
-    connection.close()
+    
+    try:
+        with sqlite3.connect('cookbook.db') as connection:
+            connection.execute('DELETE FROM recipe WHERE recipe_id = ?', (id,))
+
+    except Exception as error:
+        print(error)
+        return jsonify(f'Failed to delete recipe: {error}')
     
 
 
@@ -168,76 +401,197 @@ connection.commit()
 connection.close()
 
 
-@app.route('/contact', methods=['GET', 'POST'])
+@app.route('/contact', methods=['GET'])
 def contact():
     return render_template('contact.html')
 
 
 @app.route('/api/contact', methods=['GET', 'POST'])
-def submit_contact():
-    
+@limiter.limit('5 per minute; 30 per day')
+def send_message():
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify(error='Invalid JSON'), 400
+
+    def clean(field, min_len, max_len):
+        value = data.get(field)
+        if not isinstance(value, str):
+            return None
+        value = value.strip()
+        if not (min_len <= len(value) <= max_len):
+            return None
+        return value
+
+    name = clean('username', 3, 100)
+    email = clean('email', 5, 255)
+    subject = clean('subject', 2, 150)
+    message = clean('msg', 20, 600)
+
+    if None in (name, email, subject, message):
+        print(error)
+        return jsonify(error=f'Invalid input: {error}'), 400
+
+    user_input = {
+        'name': name,
+        'email': email,
+        'subject': subject,
+        'message': message,
+    }
+
+    # Save to database
     try:
-        user_input = {}
-        if request.method == 'POST':
-            data = request.get_json()
-            
-            user_input = {
-                'name': data['username'].strip(),
-                'email': data['email'].strip(),
-                'subject': data['subject'].strip(),
-                'message': data['msg'].strip(),
-            }
-            
-        # Insert message into DB:
-        try:
-            connection = sqlite3.connect('messages.db')
-            cursor = connection.cursor()
-            cursor.execute('INSERT INTO message(name, email, subject, message) VALUES (?, ?, ?, ?)', (user_input['name'], user_input['email'], user_input['subject'], user_input['message']))
-            connection.commit()
-            connection.close()
-            print('Data inserted successfully')
-        except Exception as error:
-            return f'Error inserting data: {error}'
-            
-        try:
-            file_path = Path('messages.json')
-            print(f'My path: {file_path}')
-            
-            if file_path.is_file():
-                with open('messages.json', 'r', encoding='utf-8') as json_file:
-                    content = json.load(json_file)
-                content.append(user_input)
-                with open('messages.json', 'w', encoding='utf-8') as json_file:    
-                    json.dump(content, json_file, indent=2)
-            else:
-                with open('messages.json', 'w', encoding='utf-8') as json_file:
-                    json.dump([user_input], json_file, indent=2)
-        except Exception as error:
-            return f'File error: {error}'   
-    
+        with sqlite3.connect('messages.db') as connection:
+            connection.execute(
+                'INSERT INTO message(name, email, subject, message) VALUES (?, ?, ?, ?)',
+                (name, email, subject, message),
+            )
     except Exception as error:
-        return f'Failed to get data. Error: {error}'   
-    
+        print(error)
+        return jsonify(error=f'Could not save message: {error}'), 500
 
-    '''No return => data sent but error in the UI!'''
-    return user_input
+    # Save to JSON file
+    try:
+        file_path = Path('messages.json')
+        
+        if file_path.is_file():
+            with open('messages.json', 'r', encoding='utf-8') as json_file:
+                content = json.load(json_file)
+        else:
+            content = []
+        
+        content.append(user_input)
+        
+        with open('messages.json', 'w', encoding='utf-8') as json_file:
+            json.dump(content, json_file, indent=2)
+    except Exception:
+        print(error)
+        return jsonify(error=f'Could not save to file: {error}'), 500
+
+    return jsonify(user_input), 201
 
 
-
-@app.route('/favourites', methods=['GET', 'POST'])
-def favourites():
-    return render_template('favourites.html', cuisine_genres=data.CUISINE_GENRES)
-
-
-
-@app.route('/log-in', methods=['GET', 'POST'])
+@app.route('/log-in', methods=['GET'])
 def log_in():
     return render_template('log-in.html')
 
 
 
-@app.route('/sign-up', methods=['GET', 'POST'])
+@app.route('/api/log-in', methods=['GET', 'POST'])
+@limiter.limit('5 per 15 minutes')
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    pwd = data.get('pwd')
+
+    if not email or not pwd:
+        return jsonify({'error': 'Email and password required'}), 400
+
+    try:
+        with sqlite3.connect('cookbook.db') as connection:
+            connection.row_factory = sqlite3.Row
+            cursor = connection.cursor()
+            cursor.execute('''
+                SELECT user_id AS id, firstname, email, password, role
+                FROM user_account
+                WHERE email = ?
+            ''', (email,))
+            row = cursor.fetchone()
+
+            if row and check_password_hash(row['password'], pwd):
+                return jsonify({'id': row['id'], 'firstname': row['firstname'], 'role': row['role']}), 200
+            else:
+                return jsonify({'error': 'Invalid credentials'}), 401
+
+    except Exception as error:
+        print(error)
+        return jsonify(error=f'Server error: {error}'), 500
+
+
+
+
+@app.route('/sign-up', methods=['GET'])
 def sign_up():
     return render_template('sign-up.html', countries=data.COUNTRIES)
 
 
+
+@app.route('/api/sign-up', methods=['POST'])
+def subscribe():
+    
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify(error='Invalid JSON'), 400
+
+    def clean(field, min_len, max_len):
+        value = data.get(field)
+        if not isinstance(value, str):
+            return None
+        value = value.strip()
+        if not (min_len <= len(value) <= max_len):
+            return None
+        return value
+
+    firstname = clean('firstname', 2, 100)
+    lastname = clean('lastname', 3, 100)
+    email = clean('email', 5, 255)
+    password = clean('password', 12, 255)
+    gender = clean('gender', 0, 20)
+    interests = clean('interests', 0, 20)
+    country = clean('country', 0, 55)
+    
+
+    if None in (firstname, lastname, email, password, gender, interests, country):
+        return jsonify(error='Invalid input'), 400
+    
+    try:
+        hashed_password = generate_password_hash(password)
+        
+        with sqlite3.connect('messages.db') as connection:
+            connection.row_factory = sqlite3.Row
+            connection.execute('PRAGMA foreign_keys = ON;')
+            cursor = connection.cursor()
+            cursor.execute('''
+                INSERT INTO user_account(
+                    firstname,
+                    lastname, 
+                    email,
+                    password,
+                    gender,
+                    country)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                    ''',
+                    (firstname,
+                    lastname,
+                    hashed_password,
+                    password,
+                    gender,
+                    country),)
+            
+            user_id = cursor.lastrowid
+            
+            for i in interests:
+                cursor.execute('''
+                    INSERT INTO user_interests(user_id, interest_name)
+                    VALUES (?, ?)
+                ''', (user_id, i))
+            
+            cursor.execute('SELECT * FROM user_account WHERE id = ?',
+                           (user_id,))
+            user_simple_rows = cursor.fetchone()
+
+            cursor.execute('''
+                    SELECT interest_name FROM user_interests
+                    WHERE user_id = ?''',
+                    (user_id,))
+            interests_rows = cursor.fetchall()
+
+            connection.commit()
+
+            user_account = dict(user_simple_rows)
+            user_account['interests'] = [row['interest_name'] for row in interests_rows]
+
+            return jsonify(user_account)
+
+    except Exception as error:
+        print(error)
+        return jsonify(error=f'Subscription failed {error}'), 500

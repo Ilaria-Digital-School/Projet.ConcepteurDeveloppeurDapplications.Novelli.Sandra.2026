@@ -14,7 +14,7 @@
             <ul id="cuisine-genres" class="minus">
                 <li><button type="button" id="show-all" class="filter-btn">SHOW ALL</button></li>
                 {% for c in cuisine_genres %}
-                <li><button type="button" class="filter-btn">{{ c }}</button></li>
+                    <li><button type="button" class="filter-btn">{{ c }}</button></li>
                 {% endfor %}
             </ul>
         </aside>
@@ -32,5 +32,8 @@
         </div>
         <p class="error">This field is required</p>
     </section>
+
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 {% endblock %}

@@ -18,7 +18,7 @@ function showMainMenu() {
 }
 
 
-toggleMainMenu.addEventListener('click', function() {
+toggleMainMenu.addEventListener('click', function () {
     nav.className === 'visible' ? hideMainMenu() : showMainMenu();
 })
 
@@ -37,7 +37,7 @@ function showSideMenu() {
 }
 
 if (toggleButton) {
-    toggleButton.addEventListener('click', function() {
+    toggleButton.addEventListener('click', function () {
         cuisineGenres.className === 'minus' ? hideSideMenu() : showSideMenu();
     });
 }
@@ -47,9 +47,9 @@ if (toggleButton) {
 let recipeList = document.querySelector('#recipe-list');
 
 function createRecipeBox(recipe) {
-    
+
     let recipeBox = document.createElement('div');
-    
+
     recipeBox.innerHTML = `
     <div class="recipe-box">
     <img src="${recipe.imgSrc}" alt="">
@@ -59,98 +59,79 @@ function createRecipeBox(recipe) {
     <button class="view-recipe" data-id="${recipe.id}">View</button>
     </div>
     `;
-    
+
     recipeList.appendChild(recipeBox);
 }
 
 
+let allRecipes = [];
 
-// FORMER VERSION.
-
-// let recipes = [];
-
-// function displayAllRecipes() {
-
-//     recipes = [
-//         {id: 1, name: 'Arrabiata pasta', imgSrc: 'assets/images/arrabiata_pasta.jpg', author: 'Sara Kelley', type: 'Italian'},
-//         {id: 2, name: 'Roastbeef & potatoes', imgSrc: 'assets/images/roastbeef_potatoes.jpg', author: 'John O\'Connor', type: 'Meat'},
-//         {id: 3, name: 'Tuna sushi', imgSrc: 'assets/images/tuna_sushi.jpg', author: 'Debbie Birmingham', type: 'Sashimi and sushi'},
-//         {id: 4, name: 'Spring rolls', imgSrc: 'assets/images/spring_rolls.jpg', author: 'Damien Nguyen', type: 'Sweet & sour'},
-//         {id: 5, name: 'Four season pizza', imgSrc: 'assets/images/four_season_pizza.jpg', author: 'Giani Livrieri', type: 'Italian'},
-//         {id: 6, name: 'Tiramisù', imgSrc: 'assets/images/tiramisu.jpg', author: 'Anja Weisser', type: 'Cake'},
-//         {id: 7, name: 'Blue cheese hamburger', imgSrc: 'assets/images/blue_cheese_hamburger.jpg', author: 'Wendy Heyward', type: 'Homemade hamburgers'},
-//         {id: 8, name: 'Cheesecake', imgSrc: 'assets/images/cheesecake.jpg', author: 'Sandra Novelli-Riquer', type: 'Cake'},
-//         {id: 9, name: 'Bruschetta', imgSrc: 'assets/images/bruschetta.jpg', author: 'Sandra Novelli-Riquer', type: 'Italian'},
-//         {id: 10, name: 'Caprese salad', imgSrc: 'assets/images/caprese_salad.jpg', author: 'Gaetano Cremonese', type: 'Italian'},
-//         {id: 11, name: 'Mini hamburgers', imgSrc: 'assets/images/mini_hamburgers.jpg', author: 'Julien Ndiaye', type: 'Homemade hamburgers'},
-//         {id: 12, name: 'Chocolate cake', imgSrc: 'assets/images/chocolate_cake.jpg', author: 'Anja Weisser', type: 'Cake'},
-
-//     ];
-
-//     recipeList = document.querySelector('#recipe-list');
-
-//     recipes.forEach((recipe) => {
-//         createRecipeBox(recipe);
-//     });
-
-//     return recipes;
-// }
-
-
-let recipes;
-
-async function fetchRecipes() {
+async function fetchAllRecipes() {
 
     try {
         const response = await fetch('/api/recipes');
 
         if (!response.ok) {
-            throw new Error(`Failed to get recipes: ${response.status}`)
+            throw new Error(`Failed to get recipes: ${response.status}`);
         }
 
-        recipes = await response.json();
+        allRecipes = await response.json();
 
-        recipeList = document.querySelector('#recipe-list');
-    
-        recipes.forEach((recipe) => {
+        allRecipes.forEach(recipe => {
             createRecipeBox(recipe);
         })
 
-        // return recipes;
+        return allRecipes;
 
+    } catch (error) {
+        console.error('Failed to get data:', error);
+        return [];
     }
+}
 
-    catch (error) {
-        console.log(`Failed to get data: ${error}`)
-    }
+
+function displaySomeRecipes(arr) {
+
+    recipeList.innerHTML = '';
+
+    arr.forEach(recipe => {
+        createRecipeBox(recipe);
+    })
+
 }
 
 
 
 if (banner) {
 
-    window.addEventListener('load', function() {
-        fetchRecipes();
-        });
+    window.addEventListener('load', function () {
+        fetchAllRecipes();
+    });
 
-    // displayAllRecipes();
-    
 
     // Filter menu.
 
     const filters = document.querySelectorAll('.filter-btn');
 
-    filters.forEach(type => type.addEventListener('click', function() {
+    filters.forEach(button => button.addEventListener('click', function () {
         recipeList.innerHTML = '';
-        for (let recipe of recipes) {
-            if (type.innerText === recipe.type) {
-                createRecipeBox(recipe);
-            }
+
+        async function filterRecipes() {
+
+            let recipes = await fetchAllRecipes();
+
+            let filterdArray = recipes.filter(recipe => recipe.categories.includes(button.innerText))
+
+            displaySomeRecipes(filterdArray);
+
         }
+
+        filterRecipes();
+
     }));
 
-    showAll.addEventListener('click', function() {
-        fetchRecipes();
+    showAll.addEventListener('click', function () {
+        fetchAllRecipes();
     })
 }
 
@@ -162,10 +143,10 @@ let favouriteRecipes = [];
 
 if (banner || favourites) {
 
-    recipeList.addEventListener('click', function(e) {
-        
+    recipeList.addEventListener('click', function (e) {
+
         const heartButton = e.target.closest('.heart');
-        
+
         // To avoid errors if user clicks elsewhere on the recipeList.
         if (!heartButton) {
             return;
@@ -174,18 +155,18 @@ if (banner || favourites) {
         // console.log(heartButton);
         // console.log(heartButton.dataset.id);
         // console.log(recipes);
-        
+
         const heartId = Number(heartButton.dataset.id);
 
-        let isFavourite = function() {
+        let isFavourite = function () {
             for (let fave of favouriteRecipes) {
                 if (fave.id === heartId) {
                     return true;
-                }    
+                }
             }
             return false;
-        } 
-        
+        }
+
         console.log(isFavourite());
 
         if (!isFavourite()) {
@@ -210,7 +191,7 @@ if (banner || favourites) {
         }
 
         console.log(favouriteRecipes);
-        
+
     });
 }
 
@@ -223,25 +204,25 @@ if (banner || favourites) {
 
 //     // console.log(heart.parentElement.innerHTML);
 
-        
+
 //         // if (favouriteRecipes.indexOf(heart.parentElement.innerHTML) === -1) {
 //         //         favouriteRecipes.push(heart.parentElement.innerHTML);
 //         //     }
-            
+
 //         // if (!favouriteRecipes.includes(heart.parentElement.innerHTML)) {
 //         //         favouriteRecipes.push(heart.parentElement.innerHTML);
 //         //     }
-                
+
 //         // let favouriteRecipesSet = new Set(favouriteRecipes);
 //         // console.log(favouriteRecipesSet);
-        
+
 //         console.log(favouriteRecipes);
 //     }
 // ));
-         
-                
 
-                
+
+
+
 // function getFavourites() {
 //     return JSON.parse(localStorage.getItem('favourites'))  || [];
 // }
@@ -253,13 +234,13 @@ if (banner || favourites) {
 // recipeList.addEventListener('click', function(e) {
 
 //     const button = e.target.closest(".heart")
-    
+
 //     if (!button) {
 //         return;
 //     }
 
 //     const favouriteList = getFavourites();
-    
+
 //     let isFavourite = favouriteList.some(recipe => recipe.id === Number(button.dataset.id));
 //     console.log(`result = ${!isFavourite}`);
 //     if (!isFavourite) {
@@ -290,15 +271,15 @@ if (banner || favourites) {
 
 if (recipeList || banner) {
 
-    recipeList.addEventListener('click', function(e) {
+    recipeList.addEventListener('click', function (e) {
 
         const viewButton = e.target.closest('.view-recipe');
-        
+
         // To avoid errors if user clicks elsewhere on the recipeList.
         if (!viewButton) {
             return;
         }
-        
+
         console.log(viewButton.dataset.id);
 
         const viewButtonId = Number(viewButton.dataset.id);
@@ -306,13 +287,13 @@ if (recipeList || banner) {
         for (let recipe of recipes) {
             if (recipe.id === viewButtonId) {
                 // console.log(recipe);
-                
+
                 window.location.href = `http://127.0.0.1:5000/recipe/${recipe.id}`;
-                
+
             }
         }
 
-        }
+    }
     );
 }
 
@@ -323,13 +304,13 @@ let recipeDetails = document.querySelector('#recipe-details');
 if (recipeDetails) {
 
     function showRecipeDetails(recipe) {
-        
+
         // let recipePage = document.createElement('div');
-        
+
         const ingredientsList = recipe.ingredients.map(i => `<li>${i.quantity || ''} ${i.unit || ''} ${i.name}</li>`).join('');
-        
+
         const stepsList = recipe.steps.map(s => `<li>${s.instruction}</li>`).join('');
-        
+
         recipeDetails.innerHTML = `
             <h2>${recipe.name}</h2>
             <p>By ${recipe.author}</p>
@@ -354,41 +335,41 @@ if (recipeDetails) {
         `;
 
         // recipeDetails.appendChild(recipePage);
-        
+
     }
 
     let recipe;
-    
+
     async function fetchOneRecipe() {
-    
+
         try {
 
             let url = window.location.pathname
             let urlArray = url.split('/');
             let recipeId = urlArray.splice(urlArray.length - 1, 1).toString();
-        
+
             const response = await fetch(`/api/recipe/${recipeId}`);
-    
+
             if (!response.ok) {
                 throw new Error(`Failed to get recipes: ${response.status}`)
             }
-    
+
             recipe = await response.json();
-    
+
             recipeDetails = document.querySelector('#recipe-details');
-        
+
             showRecipeDetails(recipe);
-    
+
             return recipe.id;
-    
+
         }
-    
+
         catch (error) {
             console.log(`Failed to get data: ${error}`)
         }
     }
 
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
         fetchOneRecipe();
     });
 
@@ -451,44 +432,44 @@ if (errorMsg) {
 
     function checkLength(element, minLength) {
         element.value.length < minLength ? showError(element) : showSuccess(element);
-        const errorMsg = element.parentElement.querySelector('.error'); 
-        errorMsg.innerText =`${element.dataset.label} must be at least ${minLength} characters`;
+        const errorMsg = element.parentElement.querySelector('.error');
+        errorMsg.innerText = `${element.dataset.label} must be at least ${minLength} characters`;
     }
 
     function isValidEmail(email) {
         !email.value.includes('@') || !email.value.includes('.') ? showError(email) : showSuccess(email);
-        const errorMsg = email.parentElement.querySelector('.error'); 
+        const errorMsg = email.parentElement.querySelector('.error');
         errorMsg.innerText = `Invalid email format`
     }
 
     function matchingPasswords(pwd, pwd2) {
         pwd.value !== pwd2.value ? showError(pwd2) : showSuccess(pwd2);
-        const errorMsg = pwd2.parentElement.querySelector('.error'); 
+        const errorMsg = pwd2.parentElement.querySelector('.error');
         errorMsg.innerText = `Passwords do not match`
     }
 
-    
-    fields.forEach(f => f.addEventListener('input', function(e) {
-        
+
+    fields.forEach(f => f.addEventListener('input', function (e) {
+
         checkRequired(e.target);
-        
-        if (e.target === name) {checkLength(name, 3)}
-        else if (e.target === email) {checkLength(email, 8); isValidEmail(email)}
-        else if (e.target === formMsg) {checkLength(formMsg, 20)}
-        else if (e.target === firstname) {checkLength(firstname, 2)}
-        else if (e.target === pwd) {checkLength(pwd, 12)}
-        else if (e.target === pwd2) {matchingPasswords(pwd, pwd2)}
-        
+
+        if (e.target === name) { checkLength(name, 3) }
+        else if (e.target === email) { checkLength(email, 8); isValidEmail(email) }
+        else if (e.target === formMsg) { checkLength(formMsg, 20) }
+        else if (e.target === firstname) { checkLength(firstname, 2) }
+        else if (e.target === pwd) { checkLength(pwd, 12) }
+        else if (e.target === pwd2) { matchingPasswords(pwd, pwd2) }
+
     }))
-    
+
 }
 
 
 // Under construct.
 
-forms.forEach(f => f.addEventListener('submit', function(e) {
+forms.forEach(f => f.addEventListener('submit', function (e) {
     e.preventDefault()
-    
+
 }))
 
 
@@ -496,7 +477,7 @@ forms.forEach(f => f.addEventListener('submit', function(e) {
 // Login form error handling.
 
 if (loginForm) {
-    loginForm.addEventListener('submit', function() {
+    loginForm.addEventListener('submit', function () {
         // if email or password is invalid:
         loginErrorMsg.style.visibility = 'visible';
     })
@@ -505,7 +486,7 @@ if (loginForm) {
 
 // Reset forms on reload.
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     forms.forEach(form => form.reset());
 })
 
@@ -514,28 +495,28 @@ window.addEventListener('load', function() {
 
 if (contactForm) {
 
-        async function submit_message() {
-    
+    async function submit_message() {
+
         try {
             const response = await fetch('/api/contact');
-    
+
             if (!response.ok) {
                 throw new Error(`Failed to get message: ${response.status}`)
             }
-    
+
             const message = await response.json();
             console.log(message);
-    
+
             return message;
-    
+
         }
-    
+
         catch (error) {
             console.log(`Failed to get message: ${error}`)
         }
     }
 
-    contactForm.addEventListener('submit', function() {
+    contactForm.addEventListener('submit', function () {
         submit_message();
     });
 
