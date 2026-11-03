@@ -22,7 +22,7 @@ export class AddRecipe {
   recipe: any = {};
   isOnEditMode = false;
 
-  categoryOptions = [
+  categoryList = [
     { value: 'italian', label: 'Italian' },
     { value: 'french', label: 'French' },
     { value: 'meat', label: 'Meat' },
@@ -37,8 +37,8 @@ export class AddRecipe {
 
   createIngredient(): FormGroup {
     return this.formBuilder.group({
-      ingredientName: [''],
-      quantity: ['', [Validators.required, Validators.min(0.01)]],
+      ingredientName: ['', [Validators.required, Validators.minLength(2)]],
+      quantity: [''],
       unit: ['']
     });
   }
@@ -56,9 +56,9 @@ export class AddRecipe {
         [this.formBuilder.control('', [Validators.required])],
         { validators: Validators.required }
       ),
-      prepTime: ['', [Validators.required]],
-      cookTime: ['', [Validators.required]],
-      servings: ['', [Validators.required]],
+      prepTime: ['', [Validators.required, Validators.min(0)]],
+      cookTime: ['', [Validators.required, Validators.min(0)]],
+      servings: ['', [Validators.required, Validators.min(1)]],
       ingredients: this.formBuilder.array([this.createIngredient()]),
       steps: this.formBuilder.array(
         [this.formBuilder.control('', [Validators.required])],
@@ -124,17 +124,17 @@ export class AddRecipe {
 
     // Clear and rebuild FormArrays with recipe data
     this.categories.clear();
-    (recipe.categories || ['']).forEach((category: string) => {
+    (recipe.categories).forEach((category: string) => {
       this.categories.push(this.formBuilder.control(category, [Validators.required]));
     });
 
     this.ingredients.clear();
-    (recipe.ingredients || ['']).forEach((ingredient: any) => {
+    (recipe.ingredients ?? []).forEach((ingredient: any) => {
       this.ingredients.push(
         this.formBuilder.group({
-          quantity: [ingredient.quantity,[Validators.required, Validators.min(0.01)]],
-          unit: [ingredient.unit, Validators.required],
-          ingredientName: [ingredient.ingredientName, Validators.required]
+          quantity: [ingredient.quantity != null ? String(ingredient.quantity) : ''],
+          unit: [ingredient.unit != null ? String(ingredient.unit) : ''],
+          ingredientName: [String(ingredient.ingredientName), [Validators.required, Validators.minLength(2)]]
         })
       );
     });
@@ -144,7 +144,7 @@ export class AddRecipe {
     }
 
     this.steps.clear();
-    (recipe.steps || ['']).forEach((step: string) => {
+    (recipe.steps).forEach((step: string) => {
       this.steps.push(this.formBuilder.control(step, [Validators.required]));
     });
   }
@@ -159,15 +159,15 @@ export class AddRecipe {
     const formValue = this.addRecipeForm.value;
 
     const recipeFinal: any = {
-      recipeName: formValue.recipeName,
-      imgSrc: formValue.imgSrc,
-      author: formValue.author,
+      recipeName: formValue.recipeName.trim(),
+      imgSrc: formValue.imgSrc.trim(),
+      author: formValue.author.trim(),
       categories: formValue.categories.filter((category: string) => category !== ''),
-      prepTime: formValue.prepTime,
-      cookTime: formValue.cookTime,
-      servings: formValue.servings,
-      ingredients: formValue.ingredients.filter((ingredient: string) => ingredient !== ''),
-      steps: formValue.steps.filter((step: string) => step !== ''),
+      prepTime: String(formValue.prepTime).trim(),
+      cookTime: String(formValue.cookTime).trim(),
+      servings: String(formValue.servings).trim(),
+      ingredients: formValue.ingredients.filter((ingredient: any) => ingredient.ingredientName.trim() !== ''),
+      steps: formValue.steps.filter((step: string) => step.trim() !== ''),
     };
 
     if (this.isOnEditMode) {

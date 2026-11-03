@@ -18,7 +18,7 @@ export class AuthService {
 
   getStoredUser() {
     if (typeof localStorage !== 'undefined') {
-      const stored = localStorage.getItem('connectedUser');
+      let stored = localStorage.getItem('connectedUser');
       if (stored) {
         return JSON.parse(stored)
       }

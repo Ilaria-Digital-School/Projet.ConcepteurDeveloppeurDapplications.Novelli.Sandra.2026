@@ -173,11 +173,11 @@ def add_recipe():
             return None
         return value
 
-    def check_if_number(field, num_type):
+    def check_if_number(field, num_type, minimum=0):
         value_str = data.get(field)
         try:
             value = num_type(value_str)
-            if value >= 0:
+            if value >= minimum:
                 return value
         except (TypeError, ValueError):
             return None
@@ -188,7 +188,7 @@ def add_recipe():
     categories = data.get('categories')
     prep_time = check_if_number('prepTime', float)
     cook_time = check_if_number('cookTime', float)
-    servings = check_if_number('servings', int)
+    servings = check_if_number('servings', int, 1)
     ingredients = data.get('ingredients')
     steps = data.get('steps')
 

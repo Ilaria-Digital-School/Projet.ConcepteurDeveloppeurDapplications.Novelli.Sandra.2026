@@ -33,7 +33,7 @@
         }
     </div>
 
-    <!-- Category (multiple) -->
+    <!-- Category(ies) -->
     <div formArrayName="categories">
         <label class="form-label">Category</label>
         @for (categoryControl of categories.controls; track categoryControl; let i=$index) {
@@ -41,13 +41,13 @@
                 <select class="form-control" [formControl]="categoryControl"
                 [attr.aria-label]="'category ' + (i + 1)">
                     <option value="">Select a category...</option>
-                    @for (option of categoryOptions; track option.value) {
+                    @for (option of categoryList; track option.value) {
                         <option [value]="option.value">{{ option.label }}</option>
                     }
                 </select>
                 <button type="button" class="btn-add" (click)="addRow(categories)" aria-label="Add another category">+</button>
                 <button type="button" class="btn-remove" (click)="removeRow(categories, i)"
-                    [disabled]="categories.length === 1" aria-label="Remove this type">−</button>
+                    [disabled]="categories.length === 1" aria-label="Remove this category">−</button>
             </div>
             @if (categoryControl.errors?.['required'] && (categoryControl.touched || categoryControl.dirty)) {
                 <div class="error">This field is required</div>
@@ -92,10 +92,16 @@
                 <!-- Unit -->
                 <input type="text" class="form-control" formControlName="unit" placeholder="g, ml, tbsp..." [attr.aria-label]="'Unit ' + (i + 1)">
                 <!-- Ingredient name -->
-                <input type="text" class="form-control" formControlName="ingredientName" placeholder="chocolate" [attr.aria-label]="'Ingredient ID ' + (i + 1)">
+                <input type="text" class="form-control" formControlName="ingredientName" placeholder="chocolate" [attr.aria-label]="'Ingredient name ' + (i + 1)">
+                @if (ingredient.get('ingredientName')?.errors?.['required'] && (ingredient.get('ingredientName')?.touched || ingredient.get('ingredientName')?.dirty)) {
+                    <div class="error">Ingredient name is required</div>
+                }
+                @else if (ingredient.get('ingredientName')?.errors?.['minlength']) {
+                    <div class="error"><div class="error">Ingredient name must be at least 2 characters</div></div>
+                }
             
-                <button type="button" class="btn-add" (click)="addIngredient()">+</button>
-                <button type="button" class="btn-remove" (click)="removeRow(ingredients, i)" [disabled]="ingredients.length === 1">−</button>
+                <button type="button" class="btn-add" (click)="addIngredient()" aria-label="Add another ingredient">+</button>
+                <button type="button" class="btn-remove" (click)="removeRow(ingredients, i)" [disabled]="ingredients.length === 1" aria-label="Remove this ingredient">−</button>
             </div>
         }
 
@@ -119,5 +125,6 @@
         }
     </div>
 
-    <button type="submit">{{ isOnEditMode ? 'Edit' : 'Add' }}</button>
+    <button type="submit" [disabled]="addRecipeForm.invalid"
+    [class.btn-disabled]="addRecipeForm.invalid">{{ isOnEditMode ? 'Edit' : 'Add' }}</button>
 </form>

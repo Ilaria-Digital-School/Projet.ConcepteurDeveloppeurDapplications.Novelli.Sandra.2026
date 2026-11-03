@@ -56,7 +56,7 @@ export class SignUp {
 
     const formValue = this.signUpForm.value;
 
-    // To add checkboxes.
+    // To handle checkboxes.
     let interests = [];
     if (formValue.baking) interests.push('baking');
     if (formValue.grilling) interests.push('grilling');

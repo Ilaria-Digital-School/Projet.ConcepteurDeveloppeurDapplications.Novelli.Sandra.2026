@@ -1,6 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-// import { RecipeService } from '../../services/recipe-service';
-import { Subject } from 'rxjs';
 import { FilterService } from '../../services/filter-service';
 
 @Component({
