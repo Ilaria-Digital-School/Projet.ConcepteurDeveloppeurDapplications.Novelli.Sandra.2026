@@ -11,12 +11,15 @@ const favourites = document.querySelector('#favourites');
 
 function hideMainMenu() {
     nav.classList.replace('visible', 'hidden');
+    toggleMainMenu.classList.replace('active', 'off');
+    toggleMainMenu.setAttribute('aria-expanded', 'false');
 }
 
 function showMainMenu() {
     nav.classList.replace('hidden', 'visible');
+    toggleMainMenu.classList.replace('off', 'active');
+    toggleMainMenu.setAttribute('aria-expanded', 'true');
 }
-
 
 toggleMainMenu.addEventListener('click', function () {
     nav.className === 'visible' ? hideMainMenu() : showMainMenu();
@@ -83,14 +86,16 @@ async function fetchAllRecipes() {
 
         return allRecipes;
 
-    } catch (error) {
-        console.error('Failed to get data:', error);
-        return [];
+    }
+    
+    catch (error) {
+        console.error(`Failed to get data:' ${error}`);
+        // return []; // THIS SEEMS CRUCIAL.
     }
 }
 
 
-function displaySomeRecipes(arr) {
+function displayFilteredRecipes(arr) {
 
     recipeList.innerHTML = '';
 
@@ -122,7 +127,7 @@ if (banner) {
 
             let filterdArray = recipes.filter(recipe => recipe.categories.includes(button.innerText))
 
-            displaySomeRecipes(filterdArray);
+            displayFilteredRecipes(filterdArray);
 
         }
 
@@ -170,7 +175,7 @@ if (banner || favourites) {
         console.log(isFavourite());
 
         if (!isFavourite()) {
-            for (let recipe of recipes) {
+            for (let recipe of allRecipes) {
                 if (recipe.id === heartId) {
                     // console.log(recipe);
                     favouriteRecipes.push(recipe);
@@ -196,78 +201,9 @@ if (banner || favourites) {
 }
 
 
-// let hearts = document.querySelectorAll('.heart');
-
-// hearts.forEach(heart => heart.addEventListener('click', function() {
-
-//     heart.innerText == '🩶' ? heart.innerText = '❤️' : heart.innerText = '🩶';
-
-//     // console.log(heart.parentElement.innerHTML);
-
-
-//         // if (favouriteRecipes.indexOf(heart.parentElement.innerHTML) === -1) {
-//         //         favouriteRecipes.push(heart.parentElement.innerHTML);
-//         //     }
-
-//         // if (!favouriteRecipes.includes(heart.parentElement.innerHTML)) {
-//         //         favouriteRecipes.push(heart.parentElement.innerHTML);
-//         //     }
-
-//         // let favouriteRecipesSet = new Set(favouriteRecipes);
-//         // console.log(favouriteRecipesSet);
-
-//         console.log(favouriteRecipes);
-//     }
-// ));
-
-
-
-
-// function getFavourites() {
-//     return JSON.parse(localStorage.getItem('favourites'))  || [];
-// }
-
-// function saveFavourites(arr) {
-//     localStorage.setItem('favourites', JSON.stringify(arr));
-// }
-
-// recipeList.addEventListener('click', function(e) {
-
-//     const button = e.target.closest(".heart")
-
-//     if (!button) {
-//         return;
-//     }
-
-//     const favouriteList = getFavourites();
-
-//     let isFavourite = favouriteList.some(recipe => recipe.id === Number(button.dataset.id));
-//     console.log(`result = ${!isFavourite}`);
-//     if (!isFavourite) {
-//         const recipe = recipes.find(item => item.id === Number(button.dataset.id));
-
-//         favouriteList.push(recipe);
-//         saveFavourites(favouriteList);
-//         button.innerText = '❤️';
-//     }
-//     else {
-//         const index = favouriteList.findIndex(recipe => recipe.id === Number(button.dataset.id));
-//         if (index !== -1) {
-//             favouriteList.splice(index, 1);
-//             saveFavourites(favouriteList);
-//             button.innerText = '🩶';
-//         }
-//     }
-
-//     console.log(favouriteList);
-//     isFavourite = getFavourites().some(recipe => recipe.id === button.dataset.id);
-
-// });
-
 
 
 // Displaying recipe details.
-
 
 if (recipeList || banner) {
 
@@ -284,7 +220,7 @@ if (recipeList || banner) {
 
         const viewButtonId = Number(viewButton.dataset.id);
 
-        for (let recipe of recipes) {
+        for (let recipe of allRecipes) {
             if (recipe.id === viewButtonId) {
                 // console.log(recipe);
 
@@ -309,7 +245,7 @@ if (recipeDetails) {
 
         const ingredientsList = recipe.ingredients.map(i => `<li>${i.quantity || ''} ${i.unit || ''} ${i.name}</li>`).join('');
 
-        const stepsList = recipe.steps.map(s => `<li>${s.instruction}</li>`).join('');
+        const stepsList = recipe.steps.map(step => `<li>${step.instruction}</li>`).join('');
 
         recipeDetails.innerHTML = `
             <h2>${recipe.name}</h2>
@@ -345,8 +281,7 @@ if (recipeDetails) {
         try {
 
             let url = window.location.pathname
-            let urlArray = url.split('/');
-            let recipeId = urlArray.splice(urlArray.length - 1, 1).toString();
+            let recipeId = url.split('/').pop();
 
             const response = await fetch(`/api/recipe/${recipeId}`);
 

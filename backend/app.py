@@ -126,7 +126,7 @@ def get_one_recipe(id):
 
 @app.route('/favourites', methods=['GET'])
 def favourites():
-    return render_template('favourites.html')
+    return render_template('favourites.html', cuisine_genres=data.CUISINE_GENRES)
     
 
 @app.route('/favourites/<int:id>', methods=['GET'])
