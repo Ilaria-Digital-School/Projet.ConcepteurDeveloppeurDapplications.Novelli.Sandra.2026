@@ -182,7 +182,7 @@ h2 {
     font-size: 1.85em;
 }
 
-#toggle-button {
+#toggle-side-menu {
     cursor: pointer;
     position: absolute;
     top: 0.5rem;
@@ -514,11 +514,10 @@ footer {
 @media only screen and (max-width: 1274px) {
 
     nav {
-        display: flex;
+        display: none;
         position: fixed;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
         background-color: black;
         width: 100%;
         height: 18rem;
@@ -528,24 +527,35 @@ footer {
     }
 
     #toggle-main-menu {
-
         display: block;
         position: fixed;
-        /* left: 1rem;
-        top: 1rem; */
         background-color: transparent;
         border: none;
         width: 2.5rem;
         height: 2.5rem;
         z-index: 3;
+    }
 
-        .line {
-            position: absolute;
-            display: block;
-            background-color: silver;
-            width: 100%;
-            height: 2px;
-        }
+    .line {
+        position: absolute;
+        display: block;
+        background-color: silver;
+        width: 100%;
+        height: 2px;
+        /* transform-origin: center;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out; */
+    }
+
+    #l1 {
+        top: 0;
+    }
+
+    #l2 {
+        bottom: 47%;
+    }
+    
+    #l3 {
+        bottom: 0;
     }
 
     #nav1,
@@ -563,15 +573,12 @@ footer {
 
     nav button,
     #sign-up {
-        /* display: flex; */
         justify-content: left;
-        /* align-items: center; */
         width: 8rem;
         height: 2.5rem;
         background-color: transparent;
         padding: 0;
         border: none;
-        /* font-size: 1em; */
     }
 
     nav li:hover,
@@ -581,52 +588,25 @@ footer {
     }
 
     nav.active {
-
         display: flex;
-
-        ul {
-            display: flex;
-            opacity: 1;
-        }
-
-        #l2 {
-            visibility: hidden;
-        }
-
-        #l1 {
-            transform: rotate(45deg);
-        }
-
-        #l3 {
-            transform: rotate(-45deg);
-        }
+    }
+    
+    #toggle-main-menu.active #l2 {
+        visibility: hidden;
+    }
+    
+    #toggle-main-menu.active #l1 {
+        top: 47%;
+        transform: rotate(45deg);
+    }
+    
+    #toggle-main-menu.active #l3 {
+        bottom: 47%;
+        transform: rotate(-45deg);
     }
 
     nav.off {
-
-        background-color: transparent;
-        box-shadow: none;
         display: none;
-
-        ul {
-            opacity: 0;
-        }
-
-        #l2 {
-            visibility: visible;
-        }
-
-        #l1 {
-            top: 0;
-        }
-
-        #l2 {
-            top: 47%;
-        }
-
-        #l3 {
-            bottom: 0;
-        }
     }
 
     .banner {
@@ -657,7 +637,7 @@ footer {
             font-size: 1.66em;
         }
 
-        #toggle-button {
+        #toggle-side-menu {
             font-size: 1.5em;
         }
 
@@ -715,7 +695,7 @@ footer {
             font-size: 1.5em;
         }
 
-        #toggle-button {
+        #toggle-side-menu {
             /* font-size: 1.5em; */
             font-size: 1.2em;
         }

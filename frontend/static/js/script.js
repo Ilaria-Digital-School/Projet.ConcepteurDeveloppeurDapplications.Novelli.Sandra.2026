@@ -1,7 +1,7 @@
-const toggleButton = document.querySelector('#toggle-button');
+const toggleMainMenu = document.querySelector('#toggle-main-menu');
+const toggleSideMenu = document.querySelector('#toggle-side-menu');
 const cuisineGenres = document.querySelector('#cuisine-genres');
 const showAll = document.querySelector('#show-all');
-const toggleMainMenu = document.querySelector('#toggle-main-menu');
 const nav = document.querySelector('nav');
 const banner = document.querySelector('.banner');
 const favourites = document.querySelector('#favourites');
@@ -31,16 +31,16 @@ toggleMainMenu.addEventListener('click', function () {
 
 function hideSideMenu() {
     cuisineGenres.classList.replace('minus', 'plus');
-    toggleButton.innerText = '➕';
+    toggleSideMenu.innerText = '➕';
 }
 
 function showSideMenu() {
     cuisineGenres.classList.replace('plus', 'minus');
-    toggleButton.innerText = '➖';
+    toggleSideMenu.innerText = '➖';
 }
 
-if (toggleButton) {
-    toggleButton.addEventListener('click', function () {
+if (toggleSideMenu) {
+    toggleSideMenu.addEventListener('click', function () {
         cuisineGenres.className === 'minus' ? hideSideMenu() : showSideMenu();
     });
 }
