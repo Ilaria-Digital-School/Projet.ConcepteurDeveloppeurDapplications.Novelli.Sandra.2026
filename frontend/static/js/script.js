@@ -10,19 +10,19 @@ const favourites = document.querySelector('#favourites');
 // Mobile version: toggle main menu.
 
 function hideMainMenu() {
-    nav.classList.replace('visible', 'hidden');
+    nav.classList.replace('active', 'off');
     toggleMainMenu.classList.replace('active', 'off');
     toggleMainMenu.setAttribute('aria-expanded', 'false');
 }
 
 function showMainMenu() {
-    nav.classList.replace('hidden', 'visible');
+    nav.classList.replace('off', 'active');
     toggleMainMenu.classList.replace('off', 'active');
     toggleMainMenu.setAttribute('aria-expanded', 'true');
 }
 
 toggleMainMenu.addEventListener('click', function () {
-    nav.className === 'visible' ? hideMainMenu() : showMainMenu();
+    nav.className === 'active' ? hideMainMenu() : showMainMenu();
 })
 
 
