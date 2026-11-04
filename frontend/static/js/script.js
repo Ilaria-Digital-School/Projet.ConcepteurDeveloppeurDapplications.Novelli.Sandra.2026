@@ -2,6 +2,7 @@ const toggleMainMenu = document.querySelector('#toggle-main-menu');
 const toggleSideMenu = document.querySelector('#toggle-side-menu');
 const cuisineGenres = document.querySelector('#cuisine-genres');
 const showAll = document.querySelector('#show-all');
+const search = document.querySelector('#search');
 const nav = document.querySelector('nav');
 const banner = document.querySelector('.banner');
 const favourites = document.querySelector('#favourites');
@@ -138,6 +139,12 @@ if (banner) {
     showAll.addEventListener('click', function () {
         fetchAllRecipes();
     })
+
+    search.addEventListener('input', function() {
+        console.log('Typing...');
+        console.log(search.value);
+    })
+
 }
 
 

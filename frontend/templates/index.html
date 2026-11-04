@@ -18,10 +18,15 @@
                 {% endfor %}
             </ul>
         </aside>
+        
+        <div id="searchbar-recipe-list">
+            <section id="searchbar">
+                <label for="search">Find your favourite recipes!</label>
+                <input id="search" type="text" placeholder="Search...">
+            </section>
+            <section id="recipe-list" aria-label="Recipe results" aria-live="polite" aria-busy="false"></section>
+        </div>
 
-        <section id="recipe-list-container" aria-label="Recipe results">
-            <div id="recipe-list" aria-live="polite" aria-busy="false"></div>
-        </section>
     </div>
 
     <section id="subscribe" aria-label="Newsletter subscription">

@@ -221,31 +221,60 @@ h2 {
     background-color: rgba(50, 50, 50, 0.2);
 }
 
+#searchbar-recipe-list {
+    display: flex;
+    flex-direction: column;
+    width: 89%;
+}
+
+#searchbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: space-between;
+    background-color: #2b58d4;
+    border-radius: 25px;
+    height: 10rem;
+    width: 100%;
+
+    label {
+        font-size: 1.4em;
+    }
+
+    input {
+        width: 90%;
+        height: 2rem;
+    }
+
+}
+ 
+
 
 /* Recipe list */
 
-#recipe-list-container {
-    /* display: inline-block; */
-    width: 70%;
-}
-
 #recipe-list {
+    width: 100%;
     display: grid;
     /* grid-template-columns: 200px 200px; */
     /* grid-template-columns: repeat(3, 1fr); */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
-    gap: 5rem;
+    /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    /* gap: 5rem; */
+    row-gap: 2.5rem;
+    column-gap: 1rem;
     /* column-gap: 10px;
     row-gap: 10px; */
     justify-items: center;
     align-items: center;
     background-color: beige;
+    margin: 2rem auto;
 }
 
 .recipe-box {
     position: relative;
     height: 19.85rem;
-    width: 22rem;
+    min-width: 22rem;
     background-color: aqua;
 }
 
@@ -553,7 +582,7 @@ footer {
     #l2 {
         bottom: 47%;
     }
-    
+
     #l3 {
         bottom: 0;
     }
@@ -590,16 +619,16 @@ footer {
     nav.active {
         display: flex;
     }
-    
+
     #toggle-main-menu.active #l2 {
         visibility: hidden;
     }
-    
+
     #toggle-main-menu.active #l1 {
         top: 47%;
         transform: rotate(45deg);
     }
-    
+
     #toggle-main-menu.active #l3 {
         bottom: 47%;
         transform: rotate(-45deg);
@@ -620,12 +649,6 @@ footer {
 
     .page-layout-wrapper {
         flex-direction: column;
-    }
-
-    #recipe-list-container {
-        display: block;
-        width: 89%;
-        margin: 2rem auto;
     }
 
     #side-menu {
@@ -713,6 +736,11 @@ footer {
             /* font-size: 1.4; */
             font-size: 1.2em;
         }
+    }
+
+    #searchbar-recipe-list,
+    #recipe-list {
+        width: 100%;
     }
 
     #subscribe {
