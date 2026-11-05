@@ -124,6 +124,11 @@ p#motto {
 }
 
 h2 {
+    font-size: 2em;
+}
+
+h2,
+h3 {
     display: block;
     text-align: center;
     /* margin: 3rem; */
@@ -175,7 +180,7 @@ h2 {
     /* display: inline-block; */
     position: relative;
     width: 24%;
-    background-color: blueviolet;
+    background-color: rgb(159, 57, 255);
 }
 
 #menu-title {
@@ -221,7 +226,7 @@ h2 {
     background-color: rgba(50, 50, 50, 0.2);
 }
 
-#searchbar-recipe-list {
+#searchbar-and-recipe-container {
     display: flex;
     flex-direction: column;
     width: 89%;
@@ -233,7 +238,7 @@ h2 {
     justify-content: space-evenly;
     align-items: center;
     align-content: space-between;
-    background-color: #2b58d4;
+    background-color: #3f5fee;
     border-radius: 25px;
     height: 10rem;
     width: 100%;
@@ -248,7 +253,6 @@ h2 {
     }
 
 }
- 
 
 
 /* Recipe list */
@@ -263,8 +267,6 @@ h2 {
     /* gap: 5rem; */
     row-gap: 2.5rem;
     column-gap: 1rem;
-    /* column-gap: 10px;
-    row-gap: 10px; */
     justify-items: center;
     align-items: center;
     background-color: beige;
@@ -385,6 +387,40 @@ h2 {
     height: 2.5rem;
 }
 
+
+/* RECIPE DETAILS */
+
+#recipe-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#recipe-details img {
+    width: 50%;
+    border-radius: 26px;
+    margin: 1rem auto;
+}
+
+#recipe-details h3 {
+    margin: 1rem auto 0.3rem;
+    text-decoration: underline;
+}
+
+#recipe-details ul {
+    text-align: left;
+}
+
+.ingredient {
+    padding: 0.5rem;
+}
+
+.prep-step {
+    list-style: none;
+    padding: 1rem;
+}
 
 /* LOGIN PAGE */
 
@@ -689,6 +725,10 @@ footer {
 
     }
 
+    #recipe-details img {
+        width: 70%;
+    }
+
 }
 
 
@@ -738,7 +778,7 @@ footer {
         }
     }
 
-    #searchbar-recipe-list,
+    #searchbar-and-recipe-container,
     #recipe-list {
         width: 100%;
     }
@@ -756,6 +796,10 @@ footer {
             width: 90%;
         }
 
+    }
+
+    #recipe-details img {
+        width: 100%;
     }
 
     .forms {

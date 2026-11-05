@@ -56,7 +56,7 @@ function createRecipeBox(recipe) {
 
     recipeBox.innerHTML = `
     <div class="recipe-box">
-    <img src="${recipe.imgSrc}" alt="">
+    <img src="${recipe.imgSrc}" alt="Picture of ${recipe.name}">
     <button class="heart" data-id="${recipe.id}">🩶</button>
     <p class="recipe-title">${recipe.name}</p>
     <p class="author">By ${recipe.author || 'Anonymous'}</p>
@@ -91,7 +91,7 @@ async function fetchAllRecipes() {
     
     catch (error) {
         console.error(`Failed to get data:' ${error}`);
-        // return []; // THIS SEEMS CRUCIAL.
+        return [];
     }
 }
 
@@ -141,9 +141,21 @@ if (banner) {
     })
 
     search.addEventListener('input', function() {
-        console.log('Typing...');
-        console.log(search.value);
-    })
+
+        recipeList.innerHTML = '';
+
+        async function searchRecipes() {
+
+            let recipes = await fetchAllRecipes();
+            let filterdArray = recipes.filter(recipe => recipe.name.toLowerCase().includes(search.value) || recipe.author.toLowerCase().includes(search.value));
+            console.log(filterdArray);
+
+            displayFilteredRecipes(filterdArray);
+        }
+
+        searchRecipes();
+
+    });
 
 }
 
@@ -250,34 +262,32 @@ if (recipeDetails) {
 
         // let recipePage = document.createElement('div');
 
-        const ingredientsList = recipe.ingredients.map(i => `<li>${i.quantity || ''} ${i.unit || ''} ${i.name}</li>`).join('');
+        const ingredientsList = recipe.ingredients.map(ing => `<li class=ingredient>${ing.quantity || ''} ${ing.unit || ''} ${ing.name}</li>`).join('');
 
-        const stepsList = recipe.steps.map(step => `<li>${step.instruction}</li>`).join('');
+        const stepsList = recipe.steps.map((step, index) => `<li class="prep-step">${index + 1}. ${step.instruction}</li>`).join('');
 
         recipeDetails.innerHTML = `
             <h2>${recipe.name}</h2>
             <p>By ${recipe.author}</p>
-            <img src=/${recipe.imgSrc}>
+            <img src=/${recipe.imgSrc} alt="Picture of ${recipe.name}">
             <p>Added on ${recipe.createdOn}</p>
-            <h3>Preparation:</h3>
+            <h3>Preparation</h3>
             <p>${recipe.prepTime} min</p>
-            <h3>Cook:</h3>
+            <h3>Cook</h3>
             <p>${recipe.cookTime} min</p>
-            <h3>Ingredients:</h3>
+            <h3>Ingredients</h3>
             <div>
                 <ul id="ingredients">
                     ${ingredientsList}
                 </ul>
             </div>
             <div>
-                <h3>Steps:</h3>
-                <ol id="steps">
+                <h3>Steps</h3>
+                <ul id="steps">
                     ${stepsList}
-                </ol>
+                </ul>
             </div>
         `;
-
-        // recipeDetails.appendChild(recipePage);
 
     }
 

@@ -44,7 +44,7 @@ def get_all_recipes():
                     r.img_url AS imgSrc,
                     (u.firstname || ' ' || u.lastname) AS author,
                     json_group_array(c.category_name) AS categories
-                    FROM recipe r
+                    FROM recipe AS r
                     LEFT JOIN user_account u ON u.user_id = r.user_id
                     JOIN recipe_category rc ON rc.recipe_id = r.recipe_id
                     JOIN category c ON c.category_id = rc.category_id
