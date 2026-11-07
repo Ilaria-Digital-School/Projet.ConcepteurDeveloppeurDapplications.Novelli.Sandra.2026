@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Sandra Novelli-Riquer",
+    "email": "sandra@novelli-riquer.com",
+    "subject": "Super cooking",
+    "message": "Hello from JavaScript!"
+  },
+  {
+    "name": "Sandra Novelli-Riquer",
+    "email": "sandra@novelli-riquer.com",
+    "subject": "Chocolate cake",
+    "message": "Hi, I'd like to submit a new recipe."
+  },
+  {
+    "name": "Sandra Novelli-Riquer",
+    "email": "sandra@novelli-riquer.com",
+    "subject": "Chocolate cake",
+    "message": "Hi, can I submit my new recipe?"
+  }
+]

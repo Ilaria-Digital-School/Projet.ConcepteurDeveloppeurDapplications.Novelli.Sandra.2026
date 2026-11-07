@@ -486,6 +486,12 @@ p,
     border-radius: 14px;
 }
 
+select {
+    height: 2rem;
+    padding-left: 0.5rem;
+    /* min-width: 6rem; */
+}
+
 textarea {
     max-width: 100%;
     min-height: 10rem;
@@ -497,8 +503,7 @@ input {
 }
 
 input[type="checkbox"],
-input[type="radio"],
-input[type="select"] {
+input[type="radio"] {
     margin: 0 0.2rem;
     padding: 0.6rem;
     width: unset;
@@ -558,6 +563,31 @@ textarea:focus {
 .submit-btn:hover,
 #join-us-btn:hover {
     box-shadow: 0 0 6px 4px rgb(0, 89, 255);
+}
+
+.submit-btn:disabled {
+    cursor: not-allowed;
+}
+
+
+/* ADD-RECIPE */
+
+.dynamic-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    column-gap: 0.5rem;
+}
+
+.dynamic-row select,
+.dynamic-row input,
+.dynamic-row textarea {
+    width: 80%;
+}
+
+.add-btn, .remove-btn {
+    width: 2rem;
+    height: 2rem;
 }
 
 

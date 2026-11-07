@@ -13,7 +13,7 @@
             <button id="toggle-side-menu" type="button" aria-expanded="true" aria-controls="cuisine-genres" aria-label="Collapse recipe type menu">➖</button>
             <ul id="cuisine-genres" class="minus">
                 <li><button type="button" id="show-all" class="filter-btn">SHOW ALL</button></li>
-                {% for c in cuisine_genres %}
+                {% for c in recipe_categories %}
                     <li><button type="button" class="filter-btn">{{ c }}</button></li>
                 {% endfor %}
             </ul>

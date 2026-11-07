@@ -6,6 +6,7 @@ const search = document.querySelector('#search');
 const nav = document.querySelector('nav');
 const banner = document.querySelector('.banner');
 const favourites = document.querySelector('#favourites');
+const buttons = document.querySelectorAll('button');
 
 
 // Mobile version: toggle main menu.
@@ -55,13 +56,13 @@ function createRecipeBox(recipe) {
     let recipeBox = document.createElement('div');
 
     recipeBox.innerHTML = `
-    <div class="recipe-box">
-    <img src="${recipe.imgSrc}" alt="Picture of ${recipe.name}">
-    <button class="heart" data-id="${recipe.id}">🩶</button>
-    <p class="recipe-title">${recipe.name}</p>
-    <p class="author">By ${recipe.author || 'Anonymous'}</p>
-    <button class="view-recipe" data-id="${recipe.id}">View</button>
-    </div>
+        <div class="recipe-box">
+        <img src="${recipe.imgSrc}" alt="Picture of ${recipe.name}">
+        <button class="heart" data-id="${recipe.id}">🩶</button>
+        <p class="recipe-title">${recipe.name}</p>
+        <p class="author">By ${recipe.author || 'Anonymous'}</p>
+        <button class="view-recipe" data-id="${recipe.id}">View</button>
+        </div>
     `;
 
     recipeList.appendChild(recipeBox);
@@ -241,7 +242,6 @@ if (recipeList || banner) {
 
         for (let recipe of allRecipes) {
             if (recipe.id === viewButtonId) {
-                // console.log(recipe);
 
                 window.location.href = `http://127.0.0.1:5000/recipe/${recipe.id}`;
 
@@ -295,30 +295,24 @@ if (recipeDetails) {
 
     async function fetchOneRecipe() {
 
-        try {
 
-            let url = window.location.pathname
-            let recipeId = url.split('/').pop();
+        let url = window.location.pathname
+        let recipeId = url.split('/').pop();
 
-            const response = await fetch(`/api/recipe/${recipeId}`);
+        const response = await fetch(`/api/recipe/${recipeId}`);
 
-            if (!response.ok) {
-                throw new Error(`Failed to get recipes: ${response.status}`)
-            }
-
-            recipe = await response.json();
-
-            recipeDetails = document.querySelector('#recipe-details');
-
-            showRecipeDetails(recipe);
-
-            return recipe.id;
-
+        if (!response.ok) {
+            throw new Error(`Failed to get recipes: ${response.status}`)
         }
 
-        catch (error) {
-            console.log(`Failed to get data: ${error}`)
-        }
+        recipe = await response.json();
+
+        recipeDetails = document.querySelector('#recipe-details');
+
+        showRecipeDetails(recipe);
+
+        return recipe.id;
+
     }
 
     window.addEventListener('load', function () {
@@ -364,6 +358,7 @@ const fields = document.querySelectorAll(`
 `);
 
 const errorMsg = document.querySelectorAll('.error');
+const submitBtn = document.querySelectorAll('.submit-btn');
 
 
 function showError(element) {
@@ -378,52 +373,136 @@ function showSuccess(element) {
 
 function checkRequired(element) {
     element.value.trim() === '' ? showError(element) : showSuccess(element);
+    const errorMsg = element.parentElement.querySelector('.error');
+    errorMsg.innerText = `This field is required`;
 }
 
-if (errorMsg) {
+function checkLength(element, minLength) {
+    element.value.length < minLength ? showError(element) : showSuccess(element);
+    const errorMsg = element.parentElement.querySelector('.error');
+    errorMsg.innerText = `${element.dataset.label} must be at least ${minLength} characters`;
+}
 
-    function checkLength(element, minLength) {
-        element.value.length < minLength ? showError(element) : showSuccess(element);
-        const errorMsg = element.parentElement.querySelector('.error');
-        errorMsg.innerText = `${element.dataset.label} must be at least ${minLength} characters`;
-    }
+function isValidEmail(email) {
+    !email.value.includes('@') || !email.value.includes('.') ? showError(email) : showSuccess(email);
+    const errorMsg = email.parentElement.querySelector('.error');
+    errorMsg.innerText = `Invalid email format`
+}
 
-    function isValidEmail(email) {
-        !email.value.includes('@') || !email.value.includes('.') ? showError(email) : showSuccess(email);
-        const errorMsg = email.parentElement.querySelector('.error');
-        errorMsg.innerText = `Invalid email format`
-    }
+function matchingPasswords(pwd, pwd2) {
+    pwd.value !== pwd2.value ? showError(pwd2) : showSuccess(pwd2);
+    const errorMsg = pwd2.parentElement.querySelector('.error');
+    errorMsg.innerText = `Passwords do not match`
+}
 
-    function matchingPasswords(pwd, pwd2) {
-        pwd.value !== pwd2.value ? showError(pwd2) : showSuccess(pwd2);
-        const errorMsg = pwd2.parentElement.querySelector('.error');
-        errorMsg.innerText = `Passwords do not match`
-    }
+if (forms) {
+    
+    fields.forEach(field => field.addEventListener('input', function (e) {
+        
+        if (e.target === name) {checkLength(name, 3)}
+        else if (e.target === email) {checkLength(email, 8); isValidEmail(email)}
+        else if (e.target === formMsg) {checkLength(formMsg, 20)}
+        else if (e.target === firstname) {checkLength(firstname, 2)}
+        else if (e.target === pwd) {checkLength(pwd, 12)}
+        else if (e.target === pwd2) {matchingPasswords(pwd, pwd2)}
 
-
-    fields.forEach(f => f.addEventListener('input', function (e) {
-
+    }));
+    
+    fields.forEach(field => field.addEventListener('blur', function (e) {
+        
         checkRequired(e.target);
-
-        if (e.target === name) { checkLength(name, 3) }
-        else if (e.target === email) { checkLength(email, 8); isValidEmail(email) }
-        else if (e.target === formMsg) { checkLength(formMsg, 20) }
-        else if (e.target === firstname) { checkLength(firstname, 2) }
-        else if (e.target === pwd) { checkLength(pwd, 12) }
-        else if (e.target === pwd2) { matchingPasswords(pwd, pwd2) }
-
-    }))
-
+        
+    }));
+    
 }
 
-
-// Under construct.
-
-forms.forEach(f => f.addEventListener('submit', function (e) {
-    e.preventDefault()
-
+buttons.forEach(btn => btn.addEventListener('click', function(e) {
+    e.preventDefault();
 }))
 
+
+// Under construct. BUGGY!!!!!!!!!!!!!!!!!!!!!
+
+// if (forms) {
+    
+//     forms.forEach(form => form.addEventListener('submit', function (e) {
+    
+//         if (Array.from(errorMsg).every(msg => msg.textContent.length > 0)) {
+//             e.preventDefault()
+//             submitBtn.forEach(btn => btn.disabled = false);
+//         }
+//         else {
+//             submitBtn.forEach(btn => btn.disabled = true);
+//         }
+//     }))
+//     forms.forEach(form => form.addEventListener('mouseenter', function (e) {
+        
+//         if (Array.from(errorMsg).every(msg => msg.textContent.length > 0)) {
+//             e.preventDefault()
+//             submitBtn.forEach(btn => btn.disabled = false);
+//         }
+//         else {
+//             submitBtn.forEach(btn => btn.disabled = true);
+//         }
+//     }))
+// }
+
+
+
+
+
+// Contact.
+
+if (contactForm) {
+    
+    async function submit_message(message) {
+        
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            body: JSON.stringify(message),
+            headers: {'Content-Type': 'application/json'}
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Failed to get message. Status: ${response.status}`)
+        }
+        
+        const data = await response.json();
+        
+        return data;
+        
+    }
+    
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(contactForm);
+        const message = Object.fromEntries(formData);
+        
+        try {
+            const result = await submit_message(message);
+            console.log(`Success: ${JSON.stringify(result)}`);
+            contactForm.reset();
+        }
+        catch (error) {
+            console.log(error);
+        }
+        
+    });
+    
+}
+
+
+// Add recipe form.
+
+const addButton = document.querySelectorAll('.add-btn');
+const removeButton = document.querySelectorAll('.remove-btn');
+
+if (addButton && removeButton) {
+
+
+
+}
 
 
 // Login form error handling.
@@ -441,35 +520,3 @@ if (loginForm) {
 window.addEventListener('load', function () {
     forms.forEach(form => form.reset());
 })
-
-
-// Contact.
-
-if (contactForm) {
-
-    async function submit_message() {
-
-        try {
-            const response = await fetch('/api/contact');
-
-            if (!response.ok) {
-                throw new Error(`Failed to get message: ${response.status}`)
-            }
-
-            const message = await response.json();
-            console.log(message);
-
-            return message;
-
-        }
-
-        catch (error) {
-            console.log(`Failed to get message: ${error}`)
-        }
-    }
-
-    contactForm.addEventListener('submit', function () {
-        submit_message();
-    });
-
-}

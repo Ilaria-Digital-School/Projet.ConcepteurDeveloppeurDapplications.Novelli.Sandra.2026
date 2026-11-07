@@ -1,4 +1,4 @@
-CUISINE_GENRES = [
+RECIPE_CATEGORIES = [
     'Italian',
     'French',
     'Meat',

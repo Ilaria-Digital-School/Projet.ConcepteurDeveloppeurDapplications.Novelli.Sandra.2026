@@ -60,7 +60,6 @@ def get_all_recipes():
         return jsonify(recipes_list)
 
     except Exception as error:
-        print(error)
         return jsonify(f'Error fetching data: {error}')
 
 
@@ -119,14 +118,13 @@ def get_one_recipe(id):
         return jsonify(recipe)
         
     except Exception as error:
-        print(error)
         return jsonify(f'Error fetching data: {error}')
    
    
 
 @app.route('/favourites', methods=['GET'])
 def favourites():
-    return render_template('favourites.html', cuisine_genres=data.CUISINE_GENRES)
+    return render_template('favourites.html', recipe_categories=data.RECIPE_CATEGORIES)
     
 
 @app.route('/favourites/<int:id>', methods=['GET'])
@@ -169,13 +167,12 @@ def display_favourites(user_id):
             return jsonify(recipes_list)
         
     except Exception as error:
-        print(error)
         return jsonify(f'Error fetching data: {error}')
 
     
 @app.route('/add-recipe', methods=['GET'])
 def add_recipe():
-    return render_template('add-recipe.html')
+    return render_template('add-recipe.html', recipe_categories=data.RECIPE_CATEGORIES)
 
 
 @app.route('/add-recipe', methods=['GET', 'POST'])
@@ -203,7 +200,7 @@ def submit_recipe():
         except (TypeError, ValueError):
             return None
 
-    recipe_name = clean('recipeName', 3)
+    recipe_name = clean('recipe-name', 3)
     img_url = clean('imgSrc', 5)
     author = clean('author', 5)
     categories = data.get('categories')
@@ -225,7 +222,7 @@ def submit_recipe():
         return jsonify(error='Invalid input'), 400
 
     # Validate ingredients
-    clean_ingredients = []
+    ingredient_list = []
 
     for ingredient in ingredients:
         if not isinstance(ingredient, dict):
@@ -246,7 +243,7 @@ def submit_recipe():
 
         if quantity == '':
             quantity = None
-        elif quantity is not None:
+        elif not quantity is None:
             try:
                 quantity = float(quantity)
                 if quantity < 0:
@@ -261,7 +258,7 @@ def submit_recipe():
                 return jsonify(error='Invalid unit'), 400
             unit = unit.strip() or None
 
-        clean_ingredients.append(
+        ingredient_list.append(
             (ingredient_name, quantity, unit)
         )
 
@@ -298,7 +295,7 @@ def submit_recipe():
                     VALUES (?, ?)
                 ''', (recipe_id, c))
 
-            for ingredient_name, quantity, unit in clean_ingredients:
+            for ingredient_name, quantity, unit in ingredient_list:
 
                 ingredient_row = cursor.execute('''
                     SELECT ingredient_id
@@ -344,20 +341,12 @@ def submit_recipe():
 
             recipe = dict(recipe_simple_rows)
             recipe['categories'] = categories
-            recipe['ingredients'] = [
-                {
-                    'ingredientName': ingredient_name,
-                    'quantity': quantity,
-                    'unit': unit
-                }
-                for ingredient_name, quantity, unit in clean_ingredients
-            ]
+            recipe['ingredients'] = [{'ingredientName': ingredient_name, 'quantity': quantity, 'unit': unit} for ingredient_name, quantity, unit in ingredient_list]
             recipe['steps'] = steps
 
             return jsonify(recipe)
 
     except Exception as error:
-        print(error)
         return jsonify(error=f'Failed to add recipe: {error}'), 500
     
 
@@ -376,7 +365,6 @@ def delete_recipe(id):
             connection.execute('DELETE FROM recipe WHERE recipe_id = ?', (id,))
 
     except Exception as error:
-        print(error)
         return jsonify(f'Failed to delete recipe: {error}')
     
 
@@ -406,7 +394,7 @@ def contact():
     return render_template('contact.html')
 
 
-@app.route('/api/contact', methods=['GET', 'POST'])
+@app.route('/api/contact', methods=['POST'])
 @limiter.limit('5 per minute; 30 per day')
 def send_message():
     data = request.get_json(silent=True)
@@ -422,14 +410,13 @@ def send_message():
             return None
         return value
 
-    name = clean('username', 3, 100)
+    name = clean('name', 3, 100)
     email = clean('email', 5, 255)
     subject = clean('subject', 2, 150)
-    message = clean('msg', 20, 600)
+    message = clean('message', 20, 600)
 
     if None in (name, email, subject, message):
-        print(error)
-        return jsonify(error=f'Invalid input: {error}'), 400
+        return jsonify(error='Invalid input'), 400
 
     user_input = {
         'name': name,
@@ -446,7 +433,6 @@ def send_message():
                 (name, email, subject, message),
             )
     except Exception as error:
-        print(error)
         return jsonify(error=f'Could not save message: {error}'), 500
 
     # Save to JSON file
@@ -463,7 +449,7 @@ def send_message():
         
         with open('messages.json', 'w', encoding='utf-8') as json_file:
             json.dump(content, json_file, indent=2)
-    except Exception:
+    except Exception as error:
         print(error)
         return jsonify(error=f'Could not save to file: {error}'), 500
 
@@ -503,7 +489,6 @@ def login():
                 return jsonify({'error': 'Invalid credentials'}), 401
 
     except Exception as error:
-        print(error)
         return jsonify(error=f'Server error: {error}'), 500
 
 
@@ -593,5 +578,4 @@ def subscribe():
             return jsonify(user_account)
 
     except Exception as error:
-        print(error)
         return jsonify(error=f'Subscription failed {error}'), 500

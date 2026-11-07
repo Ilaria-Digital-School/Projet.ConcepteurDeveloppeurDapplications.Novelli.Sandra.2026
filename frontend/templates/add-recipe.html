@@ -9,49 +9,52 @@
 
         <div class="info">
             <label for="recipeName" class="form-label">Recipe</label>
-            <input type="text" class="form-control" id="recipeName" name="recipeName" required>
-            <div class="error">This field is required</div>
+            <input type="text" class="form-control" id="recipe-name" name="recipe-name">
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
         </div>
         
         <div class="info">
             <label for="img-url" class="form-label">Image URL</label>
             <input type="text" class="form-control" id="img-url" name="imgSrc">
-            <div class="error">This field is required</div>
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
         </div>
         
         <div class="info">
             <label for="recipe-author" class="form-label">Author</label>
             <input type="text" class="form-control" id="recipe-author" name="author">
-            <div class="error">This field is required</div>
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
         </div>
         
         <div class="info">
-            <label for="recipe-type" class="form-label">Type</label>
-            <select class="form-control" id="recipe-type" name="type">
-                <option value="italian">Italian</option>
-                <option value="french">French</option>
-                <option value="meat">Meat</option>
-                <option value="spicy">Spicy</option>
-                <option value="sweet & sour">Sweet & sour</option>
-                <option value="sashimi & sushi">Sashimi & sushi</option>
-                <option value="homemade hamburgers">Homemade hamburgers</option>
-                <option value="creamy dessert">Creamy dessert</option>
-                <option value="cake">Cake</option>
-                <option value="other">Other</option>
-            </select>
-            <div class="error">This field is required</div>
+            <label for="recipe-category" class="form-label">Category</label>
+                <div class="dynamic-row">
+                    <select class="form-control" id="recipe-category" name="categories">
+                        <option value="">Select a category...</option>
+                        {% for c in recipe_categories %}
+                            <option value="italian">{{ c }}</option>
+                        {% endfor  %}
+                    </select>
+                    <button class="add-btn">➕</button><button class="remove-btn">➖</button>
+                </div>
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
         </div>
         
         <div class="info">
             <label for="recipe-ingredients" class="form-label">Ingredients</label>
-            <input type="text" class="form-control" id="recipe-ingredients" name="ingredients">
-            <div class="error">This field is required</div>
+                <div class="dynamic-row">
+                    <input type="text" class="form-control" id="recipe-ingredients" name="ingredients">
+                    <button class="add-btn">➕</button><button class="remove-btn">➖</button>
+                </div>
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
         </div>
         
         <div class="info">
             <label for="instructions">Instructions</label>
-            <textarea id="instructions" formControlName="instructions" placeholder="Type in your instructions..." required></textarea> <br>
-            <div class="error">This field is required</div>
+                <div class="dynamic-row">
+                    <textarea id="instructions" placeholder="Type in your instructions..."></textarea>
+                    <button class="add-btn">➕</button><button class="remove-btn">➖</button>
+                </div>
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
         </div>
 
         <button class="submit-btn" type="submit">Add</button>
