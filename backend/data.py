@@ -11,6 +11,14 @@ RECIPE_CATEGORIES = [
 ]
 
 
+INTERESTS = [
+    'Veggie',
+    'Grilling',
+    'Easy meal',
+    'Dessert'
+]
+
+
 COUNTRIES = [
     'UK',
     'Ireland',

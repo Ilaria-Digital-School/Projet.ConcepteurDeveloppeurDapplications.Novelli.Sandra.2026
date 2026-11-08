@@ -3,6 +3,7 @@ from flask_cors import CORS
 import sqlite3
 
 import data
+import os
 
 import json
 from pathlib import Path
@@ -18,6 +19,8 @@ app = Flask(
     static_folder="../frontend/static",
     static_url_path="/static",
 )
+
+# app.config["SECRET_KEY"] = os.environ["FLASK_SECRET_KEY"]
 
 limiter = Limiter(get_remote_address, app=app)
 
@@ -81,8 +84,8 @@ def get_one_recipe(id):
                     (u.firstname || ' ' || u.lastname) as author,
                     r.recipe_name AS name,
                     r.img_url AS imgSrc,
-                    r.prep_time AS preparation_time,
-                    r.cook_time AS cook-time,
+                    r.prep_time AS prepTime,
+                    r.cook_time AS cookTime,
                     r.servings,
                     r.created_on AS createdOn
                     FROM recipe AS r
@@ -103,7 +106,7 @@ def get_one_recipe(id):
         ingredients = [dict(r) for r in cursor.fetchall()]
 
         cursor.execute('''
-                    SELECT rs.step_number AS stepNumber, p.instruction
+                    SELECT rs.step_number AS step_number, p.instruction
                     FROM recipe_step rs
                     JOIN preparation_step p ON rs.step_id = p.step_id
                     WHERE rs.recipe_id = ?
@@ -397,7 +400,9 @@ def contact():
 @app.route('/api/contact', methods=['POST'])
 @limiter.limit('5 per minute; 30 per day')
 def send_message():
+    
     data = request.get_json(silent=True)
+    
     if not isinstance(data, dict):
         return jsonify(error='Invalid JSON'), 400
 
@@ -461,11 +466,14 @@ def log_in():
     return render_template('log-in.html')
 
 
-
-@app.route('/api/log-in', methods=['GET', 'POST'])
-@limiter.limit('5 per 15 minutes')
+@app.route('/api/log-in', methods=['POST'])
+@limiter.limit('4 per 10 minutes')
 def login():
-    data = request.get_json()
+    data = request.get_json(silent=True)
+    
+    if not data:
+        return jsonify({'error': 'Invalid request'}), 400
+    
     email = data.get('email')
     pwd = data.get('pwd')
 
@@ -484,6 +492,7 @@ def login():
             row = cursor.fetchone()
 
             if row and check_password_hash(row['password'], pwd):
+                session['user_id'] = row['id']
                 return jsonify({'id': row['id'], 'firstname': row['firstname'], 'role': row['role']}), 200
             else:
                 return jsonify({'error': 'Invalid credentials'}), 401
@@ -493,11 +502,28 @@ def login():
 
 
 
+@app.route('/api/log-out', methods=['POST'])
+def logout():
+    
+    session.clear()
+    
+    return jsonify({'Message': 'Logged out successfully'}), 200
+
+
+@app.route('/api/check-session', methods=['GET'])
+def check_session():
+
+    if 'user_id' not in session:
+        return jsonify({'logged_in': False}), 401
+
+    return jsonify({'logged_in': True, 'user_id': session['user_id']}), 200
+
+
+
 
 @app.route('/sign-up', methods=['GET'])
 def sign_up():
-    return render_template('sign-up.html', countries=data.COUNTRIES)
-
+    return render_template('sign-up.html', interests=data.INTERESTS, countries=data.COUNTRIES)
 
 
 @app.route('/api/sign-up', methods=['POST'])

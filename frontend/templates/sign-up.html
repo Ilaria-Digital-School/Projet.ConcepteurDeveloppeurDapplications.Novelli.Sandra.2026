@@ -6,31 +6,31 @@
         <h2 id="signup-heading">Register with us</h2>
 
         <fieldset>
-            <legend>Personnal details</legend>
+            <legend>Personal details</legend>
             <div class="info">
                 <label for="name">Name: </label>
                 <input type="text" name="familyName" id="name" data-label="Name" placeholder="Your family name" required aria-required="true" aria-describedby="name-error">
-                <p class="error" id="name-error" role="alert" aria-live="polite" hidden>This field is required</p>
+                <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
             </div>
             <div class="info">
                 <label for="firstname">Firstname: </label>
                 <input type="text" name="firstName" id="firstname" data-label="Firstname" placeholder="Your firstname" required aria-required="true" aria-describedby="firstname-error">
-                <p class="error" id="firstname-error" role="alert" aria-live="polite" hidden>This field is required</p>
+                <p class="error" id="firstname-error" role="alert" aria-live="polite" hidden></p>
             </div>
             <div class="info">
                 <label for="email">Email: </label>
                 <input type="email" id="email" name="email" data-label="Email" placeholder="exemple@email.com" required aria-required="true" aria-describedby="email-error">
-                <p class="error" id="email-error" role="alert" aria-live="polite" hidden>This field is required</p>
+                <p class="error" id="email-error" role="alert" aria-live="polite" hidden></p>
             </div>
             <div class="info">
-                <label for="pwd">Password: </label>
+                <label for="pwd">Password</label>
                 <input type="password" id="pwd" name="password" data-label="Password" placeholder="Enter your password" required aria-required="true" aria-describedby="pwd-error">
-                <p class="error" id="pwd-error" role="alert" aria-live="polite" hidden>This field is required</p>
+                <p class="error" id="pwd-error" role="alert" aria-live="polite" hidden></p>
             </div>
             <div class="info">
-                <label for="pwd2">Confirm your password: </label>
+                <label for="pwd2">Confirm your password</label>
                 <input type="password" id="pwd2" name="password2" placeholder="Enter your password again" required aria-required="true" aria-describedby="pwd2-error">
-                <p class="error" id="pwd2-error" role="alert" aria-live="polite" hidden>This field is required</p>
+                <p class="error" id="pwd2-error" role="alert" aria-live="polite" hidden></p>
             </div>
         </fieldset>
 
@@ -39,7 +39,7 @@
 
             <!-- Radio group -->
             <div class="info">
-                <legend>Gender:</legend>
+                <legend>Gender (optional)</legend>
                 <input type="radio" id="female" name="gender" value="female">
                 <label for="female"> Female </label>
                 <input type="radio" id="male" name="gender" value="male">
@@ -48,12 +48,11 @@
 
             <!-- Checkbox group -->
             <div class="info">
-                <legend>Interests:</legend>
-                <input type="checkbox" name="interets" id="browsing" value="vetements">
-                <label for="browsing">Browsing </label>
-
-                <input type="checkbox" name="interets" id="contributing" value="accessoires">
-                <label for="contributing">Contributing </label>
+                <legend>Any particular interest? (optional)</legend>
+                {% for i in interests %}
+                    <input type="checkbox" name="{{ i }}" id="{{ i }}" value="{{ i }}">
+                    <label for="{{ i }}">{{ i }}</label>
+                {% endfor %}
             </div>
 
             <!-- Multiple choice -->
@@ -73,7 +72,7 @@
 
         <div>
             <p>Already have an account?
-                <a href="log-in.html">Log in</a>
+                <a href="{{ url_for('log_in') }}">Log in</a>
             </p>
         </div>
     </form>

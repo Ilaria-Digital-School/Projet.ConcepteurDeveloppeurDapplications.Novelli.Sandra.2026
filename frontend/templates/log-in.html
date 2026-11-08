@@ -2,11 +2,10 @@
 
 {% block content %}
 
-
     <div id="log-in-main">
 
         <section id="log-in-box">
-        <form class="forms" id="login-form" novalidate aria-labelledby="login-heading">
+        <form class="forms" id="login-form" aria-labelledby="login-heading">
             <h2 id="login-heading">Log in to your account</h2>
 
             <fieldset aria-labelledby="login-heading">
@@ -16,7 +15,7 @@
                 </div>
                 <div class="info">
                     <label for="password">Password:</label>
-                    <input type="password" id="pwd" name="password" placeholder="Enter your password" required aria-required="true" aria-describedby="login-error">
+                    <input type="password" id="pwd" name="pwd" placeholder="Enter your password" required aria-required="true" aria-describedby="login-error">
                 </div>
                 <p class="error" id="login-error" role="alert" aria-live="polite" hidden>Invalid email or password</p>
                 <button class="submit-btn" type="submit">Submit</button>
@@ -27,10 +26,9 @@
 
         <section id="sign-up-box" aria-labelledby="signup-prompt">
             <p id="sign-up-prompt">Hello there! If you haven't got an account yet, join our cooking community.</p>
-            <button id="join-us-btn"><a href="sign-up.html">Sign up</a></button>
+            <button id="join-us-btn"><a href="{{ url_for('sign_up') }}">Sign up</a></button>
         </section>
 
     </div>
-
 
 {% endblock %}

@@ -260,8 +260,6 @@ if (recipeDetails) {
 
     function showRecipeDetails(recipe) {
 
-        // let recipePage = document.createElement('div');
-
         const ingredientsList = recipe.ingredients.map(ing => `<li class=ingredient>${ing.quantity || ''} ${ing.unit || ''} ${ing.name}</li>`).join('');
 
         const stepsList = recipe.steps.map((step, index) => `<li class="prep-step">${index + 1}. ${step.instruction}</li>`).join('');
@@ -287,14 +285,13 @@ if (recipeDetails) {
                     ${stepsList}
                 </ul>
             </div>
-        `;
+            `;
 
     }
 
     let recipe;
 
     async function fetchOneRecipe() {
-
 
         let url = window.location.pathname
         let recipeId = url.split('/').pop();
@@ -456,7 +453,7 @@ formButtons.forEach(btn => btn.addEventListener('click', function(e) {
 
 if (contactForm) {
     
-    async function submit_message(message) {
+    async function submitMessage(message) {
         
         const response = await fetch('/api/contact', {
             method: 'POST',
@@ -475,13 +472,14 @@ if (contactForm) {
     }
     
     contactForm.addEventListener('submit', async function(e) {
+
         e.preventDefault();
 
         const formData = new FormData(contactForm);
         const message = Object.fromEntries(formData);
         
         try {
-            const result = await submit_message(message);
+            const result = await submitMessage(message);
             console.log(`Success: ${JSON.stringify(result)}`);
             contactForm.reset();
         }
@@ -509,10 +507,11 @@ if (addButtons && deleteButtons) {
     infoDivs.forEach(div => div.addEventListener('click', function(e) {
 
         e.preventDefault();
+
+        let deleteButton = e.target.closest('.delete-btn');
+        let addButton = e.target.closest('.add-btn');
         
         function addRow() {
-            
-            let addButton = e.target.closest('.add-btn');
             
             if(!addButton) {return};
             
@@ -522,7 +521,7 @@ if (addButtons && deleteButtons) {
             if (newRow.querySelector('input')) {newRow.querySelector('input').value = ''}
             else if (newRow.querySelector('textarea')) {newRow.querySelector('textarea').value = ''};
             
-            addButton.parentElement.parentElement.appendChild(newRow);
+            row.parentElement.appendChild(newRow);
             
         }
         
@@ -531,22 +530,20 @@ if (addButtons && deleteButtons) {
         
         function deleteRow() {
             
-            let deleteButton = e.target.closest('.delete-btn');
-            
             if(!deleteButton) {return};
             
             let targetRow = deleteButton.parentElement;
             let parentDiv = targetRow.parentElement;
 
-            console.log(parentDiv);
+            console.log(parentDiv.children.length);
             
-            // if (parentDiv.childNodes > 1) {
+            // if (parentDiv.children.length >= 4) {
                 parentDiv.removeChild(targetRow);
-                //     deleteButton.disabled = false;
-                // }
-                // else {
-                    //     deleteButton.disabled = true;
-                    // }
+                deleteButton.disabled = false;
+            //     }
+            // else {
+            //     deleteButton.disabled = true;
+            //     }
             }
             
             deleteRow();
@@ -556,14 +553,93 @@ if (addButtons && deleteButtons) {
     }
     
     
-    // Login form error handling.
+    
+// Login form error handling.
 
 if (loginForm) {
-    loginForm.addEventListener('submit', function () {
+
+    async function logIn(info) {
+
+        const response = await fetch('/api/log-in', {
+            method: 'POST',
+            body: JSON.stringify(info),
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(`Failed to get data. Status: ${response.status}`);
+        }
+
+        return data;
+
+    }
+
+    loginForm.addEventListener('submit', async function (e) {
+
+        e.preventDefault();
+
+        const formData = new FormData(loginForm);
+        const info = Object.fromEntries(formData);
+
+        try {
+            const result = await logIn(info);
+            console.log(`Connection successful: ${JSON.stringify(result)}`);
+
+            if (result.role === 'user') {
+                window.location.href = '/';
+            }
+            else if (result.role === 'admin') {
+                window.location.href = '/admin';
+            }
+            else {
+                throw new Error ('Unknown role');
+            }
+        }
+        catch (error) {
+            loginForm.reset();
+            console.log(error);
+        }
+
+        // TAKE CARE OF THAT LATER.
         // if email or password is invalid:
-        loginErrorMsg.style.visibility = 'visible';
+        // loginErrorMsg.style.visibility = 'visible';
     })
 }
+
+
+// async function logOut() {
+
+//     const response = await fetch('/api/logout', method='POST')
+
+//     if (!response.ok) {
+//         throw new Error(`Failed to log out. Status: ${response.status}`);
+//     }
+
+//     window.location.href = '/';
+
+// }
+
+
+// async function checkSession() {
+
+//     const response = await fetch('/api/check-session', {method: 'GET'});
+//     const data = await response.json();
+
+//     if (response.status === 401) {
+//         console.log('User is not logged in');
+//         return false;
+//     }
+
+//     if (!response.ok) {
+//         throw new Error(`Failed to check session. Status: ${response.status}`);
+//     }
+
+//     console.log('User is logged in:', data.user_id);
+
+//     return true;
+// }
 
 
 // Reset forms on reload.
