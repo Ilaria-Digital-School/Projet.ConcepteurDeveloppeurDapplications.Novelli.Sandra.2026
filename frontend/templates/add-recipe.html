@@ -3,63 +3,79 @@
 {% block content %}
 
 
-    <form class="forms" id="recipe-form">
-    
+<form class="forms" id="recipe-form">
+
     <h2>Add recipe</h2>
 
-        <div class="info">
-            <label for="recipeName" class="form-label">Recipe</label>
-            <input type="text" class="form-control" id="recipe-name" name="recipe-name">
-            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
-        </div>
-        
-        <div class="info">
-            <label for="img-url" class="form-label">Image URL</label>
-            <input type="text" class="form-control" id="img-url" name="imgSrc">
-            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
-        </div>
-        
-        <div class="info">
-            <label for="recipe-author" class="form-label">Author</label>
-            <input type="text" class="form-control" id="recipe-author" name="author">
-            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
-        </div>
-        
-        <div class="info">
-            <label for="recipe-category" class="form-label">Category</label>
-                <div class="dynamic-row">
-                    <select class="form-control" id="recipe-category" name="categories">
-                        <option value="">Select a category...</option>
-                        {% for c in recipe_categories %}
-                            <option value="italian">{{ c }}</option>
-                        {% endfor  %}
-                    </select>
-                    <button class="add-btn">➕</button><button class="remove-btn">➖</button>
-                </div>
-            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
-        </div>
-        
-        <div class="info">
-            <label for="recipe-ingredients" class="form-label">Ingredients</label>
-                <div class="dynamic-row">
-                    <input type="text" class="form-control" id="recipe-ingredients" name="ingredients">
-                    <button class="add-btn">➕</button><button class="remove-btn">➖</button>
-                </div>
-            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
-        </div>
-        
-        <div class="info">
-            <label for="instructions">Instructions</label>
-                <div class="dynamic-row">
-                    <textarea id="instructions" placeholder="Type in your instructions..."></textarea>
-                    <button class="add-btn">➕</button><button class="remove-btn">➖</button>
-                </div>
-            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
-        </div>
+    <div class="info">
+        <label for="recipeName" class="form-label">Recipe</label>
+        <input type="text" class="form-control" id="recipe-name" name="recipe-name">
+        <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+    </div>
 
-        <button class="submit-btn" type="submit">Add</button>
-    </form>
+    <div class="info">
+        <label for="img-url" class="form-label">Image URL</label>
+        <input type="text" class="form-control" id="img-url" name="imgSrc">
+        <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+    </div>
+
+    <div class="info">
+        <label for="recipe-author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="recipe-author" name="author">
+        <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+    </div>
+
+    <div class="info">
+        <label for="recipe-category" class="form-label">Category</label>
+        <div class="dynamic-row" id="categories">
+            <select class="form-control" id="recipe-categories" name="categories">
+                <option value="">Select a category...</option>
+                {% for c in recipe_categories %}
+                <option value="italian">{{ c }}</option>
+                {% endfor %}
+            </select>
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+            <button class="dynamic-btn add-btn">➕</button><button class="dynamic-btn delete-btn">➖</button>
+        </div>
+    </div>
+
+    <div class="info">
+        <label for="preparation-time" class="form-label">Preparation time (minutes)</label>
+        <input type="text" class="form-control" id="preparation-time" name="preparation-time">
+        <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+    </div>
+
+    <div class="info">
+        <label for="cook-time" class="form-label">Cook time (minutes)</label>
+        <input type="text" class="form-control" id="cook-time" name="cook-time">
+        <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+    </div>
+
+    <div class="info">
+        <label for="servings" class="form-label">Servings</label>
+        <input type="text" class="form-control" id="servings" name="servings">
+        <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+    </div>
+
+    <div class="info">
+        <label for="recipe-ingredients" class="form-label">Ingredients</label>
+        <div class="dynamic-row" id="ingredients">
+            <input type="text" class="form-control" id="recipe-ingredients" name="ingredients" placeholder="Ingredient...">
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+            <button class="dynamic-btn add-btn">➕</button><button class="dynamic-btn delete-btn">➖</button>
+        </div>
+    </div>
+
+    <div class="info">
+        <label for="instructions">Instructions</label>
+        <div class="dynamic-row" id="instructions">
+            <textarea id="step" name="step" placeholder="Type in your instruction..."></textarea>
+            <p class="error" id="name-error" role="alert" aria-live="polite" hidden></p>
+            <button class="dynamic-btn add-btn">➕</button><button class="dynamic-btn delete-btn">➖</button>
+        </div>
+    </div>
+
+    <button class="submit-btn" type="submit">Add</button>
+</form>
 
 {% endblock %}
-
-

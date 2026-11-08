@@ -81,8 +81,8 @@ def get_one_recipe(id):
                     (u.firstname || ' ' || u.lastname) as author,
                     r.recipe_name AS name,
                     r.img_url AS imgSrc,
-                    r.prep_time AS prepTime,
-                    r.cook_time AS cookTime,
+                    r.prep_time AS preparation_time,
+                    r.cook_time AS cook-time,
                     r.servings,
                     r.created_on AS createdOn
                     FROM recipe AS r
@@ -204,8 +204,8 @@ def submit_recipe():
     img_url = clean('imgSrc', 5)
     author = clean('author', 5)
     categories = data.get('categories')
-    prep_time = check_if_number('prepTime', float)
-    cook_time = check_if_number('cookTime', float)
+    prep_time = check_if_number('preparation-time', float)
+    cook_time = check_if_number('cook-time', float)
     servings = check_if_number('servings', int, 1)
     ingredients = data.get('ingredients')
     steps = data.get('steps')

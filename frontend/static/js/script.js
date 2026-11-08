@@ -335,6 +335,7 @@ if (favourites) {
 // Form error handling.
 
 const forms = document.querySelectorAll('.forms');
+const infoDivs = document.querySelectorAll('.info');
 
 const contactForm = document.querySelector('#contact-form');
 const name = document.querySelector('#name');
@@ -495,12 +496,57 @@ if (contactForm) {
 
 // Add recipe form.
 
-const addButton = document.querySelectorAll('.add-btn');
-const removeButton = document.querySelectorAll('.remove-btn');
+const addButtons = document.querySelectorAll('.add-btn');
+const deleteButtons = document.querySelectorAll('.delete-btn');
+const dynamicRows = document.querySelectorAll('.dynamic-row');
 
-if (addButton && removeButton) {
+if (addButtons && deleteButtons) {
+    
+    infoDivs.forEach(div => div.addEventListener('click', function(e) {
+
+        e.preventDefault();
+        
+        function addRow() {
+
+            let addButton = e.target.closest('.add-btn');
+
+            if(!addButton) {return};
+
+            let row = addButton.parentElement;
+            let newRow = row.cloneNode(true);
+
+            // let fieldInput = newRow.querySelector('input');
+            // fieldInput.value = ''; 
+
+            addButton.parentElement.parentElement.appendChild(newRow);
+        }
+        
+        addRow();
+        
+        function deleteRow() {
+
+            let deleteButton = e.target.closest('.delete-btn');
+            
+            if(!deleteButton) {return};
+
+            let targetRow = deleteButton.parentElement;
+            let parentDiv = targetRow.parentElement;
+
+            // console.log(parentDiv.querySelectorAll(":scope > .dynamic-row"));
+
+            // if (parentDiv.querySelectorAll(":scope > .dynamic-row") > 1) {
+                parentDiv.removeChild(targetRow);
+            //     deleteButton.disabled = false;
+            // }
+            // else {
+            //     deleteButton.disabled = true;
+            // }
+        }
+
+        deleteRow();
 
 
+    }))
 
 }
 
