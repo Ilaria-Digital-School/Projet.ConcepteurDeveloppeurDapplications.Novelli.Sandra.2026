@@ -6,7 +6,7 @@ const search = document.querySelector('#search');
 const nav = document.querySelector('nav');
 const banner = document.querySelector('.banner');
 const favourites = document.querySelector('#favourites');
-const buttons = document.querySelectorAll('button');
+const formButtons = document.querySelectorAll('.forms button');
 
 
 // Mobile version: toggle main menu.
@@ -352,10 +352,10 @@ const loginForm = document.querySelector('#login-form');
 const loginErrorMsg = document.querySelector('#login-error');
 
 const fields = document.querySelectorAll(`
-    #contact-form input,
-    #contact-form textarea,
+    .forms input,
+    .forms textarea,
     #signup-form input:not([type="radio"]):not([type="checkbox"]),
-    #signup-form select
+    .forms select
 `);
 
 const errorMsg = document.querySelectorAll('.error');
@@ -417,7 +417,7 @@ if (forms) {
     
 }
 
-buttons.forEach(btn => btn.addEventListener('click', function(e) {
+formButtons.forEach(btn => btn.addEventListener('click', function(e) {
     e.preventDefault();
 }))
 
@@ -500,6 +500,10 @@ const addButtons = document.querySelectorAll('.add-btn');
 const deleteButtons = document.querySelectorAll('.delete-btn');
 const dynamicRows = document.querySelectorAll('.dynamic-row');
 
+let categories = [];
+let ingredients = [];
+let steps = [];
+
 if (addButtons && deleteButtons) {
     
     infoDivs.forEach(div => div.addEventListener('click', function(e) {
@@ -507,51 +511,52 @@ if (addButtons && deleteButtons) {
         e.preventDefault();
         
         function addRow() {
-
+            
             let addButton = e.target.closest('.add-btn');
-
+            
             if(!addButton) {return};
-
+            
             let row = addButton.parentElement;
             let newRow = row.cloneNode(true);
-
-            // let fieldInput = newRow.querySelector('input');
-            // fieldInput.value = ''; 
-
+            
+            if (newRow.querySelector('input')) {newRow.querySelector('input').value = ''}
+            else if (newRow.querySelector('textarea')) {newRow.querySelector('textarea').value = ''};
+            
             addButton.parentElement.parentElement.appendChild(newRow);
+            
         }
         
         addRow();
         
+        
         function deleteRow() {
-
+            
             let deleteButton = e.target.closest('.delete-btn');
             
             if(!deleteButton) {return};
-
+            
             let targetRow = deleteButton.parentElement;
             let parentDiv = targetRow.parentElement;
 
-            // console.log(parentDiv.querySelectorAll(":scope > .dynamic-row"));
-
-            // if (parentDiv.querySelectorAll(":scope > .dynamic-row") > 1) {
+            console.log(parentDiv);
+            
+            // if (parentDiv.childNodes > 1) {
                 parentDiv.removeChild(targetRow);
-            //     deleteButton.disabled = false;
-            // }
-            // else {
-            //     deleteButton.disabled = true;
-            // }
-        }
-
-        deleteRow();
-
-
-    }))
-
-}
-
-
-// Login form error handling.
+                //     deleteButton.disabled = false;
+                // }
+                // else {
+                    //     deleteButton.disabled = true;
+                    // }
+            }
+            
+            deleteRow();
+            
+        }))
+        
+    }
+    
+    
+    // Login form error handling.
 
 if (loginForm) {
     loginForm.addEventListener('submit', function () {

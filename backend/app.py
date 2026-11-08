@@ -27,7 +27,7 @@ CORS(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', cuisine_genres=data.CUISINE_GENRES)
+    return render_template('index.html', recipe_categories=data.RECIPE_CATEGORIES)
 
 
 @app.route('/api/recipes', methods=['GET'])

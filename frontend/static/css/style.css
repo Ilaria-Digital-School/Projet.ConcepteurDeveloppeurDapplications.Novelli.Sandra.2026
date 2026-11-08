@@ -579,10 +579,10 @@ textarea:focus {
     column-gap: 0.5rem;
 }
 
-.dynamic-row select,
-.dynamic-row input,
-.dynamic-row textarea {
+span.input-and-error {
     width: 80%;
+    display: flex;
+    flex-direction: column;
 }
 
 .add-btn, .delete-btn {
