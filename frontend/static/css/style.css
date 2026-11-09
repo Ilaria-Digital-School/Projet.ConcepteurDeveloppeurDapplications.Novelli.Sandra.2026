@@ -54,10 +54,6 @@ nav {
     justify-content: space-between;
 }
 
-nav a {
-    color: silver;
-}
-
 nav ul {
     display: flex;
     justify-content: space-between;
@@ -66,52 +62,59 @@ nav ul {
 #nav1 {
     flex-direction: row;
     justify-content: flex-start;
-    /* width: 40%; */
 }
 
 #nav2 {
     flex-direction: row;
     justify-content: flex-end;
-    /* margin-left: auto; */
-    /* width: 30%; */
 }
 
 nav li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0 0.6rem;
     list-style: none;
     border: 1px solid silver;
     border-radius: 28px;
-}
-
-nav button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 10rem;
-    height: 3rem;
+    height: 3.5rem;
     background-color: transparent;
     padding: 6px 10px;
-    border: none;
-    color: silver;
-    font-size: 1.2em;
+    font-size: 1.25em;
+    color: silver
 }
 
 nav li:hover {
     cursor: pointer;
-    color: turquoise;
     background-color: var(--highlight-background-color);
     box-shadow: 0 0 6px 4px turquoise;
 }
 
-#sign-up {
-    border: 3px solid silver;
+nav a {
     color: silver;
-    background-color: blue;
 }
 
-#sign-up:hover {
-    color: turquoise;
+#signup-link {
+    background-color: blue;
+    border-width: 3px;
 }
+
+#admin-link {
+    background-color: blueviolet;
+    border-width: 3px;
+}
+
+#signup-link a, #admin-link a {
+    color: white;
+}
+
+nav li.off {
+    display: none;
+}
+
+
+/* Title */
 
 h1,
 p#motto {
@@ -428,14 +431,14 @@ h3 {
 
 /* LOGIN PAGE */
 
-#log-in-main {
+#login-main {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
-#sign-up-box {
+#signup-box {
     display: flex;
     height: 14rem;
     /* width: 50%; */
@@ -446,7 +449,7 @@ h3 {
     border-radius: 25px;
 }
 
-#sign-up-prompt {
+#signup-prompt {
     text-align: center;
     font-size: 1.25em;
 }
@@ -473,11 +476,6 @@ fieldset {
     margin: 1rem auto;
 }
 
-.info {
-    /* padding: 0 0.5rem; */
-    margin-bottom: 0.15rem;
-}
-
 .forms label,
 input,
 textarea,
@@ -501,8 +499,12 @@ textarea {
     min-height: 10rem;
 }
 
+.additional-info div {
+    margin-bottom: 1rem;
+}
+
 .additional-info label,
-input {
+.additional-info input {
     display: inline;
 }
 
@@ -567,6 +569,10 @@ textarea:focus {
 .submit-btn:hover,
 #join-us-btn:hover {
     box-shadow: 0 0 6px 4px rgb(0, 89, 255);
+}
+
+#login-form .info {
+    margin-top: 0.5rem;
 }
 
 
@@ -660,26 +666,24 @@ footer {
     }
 
     nav li {
-        margin: unset;
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+        color: white;
         border: none;
         border-radius: 28px;
-        width: 8rem;
-    }
-
-    nav button,
-    #sign-up {
         justify-content: left;
-        width: 8rem;
+        width: 9.4rem;
         height: 2.5rem;
         background-color: transparent;
-        padding: 0;
-        border: none;
     }
 
-    nav li:hover,
-    #sign-up:hover {
-        all: unset;
-        background-color: grey;
+    nav a {
+        color: white;
+    }
+
+    #signup-link, #admin-link {
+        border-radius: 0;
+        background-color: transparent;
     }
 
     nav.active {
@@ -836,7 +840,7 @@ footer {
         width: 90%;
     }
 
-    #sign-up-box {
+    #signup-box {
         margin-top: 2rem;
     }
 

@@ -20,14 +20,16 @@
         <nav role="navigation" class="off">
                 
             <ul id="nav1" aria-label="main menu">
-                <li><button><a href="{{ url_for('index') }}">Home</a></button></li>
-                <li><button><a href="{{ url_for('favourites') }}">Favourites ❤️</a></button></li>
-                <li><button><a href="{{ url_for('contact') }}">Contact</a></button></li>
-                <li><button><a href="{{ url_for('add_recipe') }}">Add recipe ➕</a></button></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('favourites') }}">Favourites ❤️</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('add_recipe') }}">Add recipe ➕</a></li>
             </ul>
             <ul id="nav2" aria-label="sign in or login menu">
-                <li><button><a href="{{ url_for('log_in') }}">Login</a></button></li>
-                <li id="sign-up"><button><a href="{{ url_for('sign_up') }}">Sign up</a></button></li>
+                <li id="login-link"><a href="{{ url_for('log_in') }}">Login</a></li>
+                <li id="signup-link" class="logged-out"><a href="{{ url_for('sign_up') }}">Sign up</a></li>
+                <li id="admin-link"><a href="{{ url_for('admin')}}">Admin</a></li>
+                <li id="logout-link">Log out</li>
             </ul>
         </nav>
         

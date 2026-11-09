@@ -89,7 +89,7 @@ async function fetchAllRecipes() {
         return allRecipes;
 
     }
-    
+
     catch (error) {
         console.error(`Failed to get data:' ${error}`);
         return [];
@@ -141,7 +141,7 @@ if (banner) {
         fetchAllRecipes();
     })
 
-    search.addEventListener('input', function() {
+    search.addEventListener('input', function () {
 
         recipeList.innerHTML = '';
 
@@ -254,7 +254,7 @@ if (recipeList || banner) {
 
 
 
-let recipeDetails = document.querySelector('#recipe-details');
+const recipeDetails = document.querySelector('#recipe-details');
 
 if (recipeDetails) {
 
@@ -304,8 +304,6 @@ if (recipeDetails) {
 
         recipe = await response.json();
 
-        recipeDetails = document.querySelector('#recipe-details');
-
         showRecipeDetails(recipe);
 
         return recipe.id;
@@ -349,14 +347,14 @@ const loginForm = document.querySelector('#login-form');
 const loginErrorMsg = document.querySelector('#login-error');
 
 const fields = document.querySelectorAll(`
-    .forms input,
+    .forms input:not(#signup-form input[type="radio"]):not(#signup-form input[type="checkbox"]),
     .forms textarea,
-    #signup-form input:not([type="radio"]):not([type="checkbox"]),
     .forms select
 `);
 
+
 const errorMsg = document.querySelectorAll('.error');
-const submitBtn = document.querySelectorAll('.submit-btn');
+const submitButton = document.querySelectorAll('.submit-btn');
 
 
 function showError(element) {
@@ -370,61 +368,143 @@ function showSuccess(element) {
 }
 
 function checkRequired(element) {
-    element.value.trim() === '' ? showError(element) : showSuccess(element);
-    const errorMsg = element.parentElement.querySelector('.error');
-    errorMsg.innerText = `This field is required`;
+    return element.value.trim() === '';
 }
 
 function checkLength(element, minLength) {
-    element.value.length < minLength ? showError(element) : showSuccess(element);
-    const errorMsg = element.parentElement.querySelector('.error');
-    errorMsg.innerText = `${element.dataset.label} must be at least ${minLength} characters`;
+    const lengthIsValid = element.value.trim().length >= minLength;
+    return { lengthIsValid, message: `${element.dataset.label} must be at least ${minLength} characters` };
 }
 
 function isValidEmail(email) {
-    !email.value.includes('@') || !email.value.includes('.') ? showError(email) : showSuccess(email);
-    const errorMsg = email.parentElement.querySelector('.error');
-    errorMsg.innerText = `Invalid email format`
+    return (email.value.includes('@') && email.value.includes('.'));
 }
 
 function matchingPasswords(pwd, pwd2) {
-    pwd.value !== pwd2.value ? showError(pwd2) : showSuccess(pwd2);
-    const errorMsg = pwd2.parentElement.querySelector('.error');
-    errorMsg.innerText = `Passwords do not match`
+    return (pwd.value == pwd2.value);
 }
+
+
+function isValidInput(element) {
+
+    let isValid = true;
+    const errorMsg = element.parentElement.querySelector('.error');
+
+    if (checkRequired(element)) {
+        errorMsg.innerText = 'This field is required';
+        isValid = false;
+    }
+
+    else if (element === name) {
+
+        const result = checkLength(element, 3);
+
+        if (!result.lengthIsValid) {
+            errorMsg.innerText = result.message;
+            isValid = false;
+        }
+    }
+
+    else if (element === email) {
+
+        const result = checkLength(element, 8);
+
+        if (!result.lengthIsValid) {
+            errorMsg.innerText = result.message;
+            isValid = false;
+        }
+        else if (!isValidEmail(element)) {
+            errorMsg.innerText = 'Invalid email format';
+            isValid = false;
+        }
+    }
+
+    else if (element === formMsg) {
+
+        const result = checkLength(element, 20);
+
+        if (!result.lengthIsValid) {
+            errorMsg.innerText = result.message;
+            isValid = false;
+        }
+    }
+
+    else if (element === firstname) {
+
+        const result = checkLength(element, 2);
+
+        if (!result.lengthIsValid) {
+            errorMsg.innerText = result.message;
+            isValid = false;
+        }
+    }
+
+    else if (element === pwd) {
+
+        const result = checkLength(element, 12);
+
+        if (!result.lengthIsValid) {
+            errorMsg.innerText = result.message;
+            isValid = false;
+        }
+    }
+
+    else if (element === pwd2) {
+        if (!matchingPasswords(pwd, pwd2)) {
+            errorMsg.innerText = 'Passwords do not match';
+            isValid = false;
+        }
+    }
+
+    return isValid;
+
+}
+
 
 if (forms) {
-    
+
     fields.forEach(field => field.addEventListener('input', function (e) {
-        
-        if (e.target === name) {checkLength(name, 3)}
-        else if (e.target === email) {checkLength(email, 8); isValidEmail(email)}
-        else if (e.target === formMsg) {checkLength(formMsg, 20)}
-        else if (e.target === firstname) {checkLength(firstname, 2)}
-        else if (e.target === pwd) {checkLength(pwd, 12)}
-        else if (e.target === pwd2) {matchingPasswords(pwd, pwd2)}
+
+        isValidInput(e.target) ? showSuccess(e.target) : showError(e.target);
+        console.log(Array.from(fields));
+
+    }))
+
+    forms.forEach(form => form.addEventListener('submit', function (e) {
+
+        e.preventDefault();
+
+        if (Array.from(fields).every(field => isValidInput(field))) {
+            submitButton.forEach(btn => btn.disabled = false);
+        }
+        else {
+            submitButton.forEach(btn => btn.disabled = true);
+        }
 
     }));
-    
-    fields.forEach(field => field.addEventListener('blur', function (e) {
-        
-        checkRequired(e.target);
-        
-    }));
-    
+
 }
 
-formButtons.forEach(btn => btn.addEventListener('click', function(e) {
-    e.preventDefault();
-}))
+
+// Former validation logic.
+
+// console.log(fields);
+// console.log(errorMsg);
+
+// if (e.target === name) {checkLength(name, 3)}
+// else if (e.target === email) {checkLength(email, 8); isValidEmail(email)}
+// else if (e.target === formMsg) {checkLength(formMsg, 20)}
+// else if (e.target === firstname) {checkLength(firstname, 2)}
+// else if (e.target === pwd) {checkLength(pwd, 12)}
+// else if (e.target === pwd2) {matchingPasswords(pwd, pwd2)}
 
 
 // Under construct. BUGGY!!!!!!!!!!!!!!!!!!!!!
 
 // if (forms) {
-    
+
 //     forms.forEach(form => form.addEventListener('submit', function (e) {
-    
+
 //         if (Array.from(errorMsg).every(msg => msg.textContent.length > 0)) {
 //             e.preventDefault()
 //             submitBtn.forEach(btn => btn.disabled = false);
@@ -434,7 +514,7 @@ formButtons.forEach(btn => btn.addEventListener('click', function(e) {
 //         }
 //     }))
 //     forms.forEach(form => form.addEventListener('mouseenter', function (e) {
-        
+
 //         if (Array.from(errorMsg).every(msg => msg.textContent.length > 0)) {
 //             e.preventDefault()
 //             submitBtn.forEach(btn => btn.disabled = false);
@@ -452,32 +532,32 @@ formButtons.forEach(btn => btn.addEventListener('click', function(e) {
 // Contact.
 
 if (contactForm) {
-    
+
     async function submitMessage(message) {
-        
+
         const response = await fetch('/api/contact', {
             method: 'POST',
             body: JSON.stringify(message),
-            headers: {'Content-Type': 'application/json'}
+            headers: { 'Content-Type': 'application/json' }
         });
-        
+
         if (!response.ok) {
             throw new Error(`Failed to get message. Status: ${response.status}`)
         }
-        
+
         const data = await response.json();
-        
+
         return data;
-        
+
     }
-    
-    contactForm.addEventListener('submit', async function(e) {
+
+    contactForm.addEventListener('submit', async function (e) {
 
         e.preventDefault();
 
         const formData = new FormData(contactForm);
         const message = Object.fromEntries(formData);
-        
+
         try {
             const result = await submitMessage(message);
             console.log(`Success: ${JSON.stringify(result)}`);
@@ -486,9 +566,9 @@ if (contactForm) {
         catch (error) {
             console.log(error);
         }
-        
+
     });
-    
+
 }
 
 
@@ -503,58 +583,63 @@ let ingredients = [];
 let steps = [];
 
 if (addButtons && deleteButtons) {
-    
-    infoDivs.forEach(div => div.addEventListener('click', function(e) {
+
+    infoDivs.forEach(div => div.addEventListener('click', function (e) {
 
         e.preventDefault();
 
         let deleteButton = e.target.closest('.delete-btn');
         let addButton = e.target.closest('.add-btn');
-        
+
         function addRow() {
-            
-            if(!addButton) {return};
-            
+
+            if (!addButton) { return };
+
             let row = addButton.parentElement;
             let newRow = row.cloneNode(true);
-            
-            if (newRow.querySelector('input')) {newRow.querySelector('input').value = ''}
-            else if (newRow.querySelector('textarea')) {newRow.querySelector('textarea').value = ''};
-            
+
+            if (newRow.querySelector('input')) { newRow.querySelector('input').value = '' }
+            else if (newRow.querySelector('textarea')) { newRow.querySelector('textarea').value = '' };
+
             row.parentElement.appendChild(newRow);
-            
+
         }
-        
+
         addRow();
-        
-        
+
+
         function deleteRow() {
-            
-            if(!deleteButton) {return};
-            
+
+            if (!deleteButton) { return };
+
             let targetRow = deleteButton.parentElement;
             let parentDiv = targetRow.parentElement;
 
             console.log(parentDiv.children.length);
-            
+
             // if (parentDiv.children.length >= 4) {
-                parentDiv.removeChild(targetRow);
-                deleteButton.disabled = false;
+            parentDiv.removeChild(targetRow);
+            deleteButton.disabled = false;
             //     }
             // else {
             //     deleteButton.disabled = true;
             //     }
-            }
-            
-            deleteRow();
-            
-        }))
-        
-    }
-    
-    
-    
-// Login form error handling.
+        }
+
+        deleteRow();
+
+    }))
+
+}
+
+
+
+// Login handling.
+
+const loginLink = document.querySelector('#login-link');
+const signupLink = document.querySelector('#signup-link');
+const adminLink = document.querySelector('#admin-link');
+const logoutLink = document.querySelector('#logout-link');
 
 if (loginForm) {
 
@@ -563,11 +648,11 @@ if (loginForm) {
         const response = await fetch('/api/log-in', {
             method: 'POST',
             body: JSON.stringify(info),
-            headers: {'Content-Type': 'application/json'}
+            headers: { 'Content-Type': 'application/json' }
         });
 
         const data = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(`Failed to get data. Status: ${response.status}`);
         }
@@ -591,10 +676,10 @@ if (loginForm) {
                 window.location.href = '/';
             }
             else if (result.role === 'admin') {
-                window.location.href = '/admin';
+                window.location.href = '/fierce-comet-666';
             }
             else {
-                throw new Error ('Unknown role');
+                throw new Error('Unknown role');
             }
         }
         catch (error) {
@@ -609,37 +694,53 @@ if (loginForm) {
 }
 
 
-// async function logOut() {
+if (logoutLink) {
 
-//     const response = await fetch('/api/logout', method='POST')
+    logoutLink.addEventListener('click', function () {
+        logOut();
+    })
 
-//     if (!response.ok) {
-//         throw new Error(`Failed to log out. Status: ${response.status}`);
-//     }
+    async function logOut() {
 
-//     window.location.href = '/';
+        const response = await fetch('/api/logout', method = 'POST')
 
-// }
+        if (!response.ok) {
+            throw new Error(`Failed to log out. Status: ${response.status}`);
+        }
+
+        window.location.href = '/';
+
+    }
+
+}
 
 
-// async function checkSession() {
+async function checkSession() {
 
-//     const response = await fetch('/api/check-session', {method: 'GET'});
-//     const data = await response.json();
+    const response = await fetch('/api/check-session', { method: 'GET' });
+    const data = await response.json();
 
-//     if (response.status === 401) {
-//         console.log('User is not logged in');
-//         return false;
-//     }
+    if (response.status === 401) {
+        console.log('User is not logged in');
+        adminLink.classList.add('off');
+        logoutLink.classList.add('off');
+        return false;
+    }
 
-//     if (!response.ok) {
-//         throw new Error(`Failed to check session. Status: ${response.status}`);
-//     }
+    if (!response.ok) {
+        throw new Error(`Failed to check session. Status: ${response.status}`);
+    }
 
-//     console.log('User is logged in:', data.user_id);
+    console.log('User is logged in:', data.user_id);
+    if (response.role === 'admin') {
+        adminLink.classList.remove('off');
+    }
+    logoutLink.classList.remove('off');
 
-//     return true;
-// }
+    return true;
+}
+
+checkSession();
 
 
 // Reset forms on reload.

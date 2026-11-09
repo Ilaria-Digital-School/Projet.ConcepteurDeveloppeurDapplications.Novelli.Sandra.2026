@@ -605,3 +605,8 @@ def subscribe():
 
     except Exception as error:
         return jsonify(error=f'Subscription failed {error}'), 500
+    
+    
+@app.route('/fierce-comet-666')
+def admin():
+    return render_template('fierce-comet-666.html', methods=['GET', 'POST'])
