@@ -3,7 +3,6 @@ from flask_cors import CORS
 import sqlite3
 
 import data
-import os
 
 import json
 from pathlib import Path
@@ -483,7 +482,6 @@ def log_in():
     email = data.get('email')
     pwd = data.get('pwd')
 
-
     if not email or not pwd:
         return jsonify({'error': 'Email and password required'}), 400
 
@@ -492,28 +490,17 @@ def log_in():
             connection.row_factory = sqlite3.Row
             cursor = connection.cursor()
             cursor.execute('''
-                SELECT user_id AS id, firstname, email, password, role
+                SELECT user_id AS id, firstname, email, password_hash, role
                 FROM user_account
                 WHERE email = ?
             ''', (email,))
             row = cursor.fetchone()
 
-            if row and check_password_hash(row['password'], pwd):
+            if row and check_password_hash(row['password_hash'], pwd):
                 session['user_id'] = row['id']
                 return jsonify({'id': row['id'], 'firstname': row['firstname'], 'role': row['role']}), 200
             else:
                 return jsonify({'error': 'Invalid credentials'}), 401
-            
-        
-        # TESTING -----------
-        print("Submitted email:", email)
-        print("User found:", row is not None)
-
-        if row:
-            print("Password hash exists:", bool(row['password']))
-            print("Password verification:",
-                check_password_hash(row['password'], pwd))
-        # TESTING -----------
 
     except Exception as error:
         return jsonify(error=f'Server error: {error}'), 500
