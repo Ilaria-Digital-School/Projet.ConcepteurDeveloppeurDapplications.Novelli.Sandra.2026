@@ -6,7 +6,6 @@ const search = document.querySelector('#search');
 const nav = document.querySelector('nav');
 const banner = document.querySelector('.banner');
 const favourites = document.querySelector('#favourites');
-const formButtons = document.querySelectorAll('.forms button');
 
 
 // Mobile version: toggle main menu.
@@ -149,7 +148,6 @@ if (banner) {
 
             let recipes = await fetchAllRecipes();
             let filterdArray = recipes.filter(recipe => recipe.name.toLowerCase().includes(search.value) || recipe.author.toLowerCase().includes(search.value));
-            console.log(filterdArray);
 
             displayFilteredRecipes(filterdArray);
         }
@@ -329,7 +327,7 @@ if (favourites) {
 
 // Form error handling.
 
-const forms = document.querySelectorAll('.forms');
+const forms = document.querySelectorAll('.forms:not(#login-form)');
 const infoDivs = document.querySelectorAll('.info');
 
 const contactForm = document.querySelector('#contact-form');
@@ -347,7 +345,7 @@ const loginForm = document.querySelector('#login-form');
 const loginErrorMsg = document.querySelector('#login-error');
 
 const fields = document.querySelectorAll(`
-    .forms input:not(#signup-form input[type="radio"]):not(#signup-form input[type="checkbox"]),
+    .forms input:not(#login-form input):not(#signup-form input[type="radio"]):not(#signup-form input[type="checkbox"]),
     .forms textarea,
     .forms select
 `);
@@ -372,8 +370,8 @@ function checkRequired(element) {
 }
 
 function checkLength(element, minLength) {
-    const lengthIsValid = element.value.trim().length >= minLength;
-    return { lengthIsValid, message: `${element.dataset.label} must be at least ${minLength} characters` };
+    const isValidLength = element.value.trim().length >= minLength;
+    return {isValidLength, message: `${element.dataset.label} must be at least ${minLength} characters`};
 }
 
 function isValidEmail(email) {
@@ -399,7 +397,7 @@ function isValidInput(element) {
 
         const result = checkLength(element, 3);
 
-        if (!result.lengthIsValid) {
+        if (!result.isValidLength) {
             errorMsg.innerText = result.message;
             isValid = false;
         }
@@ -409,7 +407,7 @@ function isValidInput(element) {
 
         const result = checkLength(element, 8);
 
-        if (!result.lengthIsValid) {
+        if (!result.isValidLength) {
             errorMsg.innerText = result.message;
             isValid = false;
         }
@@ -423,7 +421,7 @@ function isValidInput(element) {
 
         const result = checkLength(element, 20);
 
-        if (!result.lengthIsValid) {
+        if (!result.isValidLength) {
             errorMsg.innerText = result.message;
             isValid = false;
         }
@@ -433,7 +431,7 @@ function isValidInput(element) {
 
         const result = checkLength(element, 2);
 
-        if (!result.lengthIsValid) {
+        if (!result.isValidLength) {
             errorMsg.innerText = result.message;
             isValid = false;
         }
@@ -443,7 +441,7 @@ function isValidInput(element) {
 
         const result = checkLength(element, 12);
 
-        if (!result.lengthIsValid) {
+        if (!result.isValidLength) {
             errorMsg.innerText = result.message;
             isValid = false;
         }
@@ -460,72 +458,37 @@ function isValidInput(element) {
 
 }
 
+function checkForErrors() {
+
+    if (Array.from(fields).every(field => isValidInput(field))) {
+        submitButton.forEach(btn => btn.disabled = false);
+    }
+    else {
+        submitButton.forEach(btn => btn.disabled = true);
+    }
+
+}
+
 
 if (forms) {
 
+    
     fields.forEach(field => field.addEventListener('input', function (e) {
-
+        
         isValidInput(e.target) ? showSuccess(e.target) : showError(e.target);
-        console.log(Array.from(fields));
+        checkForErrors();
 
-    }))
+    }));
 
     forms.forEach(form => form.addEventListener('submit', function (e) {
 
         e.preventDefault();
 
-        if (Array.from(fields).every(field => isValidInput(field))) {
-            submitButton.forEach(btn => btn.disabled = false);
-        }
-        else {
-            submitButton.forEach(btn => btn.disabled = true);
-        }
+        form.submit();
 
     }));
 
 }
-
-
-// Former validation logic.
-
-// console.log(fields);
-// console.log(errorMsg);
-
-// if (e.target === name) {checkLength(name, 3)}
-// else if (e.target === email) {checkLength(email, 8); isValidEmail(email)}
-// else if (e.target === formMsg) {checkLength(formMsg, 20)}
-// else if (e.target === firstname) {checkLength(firstname, 2)}
-// else if (e.target === pwd) {checkLength(pwd, 12)}
-// else if (e.target === pwd2) {matchingPasswords(pwd, pwd2)}
-
-
-// Under construct. BUGGY!!!!!!!!!!!!!!!!!!!!!
-
-// if (forms) {
-
-//     forms.forEach(form => form.addEventListener('submit', function (e) {
-
-//         if (Array.from(errorMsg).every(msg => msg.textContent.length > 0)) {
-//             e.preventDefault()
-//             submitBtn.forEach(btn => btn.disabled = false);
-//         }
-//         else {
-//             submitBtn.forEach(btn => btn.disabled = true);
-//         }
-//     }))
-//     forms.forEach(form => form.addEventListener('mouseenter', function (e) {
-
-//         if (Array.from(errorMsg).every(msg => msg.textContent.length > 0)) {
-//             e.preventDefault()
-//             submitBtn.forEach(btn => btn.disabled = false);
-//         }
-//         else {
-//             submitBtn.forEach(btn => btn.disabled = true);
-//         }
-//     }))
-// }
-
-
 
 
 
@@ -648,14 +611,14 @@ if (loginForm) {
         const response = await fetch('/api/log-in', {
             method: 'POST',
             body: JSON.stringify(info),
-            headers: { 'Content-Type': 'application/json' }
+            headers: {'Content-Type': 'application/json'}
         });
-
-        const data = await response.json();
 
         if (!response.ok) {
             throw new Error(`Failed to get data. Status: ${response.status}`);
         }
+        
+        const data = await response.json();
 
         return data;
 
@@ -683,8 +646,9 @@ if (loginForm) {
             }
         }
         catch (error) {
-            loginForm.reset();
             console.log(error);
+            loginErrorMsg.hidden = false;
+            loginForm.reset();
         }
 
         // TAKE CARE OF THAT LATER.
@@ -696,13 +660,14 @@ if (loginForm) {
 
 if (logoutLink) {
 
-    logoutLink.addEventListener('click', function () {
+    logoutLink.addEventListener('click', function (e) {
+        e.preventDefault();
         logOut();
     })
 
     async function logOut() {
 
-        const response = await fetch('/api/logout', method = 'POST')
+        const response = await fetch('/api/log-out', {method: 'POST'})
 
         if (!response.ok) {
             throw new Error(`Failed to log out. Status: ${response.status}`);
@@ -731,8 +696,9 @@ async function checkSession() {
         throw new Error(`Failed to check session. Status: ${response.status}`);
     }
 
+
     console.log('User is logged in:', data.user_id);
-    if (response.role === 'admin') {
+    if (data.role === 'admin') {
         adminLink.classList.remove('off');
     }
     logoutLink.classList.remove('off');

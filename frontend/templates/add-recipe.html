@@ -63,7 +63,11 @@
         <label for="recipe-ingredients" class="form-label">Ingredients</label>
         <div class="dynamic-row" class="ingredients">
             <span class="input-and-error">
-                <input type="text" class="form-control" id="recipe-ingredients" name="ingredients" placeholder="Ingredient...">
+                <span id="ingredient-columns">
+                    <input type="text" class="form-control" id="quantity" name="quantity" placeholder="e.g. 10...">
+                    <input type="text" class="form-control" id="unit" name="unit" placeholder="e.g. ml...">
+                    <input type="text" class="form-control" id="ingredient-name" name="ingredient-name" placeholder="e.g. milk...">
+                </span>
                 <p class="error" id="ingredient-error" role="alert" aria-live="polite" hidden></p>
             </span>
             <button class="dynamic-btn add-btn">➕</button><button class="dynamic-btn delete-btn">➖</button>

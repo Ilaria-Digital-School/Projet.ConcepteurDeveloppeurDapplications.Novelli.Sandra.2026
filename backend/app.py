@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session, render_template
+from flask import Flask, request, jsonify, session, render_template, redirect
 from flask_cors import CORS
 import sqlite3
 
@@ -20,7 +20,13 @@ app = Flask(
     static_url_path="/static",
 )
 
-# app.config["SECRET_KEY"] = os.environ["FLASK_SECRET_KEY"]
+app.config['SECRET_KEY'] = 'some-long-random-secret-key-for-development-mode'
+
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SECURE=False,
+    SESSION_COOKIE_SAMESITE='Lax'
+)
 
 limiter = Limiter(get_remote_address, app=app)
 
@@ -231,14 +237,14 @@ def submit_recipe():
         if not isinstance(ingredient, dict):
             return jsonify(error='Invalid ingredient'), 400
 
-        ingredient_name = ingredient.get('ingredientName')
+        ingredient_name = ingredient.get('ingredient-name')
 
         if not isinstance(ingredient_name, str):
             return jsonify(error='Invalid ingredient name'), 400
 
         ingredient_name = ingredient_name.strip()
 
-        if len(ingredient_name) < 1:
+        if len(ingredient_name) < 2:
             return jsonify(error='Invalid ingredient name'), 400
 
         quantity = ingredient.get('quantity')
@@ -249,7 +255,7 @@ def submit_recipe():
         elif not quantity is None:
             try:
                 quantity = float(quantity)
-                if quantity < 0:
+                if quantity < 0.01:
                     return jsonify(error='Invalid quantity'), 400
             except (TypeError, ValueError):
                 return jsonify(error='Invalid quantity'), 400
@@ -461,14 +467,14 @@ def send_message():
     return jsonify(user_input), 201
 
 
-@app.route('/log-in', methods=['GET'])
-def log_in():
-    return render_template('log-in.html')
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template('login.html')
 
 
 @app.route('/api/log-in', methods=['POST'])
 @limiter.limit('4 per 10 minutes')
-def login():
+def log_in():
     data = request.get_json(silent=True)
     
     if not data:
@@ -476,6 +482,7 @@ def login():
     
     email = data.get('email')
     pwd = data.get('pwd')
+
 
     if not email or not pwd:
         return jsonify({'error': 'Email and password required'}), 400
@@ -496,6 +503,17 @@ def login():
                 return jsonify({'id': row['id'], 'firstname': row['firstname'], 'role': row['role']}), 200
             else:
                 return jsonify({'error': 'Invalid credentials'}), 401
+            
+        
+        # TESTING -----------
+        print("Submitted email:", email)
+        print("User found:", row is not None)
+
+        if row:
+            print("Password hash exists:", bool(row['password']))
+            print("Password verification:",
+                check_password_hash(row['password'], pwd))
+        # TESTING -----------
 
     except Exception as error:
         return jsonify(error=f'Server error: {error}'), 500
@@ -503,7 +521,7 @@ def login():
 
 
 @app.route('/api/log-out', methods=['POST'])
-def logout():
+def log_out():
     
     session.clear()
     
@@ -512,11 +530,27 @@ def logout():
 
 @app.route('/api/check-session', methods=['GET'])
 def check_session():
-
-    if 'user_id' not in session:
+    user_id = session.get('user_id')
+    if user_id is None:
         return jsonify({'logged_in': False}), 401
 
-    return jsonify({'logged_in': True, 'user_id': session['user_id']}), 200
+    with sqlite3.connect('cookbook.db') as connection:
+        connection.row_factory = sqlite3.Row
+        row = connection.execute(
+            'SELECT role FROM user_account WHERE user_id = ?',
+            (user_id,)
+        ).fetchone()
+
+    if row is None:
+        session.clear()
+        return jsonify({'logged_in': False}), 401
+
+    return jsonify({
+        'logged_in': True,
+        'user_id': user_id,
+        'role': row['role']
+    }), 200
+
 
 
 
@@ -549,6 +583,7 @@ def subscribe():
     gender = clean('gender', 0, 20)
     interests = clean('interests', 0, 20)
     country = clean('country', 0, 55)
+    role = data.get('role');
     
 
     if None in (firstname, lastname, email, password, gender, interests, country):
@@ -557,36 +592,47 @@ def subscribe():
     try:
         hashed_password = generate_password_hash(password)
         
-        with sqlite3.connect('messages.db') as connection:
+        with sqlite3.connect('cookbook.db') as connection:
             connection.row_factory = sqlite3.Row
             connection.execute('PRAGMA foreign_keys = ON;')
             cursor = connection.cursor()
-            cursor.execute('''
-                INSERT INTO user_account(
+
+            cursor.execute("""
+                INSERT INTO user_account (
                     firstname,
-                    lastname, 
-                    email,
-                    password,
-                    gender,
-                    country)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                    ''',
-                    (firstname,
                     lastname,
-                    hashed_password,
-                    password,
+                    email,
+                    password_hash,
+                    country,
                     gender,
-                    country),)
+                    role
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                firstname,
+                lastname,
+                email,
+                hashed_password,
+                country,
+                gender,
+                role
+            ))
             
             user_id = cursor.lastrowid
             
-            for i in interests:
+            interests_list = [
+                interest.strip()
+                for interest in interests.split(',')
+                if interest.strip()
+            ]
+
+            for i in interests_list:
                 cursor.execute('''
                     INSERT INTO user_interests(user_id, interest_name)
                     VALUES (?, ?)
                 ''', (user_id, i))
             
-            cursor.execute('SELECT * FROM user_account WHERE id = ?',
+            cursor.execute('SELECT * FROM user_account WHERE user_id = ?',
                            (user_id,))
             user_simple_rows = cursor.fetchone()
 
@@ -607,6 +653,23 @@ def subscribe():
         return jsonify(error=f'Subscription failed {error}'), 500
     
     
-@app.route('/fierce-comet-666')
+    
+    
+@app.route('/fierce-comet-666', methods=['GET'])
 def admin():
-    return render_template('fierce-comet-666.html', methods=['GET', 'POST'])
+
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        return redirect('/login')
+
+    with sqlite3.connect('cookbook.db') as connection:
+        row = connection.execute(
+            'SELECT role FROM user_account WHERE user_id = ?',
+            (user_id,)
+        ).fetchone()
+
+    if row is None or row[0] != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+
+    return render_template('fierce-comet-666.html')

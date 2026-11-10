@@ -1,13 +1,18 @@
 RECIPE_CATEGORIES = [
     'Italian',
     'French',
+    'Asian',
+    'Latino',
     'Meat',
     'Spicy',
+    'Veggie',
     'Sweet & sour',
     'Sashimi and sushi',
     'Homemade hamburgers',
     'Cake',
-    'Creamy dessert'
+    'Creamy dessert',
+    'Fruit dessert',
+    'Other'
 ]
 
 

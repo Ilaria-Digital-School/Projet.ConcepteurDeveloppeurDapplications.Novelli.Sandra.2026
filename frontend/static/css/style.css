@@ -591,6 +591,12 @@ span.input-and-error {
     flex-direction: column;
 }
 
+#ingredient-columns {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+}
+
 .add-btn, .delete-btn {
     width: 2rem;
     height: 2rem;
