@@ -6,10 +6,13 @@ import data
 
 import json
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+
 
 
 app = Flask(
@@ -19,17 +22,25 @@ app = Flask(
     static_url_path="/static",
 )
 
-app.config['SECRET_KEY'] = 'some-long-random-secret-key-for-development-mode'
+
+load_dotenv()
+secret_key = os.environ.get('FLASK_SECRET_KEY')
+
+if not secret_key:
+    raise RuntimeError('FLASK_SECRET_KEY is not configured')
+
 
 app.config.update(
+    SECRET_KEY=secret_key,
     SESSION_COOKIE_HTTPONLY=True,
-    SESSION_COOKIE_SECURE=False,
+    SESSION_COOKIE_SECURE=False, # Should be changed to True for production.
     SESSION_COOKIE_SAMESITE='Lax'
 )
 
 limiter = Limiter(get_remote_address, app=app)
 
 CORS(app)
+
 
 
 
@@ -472,7 +483,7 @@ def login():
 
 
 @app.route('/api/log-in', methods=['POST'])
-@limiter.limit('40 per 10 minutes')
+@limiter.limit('14 per 10 minutes')
 def log_in():
     data = request.get_json(silent=True)
     
@@ -497,6 +508,7 @@ def log_in():
             row = cursor.fetchone()
 
             if row and check_password_hash(row['password_hash'], pwd):
+                session.clear()
                 session['user_id'] = row['id']
                 return jsonify({'id': row['id'], 'role': row['role']}), 200
             else:
@@ -608,11 +620,7 @@ def subscribe():
             
             user_id = cursor.lastrowid
             
-            interests_list = [
-                interest.strip()
-                for interest in interests.split(',')
-                if interest.strip()
-            ]
+            interests_list = [interest.strip() for interest in interests.split(',') if interest.strip()]
 
             for i in interests_list:
                 cursor.execute('''

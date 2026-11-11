@@ -342,7 +342,7 @@ const pwd2 = document.querySelector('#pwd2');
 const country = document.querySelector('#country');
 
 const loginForm = document.querySelector('#login-form');
-const loginErrorMsg = document.querySelector('#login-error');
+const loginErrorMsg = document.querySelector('#login-error-msg');
 
 const fields = document.querySelectorAll(`
     .forms input:not(#login-form input):not(#signup-form input[type="radio"]):not(#signup-form input[type="checkbox"]),
@@ -615,7 +615,7 @@ if (loginForm) {
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to get data. Status: ${response.status}`);
+            throw new Error(`Invalid data. Status: ${response.status}`);
         }
         
         const data = await response.json();
@@ -647,13 +647,10 @@ if (loginForm) {
         }
         catch (error) {
             console.log(error);
-            loginErrorMsg.hidden = false;
+            loginErrorMsg.style.visibility = 'visible';
             loginForm.reset();
         }
 
-        // TAKE CARE OF THAT LATER.
-        // if email or password is invalid:
-        // loginErrorMsg.style.visibility = 'visible';
     })
 }
 
