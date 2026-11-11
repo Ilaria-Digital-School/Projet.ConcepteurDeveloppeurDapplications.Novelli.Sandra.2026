@@ -679,6 +679,7 @@ if (logoutLink) {
 
 }
 
+const greetings = document.querySelector('#greetings');
 
 async function checkSession() {
 
@@ -687,8 +688,9 @@ async function checkSession() {
 
     if (response.status === 401) {
         console.log('User is not logged in');
-        adminLink.classList.add('off');
-        logoutLink.classList.add('off');
+        adminLink.className = 'off';
+        logoutLink.className = 'off';
+        greetings.innerText = '';
         return false;
     }
 
@@ -696,12 +698,13 @@ async function checkSession() {
         throw new Error(`Failed to check session. Status: ${response.status}`);
     }
 
-
-    console.log('User is logged in:', data.user_id);
-    if (data.role === 'admin') {
-        adminLink.classList.remove('off');
-    }
-    logoutLink.classList.remove('off');
+    console.log('User is logged in:', data.firstname);
+    greetings.innerText = `Hello, welcome ${data.firstname}!`;
+    data.role === 'admin' ? adminLink.className = 'on' : adminLink.className = 'off';
+    
+    signupLink.className = 'off';
+    loginLink.className = 'off';
+    logoutLink.className = 'on';
 
     return true;
 }

@@ -472,7 +472,7 @@ def login():
 
 
 @app.route('/api/log-in', methods=['POST'])
-@limiter.limit('4 per 10 minutes')
+@limiter.limit('40 per 10 minutes')
 def log_in():
     data = request.get_json(silent=True)
     
@@ -490,7 +490,7 @@ def log_in():
             connection.row_factory = sqlite3.Row
             cursor = connection.cursor()
             cursor.execute('''
-                SELECT user_id AS id, firstname, email, password_hash, role
+                SELECT user_id AS id, email, password_hash, role
                 FROM user_account
                 WHERE email = ?
             ''', (email,))
@@ -498,7 +498,7 @@ def log_in():
 
             if row and check_password_hash(row['password_hash'], pwd):
                 session['user_id'] = row['id']
-                return jsonify({'id': row['id'], 'firstname': row['firstname'], 'role': row['role']}), 200
+                return jsonify({'id': row['id'], 'role': row['role']}), 200
             else:
                 return jsonify({'error': 'Invalid credentials'}), 401
 
@@ -524,7 +524,7 @@ def check_session():
     with sqlite3.connect('cookbook.db') as connection:
         connection.row_factory = sqlite3.Row
         row = connection.execute(
-            'SELECT role FROM user_account WHERE user_id = ?',
+            'SELECT role, firstname FROM user_account WHERE user_id = ?',
             (user_id,)
         ).fetchone()
 
@@ -535,6 +535,7 @@ def check_session():
     return jsonify({
         'logged_in': True,
         'user_id': user_id,
+        'firstname': row['firstname'],
         'role': row['role']
     }), 200
 

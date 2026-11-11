@@ -49,6 +49,12 @@ a {
     display: none;
 }
 
+#greetings {
+    color: aquamarine;
+    font-size: 1.5em;
+    ;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -105,12 +111,17 @@ nav a {
     border-width: 3px;
 }
 
-#signup-link a, #admin-link a {
+#signup-link a,
+#admin-link a {
     color: white;
 }
 
 nav li.off {
     display: none;
+}
+
+nav li.on {
+    display: flex;
 }
 
 
@@ -597,7 +608,8 @@ span.input-and-error {
     column-gap: 0.5rem;
 }
 
-.add-btn, .delete-btn {
+.add-btn,
+.delete-btn {
     width: 2rem;
     height: 2rem;
 }
@@ -620,6 +632,14 @@ footer {
 
 @media only screen and (max-width: 1274px) {
 
+    #greetings {
+        position: fixed;
+        left: 50%;
+        top: 0.05%;
+        /* transform: translate(-50%, -0.2%); */
+        font-size: 1em;
+    }
+
     nav {
         display: none;
         position: fixed;
@@ -627,7 +647,7 @@ footer {
         justify-content: center;
         background-color: black;
         width: 100%;
-        height: 18rem;
+        height: 19rem;
         z-index: 2;
         box-shadow: 0 0 6px 6px black;
         border-radius: 10px;
@@ -676,18 +696,23 @@ footer {
         margin-bottom: 0.25rem;
         color: white;
         border: none;
-        border-radius: 28px;
+        border-radius: 0;
         justify-content: left;
         width: 9.4rem;
         height: 2.5rem;
         background-color: transparent;
     }
 
+    nav li:hover {
+        box-shadow: 0 0 6px 2px turquoise;
+    }
+
     nav a {
         color: white;
     }
 
-    #signup-link, #admin-link {
+    #signup-link,
+    #admin-link {
         border-radius: 0;
         background-color: transparent;
     }
