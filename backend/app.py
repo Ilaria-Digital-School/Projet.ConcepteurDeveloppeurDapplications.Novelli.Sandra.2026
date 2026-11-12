@@ -44,8 +44,8 @@ csrf = CSRFProtect(app)
 
 CORS(app)
 
-COOKBOOK_DB = os.environ.get('COOKBOOK_DB', 'databases/cookbook.db')
-MESSAGES_DB = os.environ.get('MESSAGES_DB', 'databases/messages.db')
+COOKBOOK_DB = os.environ.get('COOKBOOK_DB', os.path.join('cookbook.db'))
+MESSAGES_DB = os.environ.get('MESSAGES_DB', os.path.join('messages.db'))
 
 
 @app.route('/', methods=['GET'])
