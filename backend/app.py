@@ -13,6 +13,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_wtf import CSRFProtect
+from datetime import timedelta
 
 
 app = Flask(
@@ -34,7 +35,8 @@ app.config.update(
     SECRET_KEY=secret_key,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SECURE=False, # Should be changed to True for production.
-    SESSION_COOKIE_SAMESITE='Lax'
+    SESSION_COOKIE_SAMESITE='Lax',
+    PERMANENT_SESSION_LIFETIME=timedelta(minutes=30)
 )
 
 limiter = Limiter(get_remote_address, app=app)
@@ -42,7 +44,8 @@ csrf = CSRFProtect(app)
 
 CORS(app)
 
-
+COOKBOOK_DB = os.environ.get('COOKBOOK_DB', 'databases/cookbook.db')
+MESSAGES_DB = os.environ.get('MESSAGES_DB', 'databases/messages.db')
 
 
 @app.route('/', methods=['GET'])
@@ -98,7 +101,7 @@ def get_one_recipe(id):
         cursor = connection.cursor()
         cursor.execute('''SELECT 
                     r.recipe_id AS id,
-                    (u.firstname || ' ' || u.lastname) as author,
+                    (u.firstname || ' ' || u.lastname) AS author,
                     r.recipe_name AS name,
                     r.img_url AS imgSrc,
                     r.prep_time AS prepTime,

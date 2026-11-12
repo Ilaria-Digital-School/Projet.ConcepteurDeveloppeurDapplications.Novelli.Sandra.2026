@@ -371,7 +371,7 @@ function checkRequired(element) {
 
 function checkLength(element, minLength) {
     const isValidLength = element.value.trim().length >= minLength;
-    return {isValidLength, message: `${element.dataset.label} must be at least ${minLength} characters`};
+    return { isValidLength, message: `${element.dataset.label} must be at least ${minLength} characters` };
 }
 
 function isValidEmail(email) {
@@ -472,9 +472,9 @@ function checkForErrors() {
 
 if (forms) {
 
-    
+
     fields.forEach(field => field.addEventListener('input', function (e) {
-        
+
         isValidInput(e.target) ? showSuccess(e.target) : showError(e.target);
         checkForErrors();
 
@@ -608,16 +608,18 @@ if (loginForm) {
 
     async function logIn(info) {
 
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF
+
         const response = await fetch('/api/log-in', {
             method: 'POST',
             body: JSON.stringify(info),
-            headers: {'Content-Type': 'application/json'}
+            headers: {'Content-Type': 'application/json' , 'X-CSRFToken': csrfToken} // CSRF
         });
 
         if (!response.ok) {
             throw new Error(`Invalid data. Status: ${response.status}`);
         }
-        
+
         const data = await response.json();
 
         return data;
@@ -664,7 +666,9 @@ if (logoutLink) {
 
     async function logOut() {
 
-        const response = await fetch('/api/log-out', {method: 'POST'})
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF
+
+        const response = await fetch('/api/log-out', {method: 'POST', headers: {'X-CSRFToken': csrfToken}}) // CSRF
 
         if (!response.ok) {
             throw new Error(`Failed to log out. Status: ${response.status}`);
@@ -698,7 +702,7 @@ async function checkSession() {
     console.log('User is logged in:', data.firstname);
     greetings.innerText = `Hello, welcome ${data.firstname}!`;
     data.role === 'admin' ? adminLink.className = 'on' : adminLink.className = 'off';
-    
+
     signupLink.className = 'off';
     loginLink.className = 'off';
     logoutLink.className = 'on';
