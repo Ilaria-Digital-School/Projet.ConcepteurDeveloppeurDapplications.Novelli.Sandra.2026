@@ -327,9 +327,7 @@ def submit_recipe():
                 ''', (ingredient_name,)).fetchone()
 
                 if ingredient_row is None:
-                    return jsonify(
-                        error=f'Unknown ingredient: {ingredient_name}'
-                    ), 400
+                    return jsonify(error=f'Unknown ingredient: {ingredient_name}'), 400
 
                 ingredient_id = ingredient_row['ingredient_id']
 

@@ -594,7 +594,7 @@ textarea:focus {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    column-gap: 0.5rem;
+    column-gap: 3%;
 }
 
 .ingredient-row {
@@ -618,22 +618,22 @@ textarea:focus {
     width: 80%;
     flex-direction: row;
     justify-content: space-between;
-    column-gap: 3%;
+    column-gap: 2.5%;
 }
 
 .small-label {
-    padding: 0.2rem;
+    padding: 0.2rem 0;
     font-size: 0.8em;
 }
 
 #ingredient-field {
-    width: 90%;
+    flex: 3;
 }
 
-/* #quantity-field,
+#quantity-field,
 #unit-field {
-    width: 20%;
-} */
+    flex: 1;
+}
 
 
 
