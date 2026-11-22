@@ -487,7 +487,7 @@ fieldset {
     margin: 1rem auto;
 }
 
-.forms label,
+.forms label:not(.small-label),
 input,
 textarea,
 p,
@@ -543,6 +543,7 @@ textarea:focus {
 }
 
 .error {
+    display: block;
     color: crimson;
     font-size: 0.85em;
     visibility: hidden
@@ -596,16 +597,48 @@ textarea:focus {
     column-gap: 0.5rem;
 }
 
-span.input-and-error {
+.ingredient-row {
+    align-items: center;
+}
+
+.input-and-error {
     width: 80%;
     display: flex;
     flex-direction: column;
 }
 
+.ingredient-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #ingredient-columns {
     display: flex;
+    width: 80%;
     flex-direction: row;
-    column-gap: 0.5rem;
+    justify-content: space-between;
+    column-gap: 3%;
+}
+
+.small-label {
+    padding: 0.2rem;
+    font-size: 0.8em;
+}
+
+#ingredient-field {
+    width: 90%;
+}
+
+/* #quantity-field,
+#unit-field {
+    width: 20%;
+} */
+
+
+
+.ingredient-error {
+    display: block;
 }
 
 .add-btn,
@@ -613,6 +646,7 @@ span.input-and-error {
     width: 2rem;
     height: 2rem;
 }
+
 
 
 /* Footer */
@@ -868,7 +902,12 @@ footer {
     }
 
     .forms {
-        width: 90%;
+        width: 95%;
+        padding: 0.6rem;
+    }
+
+    #ingredient-field {
+        width: 100%;
     }
 
     #signup-box {

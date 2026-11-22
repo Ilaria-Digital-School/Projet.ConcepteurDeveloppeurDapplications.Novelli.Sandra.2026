@@ -36,6 +36,7 @@ COUNTRIES = [
     'Italy',
     'Switzerland',
     'Belgium',
+    'Tunisia',
     'Senegal',
     'Angola',
     'Other']

@@ -262,15 +262,22 @@ if (recipeDetails) {
 
         const stepsList = recipe.steps.map((step, index) => `<li class="prep-step">${index + 1}. ${step.instruction}</li>`).join('');
 
+        function timeConverter(timeValue) {
+
+            let hours = Math.floor(timeValue / 60);
+            let minutes = timeValue % 60;
+            return hours > 0 ? `${hours} h ${minutes}` : minutes;
+        }
+
         recipeDetails.innerHTML = `
             <h2>${recipe.name}</h2>
             <p>By ${recipe.author}</p>
             <img src=/${recipe.imgSrc} alt="Picture of ${recipe.name}">
             <p>Added on ${recipe.createdOn}</p>
             <h3>Preparation</h3>
-            <p>${recipe.prepTime} min</p>
+            <p>${timeConverter(recipe.prepTime)} min</p>
             <h3>Cook</h3>
-            <p>${recipe.cookTime} min</p>
+            <p>${timeConverter(recipe.cookTime)} min</p>
             <h3>Ingredients</h3>
             <div>
                 <ul id="ingredients">
@@ -386,7 +393,7 @@ function matchingPasswords(pwd, pwd2) {
 function isValidInput(element) {
 
     let isValid = true;
-    const errorMsg = element.parentElement.querySelector('.error');
+    // const errorMsg = element.parentElement.querySelector('.error');
 
     if (checkRequired(element)) {
         errorMsg.innerText = 'This field is required';
@@ -537,34 +544,57 @@ if (contactForm) {
 
 // Add recipe form.
 
+const addRecipeForm = document.querySelector('#recipe-form');
+
 const addButtons = document.querySelectorAll('.add-btn');
 const deleteButtons = document.querySelectorAll('.delete-btn');
-const dynamicRows = document.querySelectorAll('.dynamic-row');
 
-let categories = [];
-let ingredients = [];
-let steps = [];
 
 if (addButtons && deleteButtons) {
 
     infoDivs.forEach(div => div.addEventListener('click', function (e) {
 
-        e.preventDefault();
-
         let deleteButton = e.target.closest('.delete-btn');
         let addButton = e.target.closest('.add-btn');
+
 
         function addRow() {
 
             if (!addButton) { return };
 
-            let row = addButton.parentElement;
-            let newRow = row.cloneNode(true);
+            const row = addButton.parentElement;
+            const newRow = row.cloneNode(true);
 
-            if (newRow.querySelector('input')) { newRow.querySelector('input').value = '' }
-            else if (newRow.querySelector('textarea')) { newRow.querySelector('textarea').value = '' };
+            let input = newRow.querySelector('input, textarea');
 
-            row.parentElement.appendChild(newRow);
+            if (input) {
+                input.value = '';
+            }
+
+            const parentDiv = row.parentElement;
+            parentDiv.appendChild(newRow);
+
+            const dynamicRows = parentDiv.querySelectorAll(':scope > .dynamic-row');
+            console.log(dynamicRows.length);
+
+            if (dynamicRows.length >= 1) {
+                let deleteButtons = parentDiv.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(btn => btn.disabled = false);
+            }
+
+            // let targetRow = addButton.parentElement;
+            // let parentDiv = targetRow.parentElement;
+            // let originalRow = row.cloneNode(true);
+            // if (Array.from(parentDiv.children).length < 3) {
+            //     row.parentElement.appendChild(originalRow);
+            // }
+            // else {
+            //     }
+
+            // console.log(divCatFields);
+            // let divCats = document.querySelectorAll('.categories');
+            // let divCatFields = divCats.querySelectorAll('input');
+            // totalNewRows = document.querySelectorAll('add.btn');
 
         }
 
@@ -575,23 +605,59 @@ if (addButtons && deleteButtons) {
 
             if (!deleteButton) { return };
 
-            let targetRow = deleteButton.parentElement;
-            let parentDiv = targetRow.parentElement;
+            const targetRow = deleteButton.parentElement;
+            const parentDiv = targetRow.parentElement;
 
-            console.log(parentDiv.children.length);
+            const dynamicRows = parentDiv.querySelectorAll(':scope > .dynamic-row');
+            console.log(dynamicRows.length);
 
-            // if (parentDiv.children.length >= 4) {
-            parentDiv.removeChild(targetRow);
-            deleteButton.disabled = false;
-            //     }
-            // else {
-            //     deleteButton.disabled = true;
-            //     }
+            if (dynamicRows.length > 1) {
+                parentDiv.removeChild(targetRow);
+            }
+            else {
+                deleteButton.disabled = true;
+            }
+
         }
 
         deleteRow();
 
     }))
+
+    // async function submitRecipe(newRecipe) {
+
+    //     const response = await fetch('/api/add-recipe', {
+    //         method: 'POST',
+    //         body: JSON.stringify(newRecipe),
+    //         headers: { 'Content-Type': 'application/json' }
+    //     });
+
+    //     if (!response.ok) {
+    //         throw new Error(`Failed to get recipe. Status: ${response.status}`);
+    //     }
+
+    //     const data = await response.json();
+
+    //     return data;
+
+    // }
+
+    // contactForm.addEventListener('submit', async function(e) {
+
+    //     e.preventDefault();
+
+    //     const formData = new FormData(contactForm);
+    //     const recipe = Object.fromEntries(formData);
+
+    //     try {
+    //         const result = await submitRecipe(recipe);
+    //         console.log(`Success: ${JSON.stringify(result)}`);
+    //         addRecipeForm.reset();
+    //     }
+    //     catch (error) {
+    //         console.log(error);
+    //     }
+    // })
 
 }
 
@@ -613,7 +679,7 @@ if (loginForm) {
         const response = await fetch('/api/log-in', {
             method: 'POST',
             body: JSON.stringify(info),
-            headers: {'Content-Type': 'application/json' , 'X-CSRFToken': csrfToken} // CSRF
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken } // CSRF
         });
 
         if (!response.ok) {
@@ -668,7 +734,7 @@ if (logoutLink) {
 
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF
 
-        const response = await fetch('/api/log-out', {method: 'POST', headers: {'X-CSRFToken': csrfToken}}) // CSRF
+        const response = await fetch('/api/log-out', { method: 'POST', headers: { 'X-CSRFToken': csrfToken } }) // CSRF
 
         if (!response.ok) {
             throw new Error(`Failed to log out. Status: ${response.status}`);

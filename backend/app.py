@@ -119,16 +119,16 @@ def get_one_recipe(id):
         
         cursor.execute('''
                     SELECT i.ingredient_name AS name, ri.quantity, ri.unit
-                    FROM recipe_ingredient ri
-                    JOIN ingredient i ON ri.ingredient_id = i.ingredient_id
+                    FROM recipe_ingredient AS ri
+                    JOIN ingredient AS i ON ri.ingredient_id = i.ingredient_id
                     WHERE ri.recipe_id = ?
                 ''', (id,))
         ingredients = [dict(r) for r in cursor.fetchall()]
 
         cursor.execute('''
                     SELECT rs.step_number AS step_number, p.instruction
-                    FROM recipe_step rs
-                    JOIN preparation_step p ON rs.step_id = p.step_id
+                    FROM recipe_step AS rs
+                    JOIN preparation_step AS p ON rs.step_id = p.step_id
                     WHERE rs.recipe_id = ?
                     ORDER BY rs.step_number
                 ''', (id,))
@@ -167,7 +167,7 @@ def display_favourites(user_id):
                     (u.firstname || ' ' || u.lastname) AS author,
                     json_group_array(c.category_name) AS categories
                     FROM recipe AS r
-                    JOIN user_favourite uf
+                    JOIN user_favourite AS uf
                     ON uf.recipe_id = r.recipe_id
                     LEFT JOIN user_account u
                     ON u.user_id = r.user_id
@@ -198,7 +198,7 @@ def add_recipe():
     return render_template('add-recipe.html', recipe_categories=data.RECIPE_CATEGORIES)
 
 
-@app.route('/add-recipe', methods=['GET', 'POST'])
+@app.route('/api/add-recipe', methods=['POST'])
 def submit_recipe():
 
     data = request.get_json(silent=True)
